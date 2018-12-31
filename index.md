@@ -13,9 +13,15 @@
 
 ```
 ### Solution
+
 1. Loud Noise
 2. Lazer
 3. Specific Frequency
+
+### Problem
+1. It might be a lot noisy if it is too loud or sounds often.
+2. Battery Problem.
+3. Difficult to implement.
 ```
   
   
