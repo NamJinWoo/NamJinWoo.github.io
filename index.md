@@ -8,8 +8,8 @@ First Discussion
 1. Drone  2. Machine Learning 3.IoT
 
 ### Drone
-  Benefits - 
-  Difficulties - Weather can be a big problem. For example, Drone is not available when it is windy or rainy.
+- Benefits - 
+- Difficulties - Weather can be a big problem. For example, Drone is not available when it is windy or rainy.
   
 ### Information
   1. Birds cannot distinguish the color "YELLOW"
