@@ -2,10 +2,10 @@
 
 ## 2018/12/31 Mon.
 
-First Discussion
-
-- Choosing ways about in what way we will make "Hi-Tech Scarecrow"
-1. Drone  2. Machine Learning 3.IoT
+### First Discussion - Choosing ways about in what way we will make "Hi-Tech Scarecrow"
+1. Drone
+2. Machine Learning
+3. IoT
 
 ### Drone
 - Benefits - 
