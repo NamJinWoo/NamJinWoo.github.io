@@ -17,6 +17,7 @@
 1. Loud Noise
 2. Lazer
 3. Specific Frequency
+4. Specific Smell
 
 ### Problem
 1. It might be a lot noisy if it is too loud or sounds often.
