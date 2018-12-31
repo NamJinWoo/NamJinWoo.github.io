@@ -11,10 +11,11 @@
 - Benefits - 
 - Difficulties - Weather can be a big problem. For example, Drone is not available when it is windy or rainy.
 
-<Solution>
-  1. Loud Noise
-  2. Lazer
-  3. Specific Frequency
+```
+1. Loud Noise
+2. Lazer
+3. Specific Frequency
+```
   
   
 ### Information
