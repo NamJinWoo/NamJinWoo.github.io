@@ -1,4 +1,4 @@
-# Hi-Tech Scarecrow
+# Hi-Tech Scarecrow Daily Report
 
 ## 2018/12/31 Mon.
 
