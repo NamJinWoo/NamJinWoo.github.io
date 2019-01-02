@@ -26,5 +26,5 @@
 ```
   
   
-### Information
+### Research
   1. Birds cannot distinguish the color "YELLOW"
