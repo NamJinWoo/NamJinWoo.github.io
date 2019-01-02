@@ -28,3 +28,10 @@
   
 ### Research
   1. Birds cannot distinguish the color "YELLOW"
+
+
+## 2019/01/02 Wed.
+
+### Research
+  1. Birds get scared of green lights as they recognize those as predators eyes.
+  2. We can shoot a lazer randomly.
