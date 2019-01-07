@@ -35,3 +35,7 @@
 ### Research
   1. Birds get scared of green lights as they recognize those as predators eyes.
   2. We can shoot a lazer randomly.
+
+## 2019/01/03 Thu.
+
+### Draft Presentation at 2:30 ( Presenter - Jinwoo Nam )
