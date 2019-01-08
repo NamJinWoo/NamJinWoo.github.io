@@ -40,12 +40,38 @@
 
 ### Draft Presentation at 2:30 ( Presenter - Jinwoo Nam )
 
-## 2019/01/04 Fri.
+## 2019/01/04 Fri. & 2019/01/07 Mon.
 
 ### Paper
 1. looking for some reference papers.
 
 ```
-Decided a direction of our project. - Chasing birds away with green light.
+Decided a direction of our project. 
+- Chasing birds away with green light.
 - It might be various colors, and some patterns as birds' learning effect is very important.
+- We use both sound and light.
+- What about using Ultrasonic?
+```
+
+## 2019/01/08 Tue.
+
+### Equipments we need for hardware
+```
+1. Bar
+2. Megaphone
+3. Green Light Bulb
+4. Arduino
+5. Relay Module
+6. web cam (SONY or Raspberry Pi CAM)
+7. Raspberry Pi
+```
+- We asked Professor Eric about these.
+- Eunseo gave us some equipments they have.
+- Eunseo said that we are able to do the project without Arduino.( Not sure but with Raspberry Pie)
+
+### Things we've got from Eunseo and Eric today.
+```
+1. Two Raspberry Pie with SD cards.
+2. One Raspberry Pie CAM
+3. Two Monitors, keyboards and mouse.
 ```
