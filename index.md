@@ -1,6 +1,6 @@
 # Hi-Tech Scarecrow Daily Report <br/><br/><br/>
 
-## 2018/12/31 Mon. <br/>
+## 2018/12/31 Mon.
 
 ### First Discussion - Choosing ways about in what way we will make "Hi-Tech Scarecrow"
 1. Drone
@@ -29,17 +29,17 @@
 ### Research
   1. Birds cannot distinguish the color "YELLOW"
 
-
+<br/><br/><br/>
 ## 2019/01/02 Wed.
 
 ### Research
   1. Birds get scared of green lights as they recognize those as predators eyes.
   2. We can shoot a lazer randomly.
-
+<br/><br/><br/>
 ## 2019/01/03 Thu.
 
 ### Draft Presentation at 2:30 ( Presenter - Jinwoo Nam )
-
+<br/><br/><br/>
 ## 2019/01/04 Fri. & 2019/01/07 Mon.
 
 ### Paper
@@ -52,7 +52,7 @@ Decided a direction of our project.
 - We use both sound and light.
 - What about using Ultrasonic?
 ```
-
+<br/><br/><br/>
 ## 2019/01/08 Tue.  
 
 ### Equipments we need for hardware
