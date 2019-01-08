@@ -1,6 +1,6 @@
-# Hi-Tech Scarecrow Daily Report
+# Hi-Tech Scarecrow Daily Report <br/>
 
-## 2018/12/31 Mon.
+## 2018/12/31 Mon. <br/>
 
 ### First Discussion - Choosing ways about in what way we will make "Hi-Tech Scarecrow"
 1. Drone
@@ -53,7 +53,7 @@ Decided a direction of our project.
 - What about using Ultrasonic?
 ```
 
-## 2019/01/08 Tue.
+## 2019/01/08 Tue.  
 
 ### Equipments we need for hardware
 ```
