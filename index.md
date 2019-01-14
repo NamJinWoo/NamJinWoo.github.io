@@ -75,3 +75,17 @@ Decided a direction of our project.
 2. One Raspberry Pie CAM
 3. Two Monitors, keyboards and mouse.
 ```
+
+<br/><br/><br/>
+## 2019/01/09 Wed.  
+
+### Install Opencv with Raspberry Pi.
+- try detection.py with Raspberry Pi.
+- detected a movement with Threshold.
+
+<br/><br/><br/>
+## 2019/01/10 Thu.
+
+### playing eagle sound, when the camera detects any movement.
+1. studied about playing mp3 in Python.
+2. when the camera detects the movement, put playing method in the frameDiff Method
