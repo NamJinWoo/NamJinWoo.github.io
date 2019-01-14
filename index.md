@@ -96,3 +96,6 @@ Decided a direction of our project.
 ### Install Opencv with laptops
 1. tested the same code in laptop (worked)
 2. find some equipments we need to buy.
+```
+1. Multi adaptor to use 4 cameras.
+```
