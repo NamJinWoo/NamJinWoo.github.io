@@ -89,3 +89,10 @@ Decided a direction of our project.
 ### playing eagle sound, when the camera detects any movement.
 1. studied about playing mp3 in Python.
 2. when the camera detects the movement, put playing method in the frameDiff Method
+
+<br/><br/><br/>
+## 2019/01/11 Fri.
+
+### Install Opencv with laptops
+1. tested the same code in laptop (worked)
+2. find some equipments we need to buy.
