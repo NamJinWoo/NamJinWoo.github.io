@@ -102,5 +102,19 @@ Multi adaptor to use 4 cameras.
 ```
 
 <br/><br/><br/>
-## 2019/01/14 Mon.
+## 2019/01/28 Mon.
+
+### Things we've done
+```
+1. Detecting motions with opencv
+2. Turning on the light bulb with arduino.
+3. Communication between Raspberry Pi LoRa and Arduino LoRa.
+4. when the motion is detected, the light is on.
+```
+
+### Things we have to do
+```
+1. Laser sensor ( Garage Door sensor ) for detecting deers at night.
+2. Research about what deers are afraid of
+```
 
