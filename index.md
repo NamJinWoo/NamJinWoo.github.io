@@ -117,4 +117,7 @@ Multi adaptor to use 4 cameras.
 1. Laser sensor ( Garage Door sensor ) for detecting deers at night.
 2. Research about what deers are afraid of
 ```
+<br/><br/><br/>
+## 2019/01/31 Thu.
 
+### Prepare mid presentation
