@@ -121,3 +121,17 @@ Multi adaptor to use 4 cameras.
 ## 2019/01/31 Thu.
 
 ### Prepare mid presentation
+
+<br/><br/><br/>
+## 2019/02/01 Fri.
+
+### mid presentation
+
+<br/><br/><br/>
+## 2019/02/04 Mon.
+
+### Things we've done
+```
+1. implementing code about IR laser sensor. ( test too )
+2. 1 to Many Communication with LoRa. ( setting bandwidth, frequency, spreading factor.
+```
