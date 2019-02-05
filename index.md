@@ -135,3 +135,11 @@ Multi adaptor to use 4 cameras.
 1. implementing code about IR laser sensor. ( test too )
 2. 1 to Many Communication with LoRa. ( setting bandwidth, frequency, spreading factor.
 ```
+<br/><br/><br/>
+## 2019/02/05 Tue.
+
+### Things we've done
+```
+1. LoRa Communication from Arduino to Raspberry Pi
+2. Putting the codes for arduino into one
+```
