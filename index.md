@@ -145,4 +145,4 @@ Multi adaptor to use 4 cameras.
 ```
 
 ![asd][https://github.com/NamJinWoo/NamJinWoo.github.io/IMG_0308.jpg]
-<img src="https://github.com/NamJinWoo/NamJinWoo.github.io/IMG_0308.jpg">
+<img src="https://github.com/NamJinWoo/NamJinWoo.github.io/blob/master/IMG_0308.jpg">
