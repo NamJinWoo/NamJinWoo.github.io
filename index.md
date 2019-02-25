@@ -143,6 +143,3 @@ Multi adaptor to use 4 cameras.
 1. LoRa Communication from Arduino to Raspberry Pi
 2. Putting the codes for arduino into one
 ```
-
-![asd][https://github.com/NamJinWoo/NamJinWoo.github.io/IMG_0308.jpg]
-<img src="https://github.com/NamJinWoo/NamJinWoo.github.io/blob/master/IMG_0308.jpg">
