@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KBO 2026년 5월 26일 경기 분석</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f172a; color: #e2e8f0; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 헤더 ── */
+.site-header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  padding: 20px 16px 16px;
+  border-bottom: 2px solid #3b82f6;
+}
+.site-header h1 {
+  font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+}
+.site-header .subtitle { font-size: 0.78rem; color: #94a3b8; margin-top: 4px; }
+
+/* ── 탭 바 ── */
+.tab-bar {
+  display: flex; position: sticky; top: 0; z-index: 10;
+  background: #0f172a; border-bottom: 1px solid #1e293b;
+}
+.tab-btn {
+  flex: 1; padding: 14px 8px; text-align: center; font-size: 0.88rem;
+  font-weight: 600; color: #64748b; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.tab-btn.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+
+/* ── 탭 패널 ── */
+.tab-panel { display: none; padding: 16px; }
+.tab-panel.active { display: block; }
+
+/* ── 날짜 카드 (인덱스) ── */
+.date-list { display: flex; flex-direction: column; gap: 10px; }
+.date-card {
+  background: #1e293b; border-radius: 12px; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid #334155; transition: border-color .2s;
+}
+.date-card:active { border-color: #3b82f6; }
+.date-card .dc-date { font-size: 1rem; font-weight: 700; }
+.date-card .dc-meta { font-size: 0.78rem; color: #64748b; margin-top: 3px; }
+.date-card .dc-arrow { color: #3b82f6; font-size: 1.2rem; }
+
+/* ── 페이지 헤더 (날짜 페이지) ── */
+.page-header {
+  padding: 16px;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  display: flex; align-items: center; gap: 12px;
+}
+.back-btn {
+  color: #3b82f6; font-size: 0.9rem; font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.page-title { font-size: 1.05rem; font-weight: 700; }
+.page-subtitle { font-size: 0.78rem; color: #64748b; }
+
+/* ── 경기 카드 ── */
+.games-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
+.game-card {
+  background: #1e293b; border-radius: 14px;
+  border: 1px solid #334155; overflow: hidden;
+}
+
+/* 매치업 헤더 */
+.matchup {
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #162032;
+}
+.team-block { text-align: center; flex: 1; }
+.team-name { font-size: 1.05rem; font-weight: 800; }
+.team-role { font-size: 0.68rem; color: #64748b; margin-bottom: 4px; }
+.team-score { font-size: 2rem; font-weight: 900; line-height: 1; margin-top: 4px; }
+.team-score.winner { color: #22c55e; }
+.vs-col { text-align: center; padding: 0 8px; }
+.vs-text { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+/* 예측 결과 뱃지 */
+.pred-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 99px; margin-top: 6px;
+}
+.pred-hit  { background: #14532d; color: #4ade80; }
+.pred-miss { background: #450a0a; color: #f87171; }
+.pred-none { background: #1e293b; color: #64748b; }
+
+/* 승패 투수 */
+.pitchers {
+  padding: 10px 16px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  border-top: 1px solid #334155;
+}
+.pit-tag {
+  font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 600;
+}
+.pit-win  { background: #14532d; color: #4ade80; }
+.pit-lose { background: #450a0a; color: #f87171; }
+.pit-save { background: #1e3a5f; color: #60a5fa; }
+
+/* 승률 바 */
+.prob-section { padding: 14px 16px; border-top: 1px solid #334155; }
+.prob-label { font-size: 0.72rem; color: #64748b; margin-bottom: 8px; font-weight: 600; }
+.prob-bar-wrap {
+  height: 28px; border-radius: 6px; overflow: hidden;
+  display: flex; background: #0f172a;
+}
+.prob-away {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #1d4ed8; transition: width .6s ease;
+}
+.prob-home {
+  display: flex; align-items: center; justify-content: flex-start;
+  padding-left: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #dc2626; transition: width .6s ease;
+}
+.prob-teams {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; color: #94a3b8; margin-top: 6px;
+}
+
+/* λ 지표 */
+.lambda-row {
+  display: flex; gap: 8px; padding: 10px 16px 0;
+}
+.lambda-chip {
+  background: #0f172a; border-radius: 8px; padding: 8px 12px; flex: 1;
+  text-align: center;
+}
+.lambda-chip .lc-label { font-size: 0.65rem; color: #64748b; }
+.lambda-chip .lc-val   { font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin-top: 2px; }
+
+/* 선발 투수 박스 */
+.pitchers-box {
+  padding: 12px 16px; border-top: 1px solid #334155;
+  display: flex; gap: 8px;
+}
+.pitcher-chip {
+  flex: 1; background: #0f172a; border-radius: 8px; padding: 10px 12px;
+}
+.pc-role  { font-size: 0.65rem; color: #64748b; }
+.pc-name  { font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+.pc-era   { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+
+/* 분석 아코디언 */
+.analysis-toggle {
+  width: 100%; padding: 12px 16px;
+  background: none; border: none; border-top: 1px solid #334155;
+  color: #3b82f6; font-size: 0.82rem; font-weight: 600;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.analysis-body {
+  display: none; padding: 0 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+}
+.analysis-body.open { display: block; }
+.analysis-body h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.analysis-body h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.analysis-body ul { padding-left: 16px; }
+.analysis-body li { margin-bottom: 4px; }
+.analysis-body p  { margin-bottom: 8px; }
+.analysis-body strong { color: #e2e8f0; }
+
+/* 위협 타자 섹션 */
+.danger-section { padding: 0 16px 12px; }
+.danger-title { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 8px; }
+.danger-group { margin-bottom: 10px; }
+.danger-group-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.danger-team-tag {
+  font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+}
+.away-tag { background: #1e3a5f; color: #60a5fa; }
+.home-tag { background: #3b0764; color: #c084fc; }
+.danger-sub { font-size: 0.72rem; color: #64748b; }
+.danger-batter-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 10px; border-radius: 6px; margin-bottom: 3px;
+  background: #0f172a;
+}
+.db-name { font-size: 0.8rem; font-weight: 600; }
+.db-ops  { font-size: 0.75rem; font-weight: 700; }
+.ops-hot  { color: #f87171; }
+.ops-warm { color: #fb923c; }
+.ops-cool { color: #94a3b8; }
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center; padding: 48px 24px; color: #475569;
+}
+.empty-state .es-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-state .es-text { font-size: 0.9rem; }
+
+/* 업데이트 시각 */
+.update-info {
+  text-align: center; padding: 16px; font-size: 0.72rem; color: #334155;
+}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <a href="../index.html" class="back-btn" style="display:inline-block;margin-bottom:8px">← 목록으로</a>
+  <h1>⚾ 2026년 5월 26일 경기 분석</h1>
+  <div class="subtitle">몬테카를로 시뮬레이션 기반 분석 (10,000회)</div>
+</div>
+<div class="games-list">
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">LG</div>
+      <div class="team-score winner">2</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">예측 적중</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">롯데</div>
+      <div class="team-score">1</div>
+    </div>
+  </div>
+  <div class="pitchers"><span class="pit-tag pit-win">승 톨허스트</span><span class="pit-tag pit-save">S 김진성</span><span class="pit-tag pit-lose">패 현도훈</span></div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:75.7%">75.7%</div>
+    <div class="prob-home" style="width:24.3%">24.3%</div>
+  </div>
+  <div class="prob-teams">
+    <span>LG (원정)</span>
+    <span>롯데 (홈)</span>
+  </div>
+</div>
+  
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(0)">
+  경기 분석 보기 <span id="arr-0">▼</span>
+</button>
+<div class="analysis-body" id="ab-0">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: LG 경기당 4.52득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>LG (원정)</strong>: 29승0무19패 (승률 0.604) | 최근10경기 6승0무4패 | 연속 3승 — 3연승</p>
+<p><strong>롯데 (홈)</strong>: 19승1무27패 (승률 0.413) | 최근10경기 4승0무6패 | 연속 2패 — 2연패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: LG λ=5.58 vs 롯데 λ=2.87 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: LG</strong> (75.7% 우세)</p>
+<p><strong>근거</strong>: 3승 상승세<br />
+<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">KIA</div>
+      <div class="team-score winner">5</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">예측 적중</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">키움</div>
+      <div class="team-score">2</div>
+    </div>
+  </div>
+  <div class="pitchers"><span class="pit-tag pit-win">승 김태형</span><span class="pit-tag pit-lose">패 김성진</span></div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:64.5%">64.5%</div>
+    <div class="prob-home" style="width:35.5%">35.5%</div>
+  </div>
+  <div class="prob-teams">
+    <span>KIA (원정)</span>
+    <span>키움 (홈)</span>
+  </div>
+</div>
+  
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(1)">
+  경기 분석 보기 <span id="arr-1">▼</span>
+</button>
+<div class="analysis-body" id="ab-1">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: KIA 경기당 5.29득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KIA (원정)</strong>: 26승1무22패 (승률 0.542) | 최근10경기 8승0무2패 | 연속 4승 — <strong>4연승 상승세</strong></p>
+<p><strong>키움 (홈)</strong>: 20승1무29패 (승률 0.408) | 최근10경기 6승0무4패 | 연속 3패 — 3연패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: KIA λ=5.14 vs 키움 λ=3.75 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: KIA</strong> (64.5% 우세)</p>
+<p><strong>근거</strong>: 4승 상승세<br />
+<strong>예상 스코어</strong>: KIA 6 - 키움 3</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">KT</div>
+      <div class="team-score winner">6</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">예측 적중</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">두산</div>
+      <div class="team-score">0</div>
+    </div>
+  </div>
+  <div class="pitchers"><span class="pit-tag pit-win">승 보쉴리</span><span class="pit-tag pit-lose">패 최민석</span></div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:65.8%">65.8%</div>
+    <div class="prob-home" style="width:34.2%">34.2%</div>
+  </div>
+  <div class="prob-teams">
+    <span>KT (원정)</span>
+    <span>두산 (홈)</span>
+  </div>
+</div>
+  
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(2)">
+  경기 분석 보기 <span id="arr-2">▼</span>
+</button>
+<div class="analysis-body" id="ab-2">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: KT 경기당 5.81득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KT (원정)</strong>: 28승1무19패 (승률 0.596) | 최근10경기 4승0무6패 | 연속 1승</p>
+<p><strong>두산 (홈)</strong>: 22승1무26패 (승률 0.458) | 최근10경기 4승0무6패 | 연속 4패 — <strong>4연패 침체</strong></p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: KT λ=7.24 vs 두산 λ=5.09 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: KT</strong> (65.8% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div></div>
+<div class="update-info">빌드: 2026-05-26 22:31</div>
+</body>
+</html>
