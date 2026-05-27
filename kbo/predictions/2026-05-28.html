@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KBO 2026년 5월 28일 경기 예상</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f172a; color: #e2e8f0; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 헤더 ── */
+.site-header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  padding: 20px 16px 16px;
+  border-bottom: 2px solid #3b82f6;
+}
+.site-header h1 {
+  font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+}
+.site-header .subtitle { font-size: 0.78rem; color: #94a3b8; margin-top: 4px; }
+
+/* ── 탭 바 ── */
+.tab-bar {
+  display: flex; position: sticky; top: 0; z-index: 10;
+  background: #0f172a; border-bottom: 1px solid #1e293b;
+}
+.tab-btn {
+  flex: 1; padding: 14px 8px; text-align: center; font-size: 0.88rem;
+  font-weight: 600; color: #64748b; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.tab-btn.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+
+/* ── 탭 패널 ── */
+.tab-panel { display: none; padding: 16px; }
+.tab-panel.active { display: block; }
+
+/* ── 날짜 카드 (인덱스) ── */
+.date-list { display: flex; flex-direction: column; gap: 10px; }
+.date-card {
+  background: #1e293b; border-radius: 12px; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid #334155; transition: border-color .2s;
+}
+.date-card:active { border-color: #3b82f6; }
+.date-card .dc-date { font-size: 1rem; font-weight: 700; }
+.date-card .dc-meta { font-size: 0.78rem; color: #64748b; margin-top: 3px; }
+.date-card .dc-arrow { color: #3b82f6; font-size: 1.2rem; }
+
+/* ── 페이지 헤더 (날짜 페이지) ── */
+.page-header {
+  padding: 16px;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  display: flex; align-items: center; gap: 12px;
+}
+.back-btn {
+  color: #3b82f6; font-size: 0.9rem; font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.page-title { font-size: 1.05rem; font-weight: 700; }
+.page-subtitle { font-size: 0.78rem; color: #64748b; }
+
+/* ── 경기 카드 ── */
+.games-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
+.game-card {
+  background: #1e293b; border-radius: 14px;
+  border: 1px solid #334155; overflow: hidden;
+}
+
+/* 매치업 헤더 */
+.matchup {
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #162032;
+}
+.team-block { text-align: center; flex: 1; }
+.team-name { font-size: 1.05rem; font-weight: 800; }
+.team-role { font-size: 0.68rem; color: #64748b; margin-bottom: 4px; }
+.team-score { font-size: 2rem; font-weight: 900; line-height: 1; margin-top: 4px; }
+.team-score.winner { color: #22c55e; }
+.vs-col { text-align: center; padding: 0 8px; }
+.vs-text { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+/* 예측 결과 뱃지 */
+.pred-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 99px; margin-top: 6px;
+}
+.pred-hit  { background: #14532d; color: #4ade80; }
+.pred-miss { background: #450a0a; color: #f87171; }
+.pred-none { background: #1e293b; color: #64748b; }
+
+/* 승패 투수 */
+.pitchers {
+  padding: 10px 16px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  border-top: 1px solid #334155;
+}
+.pit-tag {
+  font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 600;
+}
+.pit-win  { background: #14532d; color: #4ade80; }
+.pit-lose { background: #450a0a; color: #f87171; }
+.pit-save { background: #1e3a5f; color: #60a5fa; }
+
+/* 승률 바 */
+.prob-section { padding: 14px 16px; border-top: 1px solid #334155; }
+.prob-label { font-size: 0.72rem; color: #64748b; margin-bottom: 8px; font-weight: 600; }
+.prob-bar-wrap {
+  height: 28px; border-radius: 6px; overflow: hidden;
+  display: flex; background: #0f172a;
+}
+.prob-away {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #1d4ed8; transition: width .6s ease;
+}
+.prob-home {
+  display: flex; align-items: center; justify-content: flex-start;
+  padding-left: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #dc2626; transition: width .6s ease;
+}
+.prob-teams {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; color: #94a3b8; margin-top: 6px;
+}
+
+/* λ 지표 */
+.lambda-row {
+  display: flex; gap: 8px; padding: 10px 16px 0;
+}
+.lambda-chip {
+  background: #0f172a; border-radius: 8px; padding: 8px 12px; flex: 1;
+  text-align: center;
+}
+.lambda-chip .lc-label { font-size: 0.65rem; color: #64748b; }
+.lambda-chip .lc-val   { font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin-top: 2px; }
+
+/* 선발 투수 박스 */
+.pitchers-box {
+  padding: 12px 16px; border-top: 1px solid #334155;
+  display: flex; gap: 8px;
+}
+.pitcher-chip {
+  flex: 1; background: #0f172a; border-radius: 8px; padding: 10px 12px;
+}
+.pc-role  { font-size: 0.65rem; color: #64748b; }
+.pc-name  { font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+.pc-era   { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+
+/* 분석 아코디언 */
+.analysis-toggle {
+  width: 100%; padding: 12px 16px;
+  background: none; border: none; border-top: 1px solid #334155;
+  color: #3b82f6; font-size: 0.82rem; font-weight: 600;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.analysis-body {
+  display: none; padding: 0 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+}
+.analysis-body.open { display: block; }
+.analysis-body h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.analysis-body h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.analysis-body ul { padding-left: 16px; }
+.analysis-body li { margin-bottom: 4px; }
+.analysis-body p  { margin-bottom: 8px; }
+.analysis-body strong { color: #e2e8f0; }
+
+/* 위협 타자 섹션 */
+.danger-section { padding: 0 16px 12px; }
+.danger-title { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 8px; }
+.danger-group { margin-bottom: 10px; }
+.danger-group-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.danger-team-tag {
+  font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+}
+.away-tag { background: #1e3a5f; color: #60a5fa; }
+.home-tag { background: #3b0764; color: #c084fc; }
+.danger-sub { font-size: 0.72rem; color: #64748b; }
+.danger-batter-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 10px; border-radius: 6px; margin-bottom: 3px;
+  background: #0f172a;
+}
+.db-name { font-size: 0.8rem; font-weight: 600; }
+.db-ops  { font-size: 0.75rem; font-weight: 700; }
+.ops-hot  { color: #f87171; }
+.ops-warm { color: #fb923c; }
+.ops-cool { color: #94a3b8; }
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center; padding: 48px 24px; color: #475569;
+}
+.empty-state .es-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-state .es-text { font-size: 0.9rem; }
+
+/* 업데이트 시각 */
+.update-info {
+  text-align: center; padding: 16px; font-size: 0.72rem; color: #334155;
+}
+
+/* ── 박스스코어 ── */
+.bs-toggle {
+  width: 100%; padding: 12px 16px;
+  background: none; border: none; border-top: 1px solid #334155;
+  color: #94a3b8; font-size: 0.82rem; font-weight: 600;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.bs-body { display: none; }
+.bs-body.open { display: block; }
+
+.bs-sp {
+  padding: 10px 16px; border-top: 1px solid #1e293b;
+  font-size: 0.72rem; color: #94a3b8; line-height: 1.8;
+}
+.bs-sp strong { color: #cbd5e1; }
+
+.bs-team-header {
+  padding: 8px 16px 4px; font-size: 0.75rem; font-weight: 700; color: #64748b;
+  border-top: 1px solid #1e293b; margin-top: 4px;
+}
+.bs-table-wrap { overflow-x: auto; padding: 0 16px 12px; }
+.bs-table {
+  border-collapse: collapse; width: 100%; font-size: 0.72rem;
+  white-space: nowrap;
+}
+.bs-table th {
+  background: #0f172a; color: #64748b; font-weight: 600;
+  padding: 5px 8px; text-align: center; border-bottom: 1px solid #334155;
+  position: sticky; top: 0;
+}
+.bs-table td {
+  padding: 4px 8px; text-align: center; border-bottom: 1px solid #1e293b;
+  color: #cbd5e1;
+}
+.bs-table .td-name { text-align: left; font-weight: 600; color: #e2e8f0; min-width: 60px; }
+.bs-table .td-pos  { color: #64748b; }
+.bs-table .td-hi   { color: #fbbf24; font-weight: 700; }
+.bs-table .td-win  { color: #4ade80; font-weight: 700; }
+.bs-table .td-lose { color: #f87171; font-weight: 700; }
+.bs-table .td-save { color: #60a5fa; font-weight: 700; }
+.bs-table .td-hold { color: #c084fc; font-weight: 700; }
+.bs-table tr.sub-row td { color: #475569; }
+.bs-table tfoot td  { background: #0f172a; color: #94a3b8; font-weight: 600; }
+
+/* ── 소개 탭 ── */
+.intro-body {
+  padding: 16px; font-size: 0.84rem; line-height: 1.8; color: #cbd5e1;
+}
+.intro-body h1 { font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin: 16px 0 8px; }
+.intro-body h2 { font-size: 0.95rem; font-weight: 700; color: #93c5fd; margin: 16px 0 6px; border-bottom: 1px solid #1e293b; padding-bottom: 4px; }
+.intro-body h3 { font-size: 0.85rem; font-weight: 700; color: #7dd3fc; margin: 12px 0 4px; }
+.intro-body h4 { font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin: 10px 0 4px; }
+.intro-body p  { margin-bottom: 8px; }
+.intro-body ul, .intro-body ol { padding-left: 18px; margin-bottom: 8px; }
+.intro-body li { margin-bottom: 3px; }
+.intro-body code {
+  background: #0f172a; padding: 1px 5px; border-radius: 4px;
+  font-size: 0.78rem; color: #7dd3fc; font-family: monospace;
+}
+.intro-body pre {
+  background: #0f172a; border-radius: 8px; padding: 12px 14px;
+  overflow-x: auto; margin: 8px 0; border: 1px solid #1e293b;
+}
+.intro-body pre code { background: none; padding: 0; color: #a5f3fc; }
+.intro-body table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.78rem; }
+.intro-body th { background: #1e293b; color: #94a3b8; padding: 6px 10px; text-align: left; border: 1px solid #334155; }
+.intro-body td { padding: 5px 10px; border: 1px solid #1e293b; }
+.intro-body hr { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
+.intro-body strong { color: #e2e8f0; }
+.intro-body a { color: #60a5fa; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <a href="../index.html" class="back-btn" style="display:inline-block;margin-bottom:8px">← 목록으로</a>
+  <h1>⚾ 2026년 5월 28일 경기 예상</h1>
+  <div class="subtitle">몬테카를로 시뮬레이션 기반 예측 (10,000회)</div>
+</div>
+<div class="games-list">
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">KT</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">두산 예상 54.5%</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">두산</div>
+    </div>
+  </div>
+  <div class="pitchers-box">
+    <div class="pitcher-chip">
+      <div class="pc-role">원정 선발</div>
+      <div class="pc-name">고영표</div>
+      <div class="pc-era">ERA 5.33</div>
+    </div>
+    <div class="pitcher-chip">
+      <div class="pc-role">홈 선발</div>
+      <div class="pc-name">곽빈</div>
+      <div class="pc-era">ERA 3.46</div>
+    </div>
+  </div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:45.5%">45.5%</div>
+    <div class="prob-home" style="width:54.5%">54.5%</div>
+  </div>
+  <div class="prob-teams">
+    <span>KT (원정)</span>
+    <span>두산 (홈)</span>
+  </div>
+</div>
+  <div class="lambda-row">
+    <div class="lambda-chip">
+      <div class="lc-label">KT 기대득점</div>
+      <div class="lc-val">6.05</div>
+    </div>
+    <div class="lambda-chip">
+      <div class="lc-label">두산 기대득점</div>
+      <div class="lc-val">6.41</div>
+    </div>
+  </div>
+  <div class="danger-section"><div class="danger-title">위협 타자</div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag away-tag">KT</span>
+    <span class="danger-sub">vs 곽빈</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">배정대</span>
+    <span class="db-ops ops-hot">OPS 1.143</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">최원준</span>
+    <span class="db-ops ops-hot">OPS 1.067</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">이정훈</span>
+    <span class="db-ops ops-hot">OPS 1.000</span>
+  </div></div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag home-tag">두산</span>
+    <span class="danger-sub">vs 고영표</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">조수행</span>
+    <span class="db-ops ops-hot">OPS 1.000</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">윤준호</span>
+    <span class="db-ops ops-warm">OPS 0.802</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">카메론</span>
+    <span class="db-ops ops-warm">OPS 0.750</span>
+  </div></div></div>
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(0)">
+  경기 분석 보기 <span id="arr-0">▼</span>
+</button>
+<div class="analysis-body" id="ab-0">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>선발 투수</strong>: KT 고영표(ERA 5.33) vs 두산 곽빈(ERA 3.46) — 두산 선발 ERA 우위</li>
+<li><strong>KT 위협 타자</strong>: 배정대 OPS 1.143 vs 곽빈 — 주목 포인트</li>
+<li><strong>공격력</strong>: KT 경기당 5.69득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<p><strong>KT — 고영표 (ERA 5.33)</strong><br />
+  경기이닝: 9경기 49.0이닝 | 승패: 1승 4패 | 평균자책: 5.33 | WHIP: 1.31 | 탈삼진: 58 | 볼넷: 8 | WAR: 0.60<br />
+  ▸ ERA 4.5 초과 — 불안정<br />
+<strong>두산 — 곽빈 (ERA 3.46)</strong><br />
+  경기이닝: 10경기 54.2이닝 | 승패: 3승 3패 | 평균자책: 3.46 | WHIP: 1.37 | 탈삼진: 66 | 볼넷: 20 | WAR: 1.16<br />
+  ▸ ERA 3.5 미만 — 리그 에이스급</p>
+<h2>위협 타자</h2>
+<p><strong>KT — 곽빈 상대 강타자</strong><br />
+  • 배정대: OPS 1.143<br />
+  • 최원준: OPS 1.067<br />
+  • 이정훈: OPS 1.000<br />
+<strong>두산 — 고영표 상대 강타자</strong><br />
+  • 조수행: OPS 1.000<br />
+  • 윤준호: OPS 0.802<br />
+  • 카메론: OPS 0.750</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KT (원정)</strong>: 28승1무20패 (승률 0.583) | 최근10경기 4승0무6패 | 연속 1패<br />
+  WAR: 선발 5.66 / 불펜 2.17</p>
+<p><strong>두산 (홈)</strong>: 23승1무26패 (승률 0.469) | 최근10경기 5승0무5패 | 연속 1승<br />
+  WAR: 선발 5.22 / 불펜 1.43</p>
+<p>최근 맞대결: KT 3승 0무 2패 vs 두산 2승 0무 3패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선발 투수 지배력</strong>: ERA 차이 1.87가 경기 흐름 결정</li>
+<li><strong>배정대의 활약</strong>: OPS 1.143 vs 곽빈 — 경기 판도 변수</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 두산</strong> (54.5% 우세)</p>
+<p><strong>근거</strong>: 선발 ERA 우위 / 홈 어드밴티지<br />
+<strong>예상 스코어</strong>: 두산 7 - KT 5</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">KIA</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">키움 예상 52.4%</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">키움</div>
+    </div>
+  </div>
+  <div class="pitchers-box">
+    <div class="pitcher-chip">
+      <div class="pc-role">원정 선발</div>
+      <div class="pc-name">황동하</div>
+      <div class="pc-era">ERA 4.5</div>
+    </div>
+    <div class="pitcher-chip">
+      <div class="pc-role">홈 선발</div>
+      <div class="pc-name">로젠버그</div>
+      <div class="pc-era">ERA 1.42</div>
+    </div>
+  </div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:47.6%">47.6%</div>
+    <div class="prob-home" style="width:52.4%">52.4%</div>
+  </div>
+  <div class="prob-teams">
+    <span>KIA (원정)</span>
+    <span>키움 (홈)</span>
+  </div>
+</div>
+  <div class="lambda-row">
+    <div class="lambda-chip">
+      <div class="lc-label">KIA 기대득점</div>
+      <div class="lc-val">3.78</div>
+    </div>
+    <div class="lambda-chip">
+      <div class="lc-label">키움 기대득점</div>
+      <div class="lc-val">4.43</div>
+    </div>
+  </div>
+  <div class="danger-section"><div class="danger-title">위협 타자</div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag away-tag">KIA</span>
+    <span class="danger-sub">vs 로젠버그</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">한승연</span>
+    <span class="db-ops ops-hot">OPS 2.000</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">김도영</span>
+    <span class="db-ops ops-hot">OPS 1.500</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">박재현</span>
+    <span class="db-ops ops-warm">OPS 0.897</span>
+  </div></div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag home-tag">키움</span>
+    <span class="danger-sub">vs 황동하</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">여동욱</span>
+    <span class="db-ops ops-hot">OPS 3.000</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">박주홍</span>
+    <span class="db-ops ops-hot">OPS 1.200</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">김건희</span>
+    <span class="db-ops ops-hot">OPS 1.063</span>
+  </div></div></div>
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(1)">
+  경기 분석 보기 <span id="arr-1">▼</span>
+</button>
+<div class="analysis-body" id="ab-1">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>선발 투수</strong>: KIA 황동하(ERA 4.50) vs 키움 로젠버그(ERA 1.42) — 키움 선발 ERA 우위</li>
+<li><strong>KIA 위협 타자</strong>: 한승연 OPS 2.000 vs 로젠버그 — 주목 포인트</li>
+<li><strong>공격력</strong>: KIA 경기당 5.36득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<p><strong>KIA — 황동하 (ERA 4.50)</strong><br />
+  경기이닝: 12경기 40.0이닝 | 승패: 4승 0패 | 평균자책: 4.50 | WHIP: 1.38 | 탈삼진: 30 | 볼넷: 13 | WAR: 0.75<br />
+  → 키움타선 통산: ERA 18.00, OOPS 1.500<br />
+  ▸ ERA 4.5 초과 — 불안정<br />
+<strong>키움 — 로젠버그 (ERA 1.42)</strong><br />
+  경기이닝: 2경기 6.1이닝 | 승패: 0승 0패 | 평균자책: 1.42 | WHIP: 1.42 | 탈삼진: 9 | 볼넷: 4 | WAR: 0.36<br />
+  ▸ ERA 3.5 미만 — 리그 에이스급</p>
+<h2>위협 타자</h2>
+<p><strong>KIA — 로젠버그 상대 강타자</strong><br />
+  • 한승연: OPS 2.000<br />
+  • 김도영: OPS 1.500<br />
+  • 박재현: OPS 0.897<br />
+<strong>키움 — 황동하 상대 강타자</strong><br />
+  • 여동욱: OPS 3.000<br />
+  • 박주홍: OPS 1.200<br />
+  • 김건희: OPS 1.063</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KIA (원정)</strong>: 27승1무22패 (승률 0.551) | 최근10경기 8승0무2패 | 연속 5승 — <strong>5연승 상승세</strong><br />
+  WAR: 선발 5.61 / 불펜 2.77</p>
+<p><strong>키움 (홈)</strong>: 20승1무30패 (승률 0.4) | 최근10경기 5승0무5패 | 연속 4패 — <strong>4연패 침체</strong><br />
+  WAR: 선발 3.93 / 불펜 -1.00</p>
+<p>최근 맞대결: KIA 5승 0무 0패 vs 키움 0승 0무 5패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선발 투수 지배력</strong>: ERA 차이 3.08가 경기 흐름 결정</li>
+<li><strong>한승연의 활약</strong>: OPS 2.000 vs 로젠버그 — 경기 판도 변수</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 키움</strong> (52.4% 우세)</p>
+<p><strong>근거</strong>: 선발 ERA 우위 / 홈 어드밴티지<br />
+<strong>예상 스코어</strong>: 키움 5 - KIA 3</p>
+<blockquote>
+<p>⚠️ 전력 차이 4.8%p — 박빙 승부</p>
+</blockquote>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">삼성</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">삼성 예상 82.8%</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">SSG</div>
+    </div>
+  </div>
+  <div class="pitchers-box">
+    <div class="pitcher-chip">
+      <div class="pc-role">원정 선발</div>
+      <div class="pc-name">최원태</div>
+      <div class="pc-era">ERA 5.53</div>
+    </div>
+    <div class="pitcher-chip">
+      <div class="pc-role">홈 선발</div>
+      <div class="pc-name">긴지로</div>
+      <div class="pc-era">ERA 9.75</div>
+    </div>
+  </div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:82.8%">82.8%</div>
+    <div class="prob-home" style="width:17.2%">17.2%</div>
+  </div>
+  <div class="prob-teams">
+    <span>삼성 (원정)</span>
+    <span>SSG (홈)</span>
+  </div>
+</div>
+  <div class="lambda-row">
+    <div class="lambda-chip">
+      <div class="lc-label">삼성 기대득점</div>
+      <div class="lc-val">10.0</div>
+    </div>
+    <div class="lambda-chip">
+      <div class="lc-label">SSG 기대득점</div>
+      <div class="lc-val">6.44</div>
+    </div>
+  </div>
+  <div class="danger-section"><div class="danger-title">위협 타자</div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag away-tag">삼성</span>
+    <span class="danger-sub">vs 긴지로</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">강민호</span>
+    <span class="db-ops ops-hot">OPS 1.406</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">전병우</span>
+    <span class="db-ops ops-hot">OPS 1.143</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">박승규</span>
+    <span class="db-ops ops-hot">OPS 1.115</span>
+  </div></div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag home-tag">SSG</span>
+    <span class="danger-sub">vs 최원태</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">에레디아</span>
+    <span class="db-ops ops-hot">OPS 0.996</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">박성한</span>
+    <span class="db-ops ops-hot">OPS 0.971</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">안상현</span>
+    <span class="db-ops ops-warm">OPS 0.821</span>
+  </div></div></div>
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(2)">
+  경기 분석 보기 <span id="arr-2">▼</span>
+</button>
+<div class="analysis-body" id="ab-2">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>선발 투수</strong>: 삼성 최원태(ERA 5.53) vs SSG 긴지로(ERA 9.75) — 삼성 선발 ERA 우위</li>
+<li><strong>삼성 위협 타자</strong>: 강민호 OPS 1.406 vs 긴지로 — 주목 포인트</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<p><strong>삼성 — 최원태 (ERA 5.53)</strong><br />
+  경기이닝: 8경기 40.2이닝 | 승패: 1승 2패 | 평균자책: 5.53 | WHIP: 1.67 | 탈삼진: 38 | 볼넷: 19 | WAR: 0.44<br />
+  → SSG타선 통산: ERA 5.40, OOPS 0.801<br />
+  ▸ ERA 4.5 초과 — 불안정<br />
+<strong>SSG — 긴지로 (ERA 9.75)</strong><br />
+  경기이닝: 3경기 12.0이닝 | 승패: 0승 2패 | 평균자책: 9.75 | WHIP: 2.17 | 탈삼진: 15 | 볼넷: 12 | WAR: -0.31<br />
+  ▸ ERA 4.5 초과 — 불안정</p>
+<h2>위협 타자</h2>
+<p><strong>삼성 — 긴지로 상대 강타자</strong><br />
+  • 강민호: OPS 1.406<br />
+  • 전병우: OPS 1.143<br />
+  • 박승규: OPS 1.115<br />
+<strong>SSG — 최원태 상대 강타자</strong><br />
+  • 에레디아: OPS 0.996<br />
+  • 박성한: OPS 0.971<br />
+  • 안상현: OPS 0.821</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>삼성 (원정)</strong>: 29승1무18패 (승률 0.617) | 최근10경기 7승0무3패 | 연속 2승 — 2연승<br />
+  WAR: 선발 6.91 / 불펜 3.69</p>
+<p><strong>SSG (홈)</strong>: 22승1무26패 (승률 0.458) | 최근10경기 1승0무9패 | 연속 8패 — <strong>8연패 침체</strong><br />
+  WAR: 선발 2.68 / 불펜 1.48</p>
+<p>최근 맞대결: 삼성 1승 0무 3패 vs SSG 3승 0무 1패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선발 투수 지배력</strong>: ERA 차이 4.22가 경기 흐름 결정</li>
+<li><strong>강민호의 활약</strong>: OPS 1.406 vs 긴지로 — 경기 판도 변수</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 삼성</strong> (82.8% 우세)</p>
+<p><strong>근거</strong>: 선발 ERA 우위 / 2승 상승세<br />
+<strong>예상 스코어</strong>: 삼성 11 - SSG 6</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">LG</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">LG 예상 72.3%</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">롯데</div>
+    </div>
+  </div>
+  <div class="pitchers-box">
+    <div class="pitcher-chip">
+      <div class="pc-role">원정 선발</div>
+      <div class="pc-name">이정용</div>
+      <div class="pc-era">ERA 4.5</div>
+    </div>
+    <div class="pitcher-chip">
+      <div class="pc-role">홈 선발</div>
+      <div class="pc-name">김진욱</div>
+      <div class="pc-era">ERA 3.06</div>
+    </div>
+  </div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:72.3%">72.3%</div>
+    <div class="prob-home" style="width:27.7%">27.7%</div>
+  </div>
+  <div class="prob-teams">
+    <span>LG (원정)</span>
+    <span>롯데 (홈)</span>
+  </div>
+</div>
+  <div class="lambda-row">
+    <div class="lambda-chip">
+      <div class="lc-label">LG 기대득점</div>
+      <div class="lc-val">5.0</div>
+    </div>
+    <div class="lambda-chip">
+      <div class="lc-label">롯데 기대득점</div>
+      <div class="lc-val">3.02</div>
+    </div>
+  </div>
+  <div class="danger-section"><div class="danger-title">위협 타자</div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag away-tag">LG</span>
+    <span class="danger-sub">vs 김진욱</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">문정빈</span>
+    <span class="db-ops ops-hot">OPS 4.000</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">박동원</span>
+    <span class="db-ops ops-hot">OPS 1.462</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">오스틴</span>
+    <span class="db-ops ops-hot">OPS 1.143</span>
+  </div></div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag home-tag">롯데</span>
+    <span class="danger-sub">vs 이정용</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">고승민</span>
+    <span class="db-ops ops-hot">OPS 1.339</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">레이예스</span>
+    <span class="db-ops ops-hot">OPS 1.194</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">김동현</span>
+    <span class="db-ops ops-hot">OPS 1.166</span>
+  </div></div></div>
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(3)">
+  경기 분석 보기 <span id="arr-3">▼</span>
+</button>
+<div class="analysis-body" id="ab-3">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>선발 투수</strong>: LG 이정용(ERA 4.50) vs 롯데 김진욱(ERA 3.06) — 롯데 선발 ERA 우위</li>
+<li><strong>LG 위협 타자</strong>: 문정빈 OPS 4.000 vs 김진욱 — 주목 포인트</li>
+<li><strong>공격력</strong>: LG 경기당 4.59득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<p><strong>LG — 이정용 (ERA 4.50)</strong><br />
+  경기이닝: 13경기 26.0이닝 | 승패: 0승 1패 | 평균자책: 4.50 | WHIP: 1.69 | 탈삼진: 14 | 볼넷: 10 | WAR: 0.36<br />
+  ▸ ERA 4.5 초과 — 불안정<br />
+<strong>롯데 — 김진욱 (ERA 3.06)</strong><br />
+  경기이닝: 9경기 53.0이닝 | 승패: 2승 3패 | 평균자책: 3.06 | WHIP: 1.23 | 탈삼진: 45 | 볼넷: 17 | WAR: 1.55<br />
+  ▸ ERA 3.5 미만 — 리그 에이스급</p>
+<h2>위협 타자</h2>
+<p><strong>LG — 김진욱 상대 강타자</strong><br />
+  • 문정빈: OPS 4.000<br />
+  • 박동원: OPS 1.462<br />
+  • 오스틴: OPS 1.143<br />
+<strong>롯데 — 이정용 상대 강타자</strong><br />
+  • 고승민: OPS 1.339<br />
+  • 레이예스: OPS 1.194<br />
+  • 김동현: OPS 1.166</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>LG (원정)</strong>: 30승0무19패 (승률 0.612) | 최근10경기 7승0무3패 | 연속 4승 — <strong>4연승 상승세</strong><br />
+  WAR: 선발 5.03 / 불펜 2.33</p>
+<p><strong>롯데 (홈)</strong>: 19승1무28패 (승률 0.404) | 최근10경기 4승0무6패 | 연속 3패 — 3연패<br />
+  WAR: 선발 5.89 / 불펜 1.09</p>
+<p>최근 맞대결: LG 4승 0무 1패 vs 롯데 1승 0무 4패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선발 투수 지배력</strong>: ERA 차이 1.44가 경기 흐름 결정</li>
+<li><strong>문정빈의 활약</strong>: OPS 4.000 vs 김진욱 — 경기 판도 변수</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: LG</strong> (72.3% 우세)</p>
+<p><strong>근거</strong>: 4승 상승세<br />
+<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
+      <div class="team-name">한화</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">한화 예상 74.8%</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">NC</div>
+    </div>
+  </div>
+  <div class="pitchers-box">
+    <div class="pitcher-chip">
+      <div class="pc-role">원정 선발</div>
+      <div class="pc-name">왕옌청</div>
+      <div class="pc-era">ERA 2.72</div>
+    </div>
+    <div class="pitcher-chip">
+      <div class="pc-role">홈 선발</div>
+      <div class="pc-name">김태경</div>
+      <div class="pc-era">ERA 3.65</div>
+    </div>
+  </div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:74.8%">74.8%</div>
+    <div class="prob-home" style="width:25.2%">25.2%</div>
+  </div>
+  <div class="prob-teams">
+    <span>한화 (원정)</span>
+    <span>NC (홈)</span>
+  </div>
+</div>
+  <div class="lambda-row">
+    <div class="lambda-chip">
+      <div class="lc-label">한화 기대득점</div>
+      <div class="lc-val">6.3</div>
+    </div>
+    <div class="lambda-chip">
+      <div class="lc-label">NC 기대득점</div>
+      <div class="lc-val">3.5</div>
+    </div>
+  </div>
+  <div class="danger-section"><div class="danger-title">위협 타자</div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag away-tag">한화</span>
+    <span class="danger-sub">vs 김태경</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">페라자</span>
+    <span class="db-ops ops-hot">OPS 1.600</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">김태연</span>
+    <span class="db-ops ops-hot">OPS 1.232</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">심우준</span>
+    <span class="db-ops ops-hot">OPS 0.953</span>
+  </div></div><div class="danger-group">
+  <div class="danger-group-header">
+    <span class="danger-team-tag home-tag">NC</span>
+    <span class="danger-sub">vs 왕옌청</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">안중열</span>
+    <span class="db-ops ops-hot">OPS 2.667</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">권희동</span>
+    <span class="db-ops ops-hot">OPS 2.500</span>
+  </div><div class="danger-batter-row">
+    <span class="db-name">김주원</span>
+    <span class="db-ops ops-hot">OPS 1.580</span>
+  </div></div></div>
+  
+<button class="analysis-toggle" onclick="toggleAnalysis(4)">
+  경기 분석 보기 <span id="arr-4">▼</span>
+</button>
+<div class="analysis-body" id="ab-4">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>선발 투수</strong>: 한화 왕옌청(ERA 2.72) vs NC 김태경(ERA 3.65) — 한화 선발 ERA 우위</li>
+<li><strong>한화 위협 타자</strong>: 페라자 OPS 1.600 vs 김태경 — 주목 포인트</li>
+<li><strong>공격력</strong>: 한화 경기당 6.12득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<p><strong>한화 — 왕옌청 (ERA 2.72)</strong><br />
+  경기이닝: 10경기 56.1이닝 | 승패: 5승 2패 | 평균자책: 2.72 | WHIP: 1.35 | 탈삼진: 48 | 볼넷: 22 | WAR: 1.58<br />
+  ▸ ERA 3.5 미만 — 리그 에이스급<br />
+<strong>NC — 김태경 (ERA 3.65)</strong><br />
+  경기이닝: 7경기 12.1이닝 | 승패: 0승 0패 | 평균자책: 3.65 | WHIP: 1.38 | 탈삼진: 13 | 볼넷: 6 | WAR: 0.28<br />
+  ▸ ERA 4.5 미만 — 평균 이상</p>
+<h2>위협 타자</h2>
+<p><strong>한화 — 김태경 상대 강타자</strong><br />
+  • 페라자: OPS 1.600<br />
+  • 김태연: OPS 1.232<br />
+  • 심우준: OPS 0.953<br />
+<strong>NC — 왕옌청 상대 강타자</strong><br />
+  • 안중열: OPS 2.667<br />
+  • 권희동: OPS 2.500<br />
+  • 김주원: OPS 1.580</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>한화 (원정)</strong>: 23승0무25패 (승률 0.479) | 최근10경기 6승0무4패 | 연속 1패<br />
+  WAR: 선발 5.01 / 불펜 -1.24</p>
+<p><strong>NC (홈)</strong>: 20승1무27패 (승률 0.426) | 최근10경기 4승0무6패 | 연속 2승 — 2연승<br />
+  WAR: 선발 3.94 / 불펜 1.73</p>
+<p>최근 맞대결: 한화 1승 0무 3패 vs NC 3승 0무 1패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선발 투수 지배력</strong>: ERA 차이 0.93가 경기 흐름 결정</li>
+<li><strong>페라자의 활약</strong>: OPS 1.600 vs 김태경 — 경기 판도 변수</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 한화</strong> (74.8% 우세)</p>
+<p><strong>근거</strong>: 선발 ERA 우위<br />
+<strong>예상 스코어</strong>: 한화 7 - NC 3</p>
+</div>
+<script>
+function toggleAnalysis(i) {
+  var el = document.getElementById('ab-'+i);
+  var arr = document.getElementById('arr-'+i);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+</div></div>
+<div class="update-info">빌드: 2026-05-27 22:44</div>
+</body>
+</html>
