@@ -173,6 +173,18 @@ a { color: inherit; text-decoration: none; }
 .analysis-body li { margin-bottom: 4px; }
 .analysis-body p  { margin-bottom: 8px; }
 .analysis-body strong { color: #e2e8f0; }
+/* 완료경기 결과 분석 — 항상 노출 */
+.result-analysis {
+  padding: 12px 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+  border-top: 1px solid #1e293b;
+}
+.result-analysis h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.result-analysis h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.result-analysis ul { padding-left: 16px; }
+.result-analysis li { margin-bottom: 4px; }
+.result-analysis p  { margin-bottom: 8px; }
+.result-analysis strong { color: #e2e8f0; }
 
 /* 위협 타자 섹션 */
 .danger-section { padding: 0 16px 12px; }
@@ -322,12 +334,7 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
   
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(0)">
-  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-0">▼</span>
-</button>
-<div class="analysis-body" id="ab-0">
-  <h2>❌ 예측 빗나감</h2>
+  <div class="result-analysis"><h2>❌ 예측 빗나감</h2>
 <p><strong>예측</strong>: LG 승 (63.9% 우세) → <strong>실제</strong>: 롯데 승 (LG 5 - 8 롯데)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -348,19 +355,7 @@ a { color: inherit; text-decoration: none; }
 <h3>시뮬레이션 개선 제안</h3>
 <ul>
 <li>불펜 ERA/WAR 가중치 상향 검토 — 선발 이후 이닝에서 실점이 예측을 초과함</li>
-</ul>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
+</ul></div>
   
 <button class="bs-toggle" onclick="toggleBS('bs-0')">
   경기 결과 상세 <span id="bs-0-arr">▼</span>
@@ -439,12 +434,7 @@ function toggleBS(id) {
   </div>
 </div>
   
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(1)">
-  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-1">▼</span>
-</button>
-<div class="analysis-body" id="ab-1">
-  <h2>✅ 예측 적중</h2>
+  <div class="result-analysis"><h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: 삼성 승 (85.1% 우세) → <strong>실제</strong>: 삼성 승 (삼성 10 - 1 SSG)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -462,19 +452,7 @@ function toggleBS(id) {
 - 🔥 SSG 위험 타자: 에레디아 OPS 0.996 vs 최원태 — 핵심 위협<br />
 - 📊 최근 맞대결: SSG 최근 상대전적 우세 (삼성 1승 0무 3패 vs SSG 3승 0무 1패)</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>선발 투수 ERA</strong>이 가장 결정적: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</p>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</p></div>
   
 <button class="bs-toggle" onclick="toggleBS('bs-1')">
   경기 결과 상세 <span id="bs-1-arr">▼</span>
@@ -553,12 +531,7 @@ function toggleBS(id) {
   </div>
 </div>
   
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(2)">
-  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-2">▼</span>
-</button>
-<div class="analysis-body" id="ab-2">
-  <h2>✅ 예측 적중</h2>
+  <div class="result-analysis"><h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: KIA 승 (52.0% 우세) → <strong>실제</strong>: KIA 승 (KIA 5 - 0 키움)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -576,19 +549,7 @@ function toggleBS(id) {
 - 📋 상대전적 ERA: 황동하 상대(홈팀) ERA 18.00 — 불안<br />
 - 🔥 키움 위험 타자: 여동욱 OPS 3.000 vs 황동하 — 핵심 위협</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>KIA 위험 타자</strong>이 가장 결정적: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</p>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
+<p><strong>KIA 위험 타자</strong>이 가장 결정적: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</p></div>
   
 <button class="bs-toggle" onclick="toggleBS('bs-2')">
   경기 결과 상세 <span id="bs-2-arr">▼</span>
@@ -667,12 +628,7 @@ function toggleBS(id) {
   </div>
 </div>
   
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(3)">
-  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-3">▼</span>
-</button>
-<div class="analysis-body" id="ab-3">
-  <h2>✅ 예측 적중</h2>
+  <div class="result-analysis"><h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: KT 승 (54.3% 우세) → <strong>실제</strong>: KT 승 (KT 11 - 3 두산)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -687,19 +643,7 @@ function toggleBS(id) {
 - ⚾ 선발 투수 ERA: 고영표 ERA 5.33 vs 곽빈 ERA 3.46 — 두산 우세<br />
 - 🔥 두산 위험 타자: 조수행 OPS 1.000 vs 고영표 — 핵심 위협</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>KT 위험 타자</strong>이 가장 결정적: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</p>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
+<p><strong>KT 위험 타자</strong>이 가장 결정적: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</p></div>
   
 <button class="bs-toggle" onclick="toggleBS('bs-3')">
   경기 결과 상세 <span id="bs-3-arr">▼</span>
@@ -778,12 +722,7 @@ function toggleBS(id) {
   </div>
 </div>
   
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(4)">
-  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-4">▼</span>
-</button>
-<div class="analysis-body" id="ab-4">
-  <h2>✅ 예측 적중</h2>
+  <div class="result-analysis"><h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: 한화 승 (81.4% 우세) → <strong>실제</strong>: 한화 승 (한화 18 - 7 NC)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -801,19 +740,7 @@ function toggleBS(id) {
 - 📊 최근 맞대결: NC 최근 상대전적 우세 (한화 1승 0무 3패 vs NC 3승 0무 1패)<br />
 - 🏟️ NC 홈구장 파크팩터: 파크팩터 0.95 — 투수 유리 구장</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>선발 투수 ERA</strong>이 가장 결정적: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</p>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</p></div>
   
 <button class="bs-toggle" onclick="toggleBS('bs-4')">
   경기 결과 상세 <span id="bs-4-arr">▼</span>
@@ -861,6 +788,6 @@ function toggleBS(id) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-05-28 23:17</div>
+<div class="update-info">빌드: 2026-05-28 23:23</div>
 </body>
 </html>
