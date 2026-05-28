@@ -380,10 +380,10 @@ a { color: inherit; text-decoration: none; }
     <span class="db-ops ops-warm">OPS 0.893</span>
   </div></div></div>
   
-<button class="analysis-toggle" onclick="toggleAnalysis(0)">
-  경기 분석 보기 <span id="arr-0">▼</span>
+<button class="analysis-toggle" onclick="toggleAcc('u0')">
+  경기 분석 보기 <span id="arr-u0">▼</span>
 </button>
-<div class="analysis-body" id="ab-0">
+<div class="analysis-body" id="ab-u0">
   <h2>핵심 포인트</h2>
 <ul>
 <li><strong>선발 투수</strong>: KIA 이의리(ERA 8.37) vs LG 웰스(ERA 2.06) — LG 선발 ERA 우위</li>
@@ -424,9 +424,9 @@ a { color: inherit; text-decoration: none; }
 <strong>예상 스코어</strong>: LG 11 - KIA 3</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -512,10 +512,10 @@ function toggleAnalysis(i) {
     <span class="db-ops ops-warm">OPS 0.866</span>
   </div></div></div>
   
-<button class="analysis-toggle" onclick="toggleAnalysis(1)">
-  경기 분석 보기 <span id="arr-1">▼</span>
+<button class="analysis-toggle" onclick="toggleAcc('u1')">
+  경기 분석 보기 <span id="arr-u1">▼</span>
 </button>
-<div class="analysis-body" id="ab-1">
+<div class="analysis-body" id="ab-u1">
   <h2>핵심 포인트</h2>
 <ul>
 <li><strong>선발 투수</strong>: KT 사우어(ERA 4.82) vs 키움 배동현(ERA 4.54) — 키움 선발 ERA 우위</li>
@@ -556,9 +556,9 @@ function toggleAnalysis(i) {
 <strong>예상 스코어</strong>: KT 11 - 키움 3</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -575,7 +575,7 @@ function toggleAnalysis(i) {
     </div>
     <div class="vs-col">
       <div class="vs-text">VS</div>
-      <span class="pred-badge pred-hit">한화 예상 74.8%</span>
+      <span class="pred-badge pred-hit">한화 예상 74.7%</span>
     </div>
     <div class="team-block">
       <div class="team-role">홈</div>
@@ -598,8 +598,8 @@ function toggleAnalysis(i) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:25.2%">25.2%</div>
-    <div class="prob-home" style="width:74.8%">74.8%</div>
+    <div class="prob-away" style="width:25.3%">25.3%</div>
+    <div class="prob-home" style="width:74.7%">74.7%</div>
   </div>
   <div class="prob-teams">
     <span>SSG (원정)</span>
@@ -644,10 +644,10 @@ function toggleAnalysis(i) {
     <span class="db-ops ops-cool">OPS 0.681</span>
   </div></div></div>
   
-<button class="analysis-toggle" onclick="toggleAnalysis(2)">
-  경기 분석 보기 <span id="arr-2">▼</span>
+<button class="analysis-toggle" onclick="toggleAcc('u2')">
+  경기 분석 보기 <span id="arr-u2">▼</span>
 </button>
-<div class="analysis-body" id="ab-2">
+<div class="analysis-body" id="ab-u2">
   <h2>핵심 포인트</h2>
 <ul>
 <li><strong>선발 투수</strong>: SSG 최민준(ERA 3.51) vs 한화 화이트(ERA 2.63) — 한화 선발 ERA 우위</li>
@@ -683,14 +683,14 @@ function toggleAnalysis(i) {
 <li><strong>박성한의 활약</strong>: OPS 1.266 vs 화이트 — 경기 판도 변수</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: 한화</strong> (74.8% 우세)</p>
+<p><strong>예측 승팀: 한화</strong> (74.7% 우세)</p>
 <p><strong>근거</strong>: 선발 ERA 우위 / 홈 어드밴티지<br />
 <strong>예상 스코어</strong>: 한화 5 - SSG 3</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -707,7 +707,7 @@ function toggleAnalysis(i) {
     </div>
     <div class="vs-col">
       <div class="vs-text">VS</div>
-      <span class="pred-badge pred-hit">삼성 예상 83.1%</span>
+      <span class="pred-badge pred-hit">삼성 예상 83.2%</span>
     </div>
     <div class="team-block">
       <div class="team-role">홈</div>
@@ -730,8 +730,8 @@ function toggleAnalysis(i) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:16.9%">16.9%</div>
-    <div class="prob-home" style="width:83.1%">83.1%</div>
+    <div class="prob-away" style="width:16.8%">16.8%</div>
+    <div class="prob-home" style="width:83.2%">83.2%</div>
   </div>
   <div class="prob-teams">
     <span>두산 (원정)</span>
@@ -776,10 +776,10 @@ function toggleAnalysis(i) {
     <span class="db-ops ops-hot">OPS 0.971</span>
   </div></div></div>
   
-<button class="analysis-toggle" onclick="toggleAnalysis(3)">
-  경기 분석 보기 <span id="arr-3">▼</span>
+<button class="analysis-toggle" onclick="toggleAcc('u3')">
+  경기 분석 보기 <span id="arr-u3">▼</span>
 </button>
-<div class="analysis-body" id="ab-3">
+<div class="analysis-body" id="ab-u3">
   <h2>핵심 포인트</h2>
 <ul>
 <li><strong>선발 투수</strong>: 두산 잭로그(ERA 3.81) vs 삼성 원태인(ERA 3.43) — 삼성 선발 ERA 우위</li>
@@ -814,14 +814,14 @@ function toggleAnalysis(i) {
 <li><strong>김인태의 활약</strong>: OPS 2.667 vs 원태인 — 경기 판도 변수</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: 삼성</strong> (83.1% 우세)</p>
+<p><strong>예측 승팀: 삼성</strong> (83.2% 우세)</p>
 <p><strong>근거</strong>: 선발 ERA 우위 / 3승 상승세 / 홈 어드밴티지<br />
 <strong>예상 스코어</strong>: 삼성 8 - 두산 2</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -838,7 +838,7 @@ function toggleAnalysis(i) {
     </div>
     <div class="vs-col">
       <div class="vs-text">VS</div>
-      <span class="pred-badge pred-hit">NC 예상 56.1%</span>
+      <span class="pred-badge pred-hit">NC 예상 56.2%</span>
     </div>
     <div class="team-block">
       <div class="team-role">홈</div>
@@ -861,8 +861,8 @@ function toggleAnalysis(i) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:43.9%">43.9%</div>
-    <div class="prob-home" style="width:56.1%">56.1%</div>
+    <div class="prob-away" style="width:43.8%">43.8%</div>
+    <div class="prob-home" style="width:56.2%">56.2%</div>
   </div>
   <div class="prob-teams">
     <span>롯데 (원정)</span>
@@ -907,10 +907,10 @@ function toggleAnalysis(i) {
     <span class="db-ops ops-hot">OPS 1.167</span>
   </div></div></div>
   
-<button class="analysis-toggle" onclick="toggleAnalysis(4)">
-  경기 분석 보기 <span id="arr-4">▼</span>
+<button class="analysis-toggle" onclick="toggleAcc('u4')">
+  경기 분석 보기 <span id="arr-u4">▼</span>
 </button>
-<div class="analysis-body" id="ab-4">
+<div class="analysis-body" id="ab-u4">
   <h2>핵심 포인트</h2>
 <ul>
 <li><strong>선발 투수</strong>: 롯데 박세웅(ERA 4.71) vs NC 구창모(ERA 4.47) — NC 선발 ERA 우위</li>
@@ -944,14 +944,14 @@ function toggleAnalysis(i) {
 <li><strong>나승엽의 활약</strong>: OPS 1.500 vs 구창모 — 경기 판도 변수</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: NC</strong> (56.1% 우세)</p>
+<p><strong>예측 승팀: NC</strong> (56.2% 우세)</p>
 <p><strong>근거</strong>: 선발 ERA 우위 / 홈 어드밴티지<br />
 <strong>예상 스코어</strong>: NC 6 - 롯데 4</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -960,6 +960,6 @@ function toggleAnalysis(i) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-05-28 23:25</div>
+<div class="update-info">빌드: 2026-05-28 23:28</div>
 </body>
 </html>

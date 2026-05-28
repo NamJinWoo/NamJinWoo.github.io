@@ -325,8 +325,8 @@ a { color: inherit; text-decoration: none; }
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:80.0%">80.0%</div>
-    <div class="prob-home" style="width:20.0%">20.0%</div>
+    <div class="prob-away" style="width:79.9%">79.9%</div>
+    <div class="prob-home" style="width:20.1%">20.1%</div>
   </div>
   <div class="prob-teams">
     <span>한화 (원정)</span>
@@ -334,7 +334,13 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
   
-  <div class="result-analysis"><h2>핵심 포인트</h2>
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a0')">
+  이전 경기 분석 보기 <span id="arr-a0">▼</span>
+</button>
+<div class="analysis-body" id="ab-a0">
+  <h2>핵심 포인트</h2>
 <ul>
 <li><strong>공격력</strong>: 한화 경기당 6.37득점 우세</li>
 </ul>
@@ -352,7 +358,19 @@ a { color: inherit; text-decoration: none; }
 <h2>최종 예측</h2>
 <p><strong>예측 승팀: 한화</strong> (80.0% 우세)</p>
 <p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: 한화 8 - NC 4</p></div>
+<strong>예상 스코어</strong>: 한화 8 - NC 4</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-0')">
   경기 결과 상세 <span id="bs-0-arr">▼</span>
@@ -422,8 +440,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:71.6%">71.6%</div>
-    <div class="prob-home" style="width:28.4%">28.4%</div>
+    <div class="prob-away" style="width:72.6%">72.6%</div>
+    <div class="prob-home" style="width:27.4%">27.4%</div>
   </div>
   <div class="prob-teams">
     <span>LG (원정)</span>
@@ -431,7 +449,13 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>핵심 포인트</h2>
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a1')">
+  이전 경기 분석 보기 <span id="arr-a1">▼</span>
+</button>
+<div class="analysis-body" id="ab-a1">
+  <h2>핵심 포인트</h2>
 <ul>
 <li><strong>공격력</strong>: LG 경기당 4.60득점 우세</li>
 </ul>
@@ -447,9 +471,21 @@ function toggleBS(id) {
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: LG</strong> (71.6% 우세)</p>
+<p><strong>예측 승팀: LG</strong> (71.9% 우세)</p>
 <p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: LG 6 - 롯데 3</p></div>
+<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-1')">
   경기 결과 상세 <span id="bs-1-arr">▼</span>
@@ -519,8 +555,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:83.5%">83.5%</div>
-    <div class="prob-home" style="width:16.5%">16.5%</div>
+    <div class="prob-away" style="width:83.8%">83.8%</div>
+    <div class="prob-home" style="width:16.2%">16.2%</div>
   </div>
   <div class="prob-teams">
     <span>삼성 (원정)</span>
@@ -528,7 +564,13 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>핵심 포인트</h2>
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a2')">
+  이전 경기 분석 보기 <span id="arr-a2">▼</span>
+</button>
+<div class="analysis-body" id="ab-a2">
+  <h2>핵심 포인트</h2>
 <ul>
 <li><strong>공격력</strong>: 삼성 경기당 5.61득점 우세</li>
 </ul>
@@ -544,9 +586,21 @@ function toggleBS(id) {
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: 삼성</strong> (83.5% 우세)</p>
+<p><strong>예측 승팀: 삼성</strong> (83.6% 우세)</p>
 <p><strong>근거</strong>: 3승 상승세<br />
-<strong>예상 스코어</strong>: 삼성 8 - SSG 4</p></div>
+<strong>예상 스코어</strong>: 삼성 8 - SSG 4</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-2')">
   경기 결과 상세 <span id="bs-2-arr">▼</span>
@@ -616,8 +670,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:73.7%">73.7%</div>
-    <div class="prob-home" style="width:26.3%">26.3%</div>
+    <div class="prob-away" style="width:74.0%">74.0%</div>
+    <div class="prob-home" style="width:26.0%">26.0%</div>
   </div>
   <div class="prob-teams">
     <span>KIA (원정)</span>
@@ -625,7 +679,13 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>핵심 포인트</h2>
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a3')">
+  이전 경기 분석 보기 <span id="arr-a3">▼</span>
+</button>
+<div class="analysis-body" id="ab-a3">
+  <h2>핵심 포인트</h2>
 <ul>
 <li><strong>공격력</strong>: KIA 경기당 5.35득점 우세</li>
 </ul>
@@ -641,9 +701,21 @@ function toggleBS(id) {
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: KIA</strong> (73.7% 우세)</p>
+<p><strong>예측 승팀: KIA</strong> (73.4% 우세)</p>
 <p><strong>근거</strong>: 6승 상승세<br />
-<strong>예상 스코어</strong>: KIA 6 - 키움 3</p></div>
+<strong>예상 스코어</strong>: KIA 6 - 키움 3</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-3')">
   경기 결과 상세 <span id="bs-3-arr">▼</span>
@@ -713,8 +785,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:63.4%">63.4%</div>
-    <div class="prob-home" style="width:36.6%">36.6%</div>
+    <div class="prob-away" style="width:64.2%">64.2%</div>
+    <div class="prob-home" style="width:35.8%">35.8%</div>
   </div>
   <div class="prob-teams">
     <span>KT (원정)</span>
@@ -722,7 +794,13 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>핵심 포인트</h2>
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a4')">
+  이전 경기 분석 보기 <span id="arr-a4">▼</span>
+</button>
+<div class="analysis-body" id="ab-a4">
+  <h2>핵심 포인트</h2>
 <ul>
 <li><strong>공격력</strong>: KT 경기당 5.80득점 우세</li>
 </ul>
@@ -738,9 +816,21 @@ function toggleBS(id) {
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: KT</strong> (63.4% 우세)</p>
+<p><strong>예측 승팀: KT</strong> (64.6% 우세)</p>
 <p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: KT 8 - 두산 5</p></div>
+<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-4')">
   경기 결과 상세 <span id="bs-4-arr">▼</span>
@@ -788,6 +878,6 @@ function toggleBS(id) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-05-28 23:25</div>
+<div class="update-info">빌드: 2026-05-28 23:28</div>
 </body>
 </html>

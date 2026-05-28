@@ -334,7 +334,12 @@ a { color: inherit; text-decoration: none; }
   </div>
 </div>
   
-  <div class="result-analysis"><h2>❌ 예측 빗나감</h2>
+  
+<button class="analysis-toggle" onclick="toggleAcc('r0')">
+  ❌ 예측 빗나감 분석 <span id="arr-r0">▼</span>
+</button>
+<div class="analysis-body" id="ab-r0">
+  <h2>❌ 예측 빗나감</h2>
 <p><strong>예측</strong>: LG 승 (63.9% 우세) → <strong>실제</strong>: 롯데 승 (LG 5 - 8 롯데)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -355,7 +360,55 @@ a { color: inherit; text-decoration: none; }
 <h3>시뮬레이션 개선 제안</h3>
 <ul>
 <li>불펜 ERA/WAR 가중치 상향 검토 — 선발 이후 이닝에서 실점이 예측을 초과함</li>
-</ul></div>
+</ul>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a0')">
+  이전 경기 분석 보기 <span id="arr-a0">▼</span>
+</button>
+<div class="analysis-body" id="ab-a0">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: LG 경기당 4.60득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>LG (원정)</strong>: 30승0무20패 (승률 0.6) | 최근10경기 6승0무4패 | 연속 1패</p>
+<p><strong>롯데 (홈)</strong>: 20승1무28패 (승률 0.417) | 최근10경기 4승0무6패 | 연속 1승</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: LG λ=5.29 vs 롯데 λ=3.09 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: LG</strong> (71.9% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-0')">
   경기 결과 상세 <span id="bs-0-arr">▼</span>
@@ -434,7 +487,12 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>✅ 예측 적중</h2>
+  
+<button class="analysis-toggle" onclick="toggleAcc('r1')">
+  ✅ 예측 적중 분석 <span id="arr-r1">▼</span>
+</button>
+<div class="analysis-body" id="ab-r1">
+  <h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: 삼성 승 (85.1% 우세) → <strong>실제</strong>: 삼성 승 (삼성 10 - 1 SSG)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -452,7 +510,55 @@ function toggleBS(id) {
 - 🔥 SSG 위험 타자: 에레디아 OPS 0.996 vs 최원태 — 핵심 위협<br />
 - 📊 최근 맞대결: SSG 최근 상대전적 우세 (삼성 1승 0무 3패 vs SSG 3승 0무 1패)</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>선발 투수 ERA</strong>이 가장 결정적: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</p></div>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a1')">
+  이전 경기 분석 보기 <span id="arr-a1">▼</span>
+</button>
+<div class="analysis-body" id="ab-a1">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: 삼성 경기당 5.61득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>삼성 (원정)</strong>: 30승1무18패 (승률 0.625) | 최근10경기 7승0무3패 | 연속 3승 — 3연승</p>
+<p><strong>SSG (홈)</strong>: 22승1무27패 (승률 0.449) | 최근10경기 1승0무9패 | 연속 9패 — <strong>9연패 침체</strong></p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: 삼성 λ=7.28 vs SSG λ=4.21 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 삼성</strong> (83.6% 우세)</p>
+<p><strong>근거</strong>: 3승 상승세<br />
+<strong>예상 스코어</strong>: 삼성 8 - SSG 4</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-1')">
   경기 결과 상세 <span id="bs-1-arr">▼</span>
@@ -531,7 +637,12 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>✅ 예측 적중</h2>
+  
+<button class="analysis-toggle" onclick="toggleAcc('r2')">
+  ✅ 예측 적중 분석 <span id="arr-r2">▼</span>
+</button>
+<div class="analysis-body" id="ab-r2">
+  <h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: KIA 승 (52.0% 우세) → <strong>실제</strong>: KIA 승 (KIA 5 - 0 키움)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -549,7 +660,55 @@ function toggleBS(id) {
 - 📋 상대전적 ERA: 황동하 상대(홈팀) ERA 18.00 — 불안<br />
 - 🔥 키움 위험 타자: 여동욱 OPS 3.000 vs 황동하 — 핵심 위협</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>KIA 위험 타자</strong>이 가장 결정적: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</p></div>
+<p><strong>KIA 위험 타자</strong>이 가장 결정적: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a2')">
+  이전 경기 분석 보기 <span id="arr-a2">▼</span>
+</button>
+<div class="analysis-body" id="ab-a2">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: KIA 경기당 5.35득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KIA (원정)</strong>: 28승1무22패 (승률 0.56) | 최근10경기 8승0무2패 | 연속 6승 — <strong>6연승 상승세</strong></p>
+<p><strong>키움 (홈)</strong>: 20승1무31패 (승률 0.392) | 최근10경기 5승0무5패 | 연속 5패 — <strong>5연패 침체</strong></p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: KIA λ=5.52 vs 키움 λ=3.14 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: KIA</strong> (73.8% 우세)</p>
+<p><strong>근거</strong>: 6승 상승세<br />
+<strong>예상 스코어</strong>: KIA 6 - 키움 3</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-2')">
   경기 결과 상세 <span id="bs-2-arr">▼</span>
@@ -628,7 +787,12 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>✅ 예측 적중</h2>
+  
+<button class="analysis-toggle" onclick="toggleAcc('r3')">
+  ✅ 예측 적중 분석 <span id="arr-r3">▼</span>
+</button>
+<div class="analysis-body" id="ab-r3">
+  <h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: KT 승 (54.3% 우세) → <strong>실제</strong>: KT 승 (KT 11 - 3 두산)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -643,7 +807,55 @@ function toggleBS(id) {
 - ⚾ 선발 투수 ERA: 고영표 ERA 5.33 vs 곽빈 ERA 3.46 — 두산 우세<br />
 - 🔥 두산 위험 타자: 조수행 OPS 1.000 vs 고영표 — 핵심 위협</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>KT 위험 타자</strong>이 가장 결정적: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</p></div>
+<p><strong>KT 위험 타자</strong>이 가장 결정적: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a3')">
+  이전 경기 분석 보기 <span id="arr-a3">▼</span>
+</button>
+<div class="analysis-body" id="ab-a3">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: KT 경기당 5.80득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KT (원정)</strong>: 29승1무20패 (승률 0.592) | 최근10경기 5승0무5패 | 연속 1승</p>
+<p><strong>두산 (홈)</strong>: 23승1무27패 (승률 0.46) | 최근10경기 5승0무5패 | 연속 1패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: KT λ=7.47 vs 두산 λ=5.53 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: KT</strong> (63.9% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-3')">
   경기 결과 상세 <span id="bs-3-arr">▼</span>
@@ -722,7 +934,12 @@ function toggleBS(id) {
   </div>
 </div>
   
-  <div class="result-analysis"><h2>✅ 예측 적중</h2>
+  
+<button class="analysis-toggle" onclick="toggleAcc('r4')">
+  ✅ 예측 적중 분석 <span id="arr-r4">▼</span>
+</button>
+<div class="analysis-body" id="ab-r4">
+  <h2>✅ 예측 적중</h2>
 <p><strong>예측</strong>: 한화 승 (81.4% 우세) → <strong>실제</strong>: 한화 승 (한화 18 - 7 NC)</p>
 <h3>예측 득점 정확도</h3>
 <ul>
@@ -740,7 +957,55 @@ function toggleBS(id) {
 - 📊 최근 맞대결: NC 최근 상대전적 우세 (한화 1승 0무 3패 vs NC 3승 0무 1패)<br />
 - 🏟️ NC 홈구장 파크팩터: 파크팩터 0.95 — 투수 유리 구장</p>
 <h3>핵심 적중 포인트</h3>
-<p><strong>선발 투수 ERA</strong>이 가장 결정적: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</p></div>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a4')">
+  이전 경기 분석 보기 <span id="arr-a4">▼</span>
+</button>
+<div class="analysis-body" id="ab-a4">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: 한화 경기당 6.37득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>한화 (원정)</strong>: 24승0무25패 (승률 0.49) | 최근10경기 6승0무4패 | 연속 1승</p>
+<p><strong>NC (홈)</strong>: 20승1무28패 (승률 0.417) | 최근10경기 3승0무7패 | 연속 1패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: 한화 λ=7.68 vs NC λ=4.1 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: 한화</strong> (79.6% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: 한화 8 - NC 4</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="bs-toggle" onclick="toggleBS('bs-4')">
   경기 결과 상세 <span id="bs-4-arr">▼</span>
@@ -788,6 +1053,6 @@ function toggleBS(id) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-05-28 23:25</div>
+<div class="update-info">빌드: 2026-05-28 23:28</div>
 </body>
 </html>
