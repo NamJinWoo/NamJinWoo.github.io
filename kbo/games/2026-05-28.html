@@ -313,8 +313,8 @@ a { color: inherit; text-decoration: none; }
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:72.0%">72.0%</div>
-    <div class="prob-home" style="width:28.0%">28.0%</div>
+    <div class="prob-away" style="width:63.9%">63.9%</div>
+    <div class="prob-home" style="width:36.1%">36.1%</div>
   </div>
   <div class="prob-teams">
     <span>LG (원정)</span>
@@ -324,28 +324,31 @@ a { color: inherit; text-decoration: none; }
   
   
 <button class="analysis-toggle" onclick="toggleAnalysis(0)">
-  이전 경기 분석 보기 <span id="arr-0">▼</span>
+  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-0">▼</span>
 </button>
 <div class="analysis-body" id="ab-0">
-  <h2>핵심 포인트</h2>
+  <h2>❌ 예측 빗나감</h2>
+<p><strong>예측</strong>: LG 승 (63.9% 우세) → <strong>실제</strong>: 롯데 승 (LG 5 - 8 롯데)</p>
+<h3>예측 득점 정확도</h3>
 <ul>
-<li><strong>공격력</strong>: LG 경기당 4.60득점 우세</li>
+<li>LG: 예측 4.5점 → 실제 5점 (오차 0.5, 근접)</li>
+<li>롯데: 예측 3.3점 → 실제 8점 (오차 4.7, 큰 차이)</li>
 </ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>LG (원정)</strong>: 30승0무20패 (승률 0.6) | 최근10경기 6승0무4패 | 연속 1패</p>
-<p><strong>롯데 (홈)</strong>: 20승1무28패 (승률 0.417) | 최근10경기 4승0무6패 | 연속 1승</p>
-<h2>승부 포인트</h2>
+<h3>빗나간 원인 분석</h3>
 <ul>
-<li><strong>선취점 선점</strong>: LG λ=5.29 vs 롯데 λ=3.09 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+<li>롯데 타선 폭발 — 예측(3.3점) 대비 실제 8점, 타선이 시뮬레이션을 초과</li>
 </ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: LG</strong> (72.0% 우세)</p>
-<p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+<p><em>실제로는 롯데를 지지했던 요인 (2개):</em><br />
+  - 🔥 LG 위험 타자: 문정빈 OPS 4.000 vs 김진욱 — 핵심 위협<br />
+  - 📊 최근 맞대결: LG 최근 상대전적 우세 (LG 4승 0무 1패 vs 롯데 1승 0무 4패)</p>
+<h3>다음 시뮬레이션 주목 포인트</h3>
+<ul>
+<li>롯데 불펜 vs 타선 매치업 — 선발 이후 불펜 ERA/WHIP을 포함한 전체 투수력으로 보정 필요</li>
+</ul>
+<h3>시뮬레이션 개선 제안</h3>
+<ul>
+<li>불펜 ERA/WAR 가중치 상향 검토 — 선발 이후 이닝에서 실점이 예측을 초과함</li>
+</ul>
 </div>
 <script>
 function toggleAnalysis(i) {
@@ -427,8 +430,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:83.2%">83.2%</div>
-    <div class="prob-home" style="width:16.8%">16.8%</div>
+    <div class="prob-away" style="width:85.1%">85.1%</div>
+    <div class="prob-home" style="width:14.9%">14.9%</div>
   </div>
   <div class="prob-teams">
     <span>삼성 (원정)</span>
@@ -438,28 +441,28 @@ function toggleBS(id) {
   
   
 <button class="analysis-toggle" onclick="toggleAnalysis(1)">
-  이전 경기 분석 보기 <span id="arr-1">▼</span>
+  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-1">▼</span>
 </button>
 <div class="analysis-body" id="ab-1">
-  <h2>핵심 포인트</h2>
+  <h2>✅ 예측 적중</h2>
+<p><strong>예측</strong>: 삼성 승 (85.1% 우세) → <strong>실제</strong>: 삼성 승 (삼성 10 - 1 SSG)</p>
+<h3>예측 득점 정확도</h3>
 <ul>
-<li><strong>공격력</strong>: 삼성 경기당 5.61득점 우세</li>
+<li>삼성: 예측 10.0점 → 실제 10점 (오차 0.0, 근접)</li>
+<li>SSG: 예측 6.1점 → 실제 1점 (오차 5.1, 큰 차이)</li>
 </ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>삼성 (원정)</strong>: 30승1무18패 (승률 0.625) | 최근10경기 7승0무3패 | 연속 3승 — 3연승</p>
-<p><strong>SSG (홈)</strong>: 22승1무27패 (승률 0.449) | 최근10경기 1승0무9패 | 연속 9패 — <strong>9연패 침체</strong></p>
-<h2>승부 포인트</h2>
+<h3>적중 기여 요인 (3/6개 일치)</h3>
 <ul>
-<li><strong>선취점 선점</strong>: 삼성 λ=7.28 vs SSG λ=4.21 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+<li>⚾ <strong>선발 투수 ERA</strong>: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</li>
+<li>🔥 <strong>삼성 위험 타자</strong>: 강민호 OPS 1.406 vs 긴지로 — 핵심 위협</li>
+<li>📈 <strong>선발 로테이션 WAR</strong>: 삼성 선발WAR 우세 (삼성 6.91 vs SSG 2.68)</li>
 </ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: 삼성</strong> (83.2% 우세)</p>
-<p><strong>근거</strong>: 3승 상승세<br />
-<strong>예상 스코어</strong>: 삼성 8 - SSG 4</p>
+<p>반대 신호 (3개는 이번엔 맞지 않음):<br />
+- 📋 상대전적 ERA: 최원태 상대(홈팀) ERA 5.40 — 불안<br />
+- 🔥 SSG 위험 타자: 에레디아 OPS 0.996 vs 최원태 — 핵심 위협<br />
+- 📊 최근 맞대결: SSG 최근 상대전적 우세 (삼성 1승 0무 3패 vs SSG 3승 0무 1패)</p>
+<h3>핵심 적중 포인트</h3>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 최원태 ERA 5.53 vs 긴지로 ERA 9.75 — 삼성 우세</p>
 </div>
 <script>
 function toggleAnalysis(i) {
@@ -541,8 +544,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:73.5%">73.5%</div>
-    <div class="prob-home" style="width:26.5%">26.5%</div>
+    <div class="prob-away" style="width:52.0%">52.0%</div>
+    <div class="prob-home" style="width:48.0%">48.0%</div>
   </div>
   <div class="prob-teams">
     <span>KIA (원정)</span>
@@ -552,28 +555,28 @@ function toggleBS(id) {
   
   
 <button class="analysis-toggle" onclick="toggleAnalysis(2)">
-  이전 경기 분석 보기 <span id="arr-2">▼</span>
+  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-2">▼</span>
 </button>
 <div class="analysis-body" id="ab-2">
-  <h2>핵심 포인트</h2>
+  <h2>✅ 예측 적중</h2>
+<p><strong>예측</strong>: KIA 승 (52.0% 우세) → <strong>실제</strong>: KIA 승 (KIA 5 - 0 키움)</p>
+<h3>예측 득점 정확도</h3>
 <ul>
-<li><strong>공격력</strong>: KIA 경기당 5.35득점 우세</li>
+<li>KIA: 예측 3.9점 → 실제 5점 (오차 1.1, 근접)</li>
+<li>키움: 예측 4.1점 → 실제 0점 (오차 4.1, 큰 차이)</li>
 </ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>KIA (원정)</strong>: 28승1무22패 (승률 0.56) | 최근10경기 8승0무2패 | 연속 6승 — <strong>6연승 상승세</strong></p>
-<p><strong>키움 (홈)</strong>: 20승1무31패 (승률 0.392) | 최근10경기 5승0무5패 | 연속 5패 — <strong>5연패 침체</strong></p>
-<h2>승부 포인트</h2>
+<h3>적중 기여 요인 (3/6개 일치)</h3>
 <ul>
-<li><strong>선취점 선점</strong>: KIA λ=5.52 vs 키움 λ=3.14 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+<li>🔥 <strong>KIA 위험 타자</strong>: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</li>
+<li>📊 <strong>최근 맞대결</strong>: KIA 최근 상대전적 우세 (KIA 5승 0무 0패 vs 키움 0승 0무 5패)</li>
+<li>📈 <strong>선발 로테이션 WAR</strong>: KIA 선발WAR 우세 (KIA 5.61 vs 키움 3.93)</li>
 </ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: KIA</strong> (73.5% 우세)</p>
-<p><strong>근거</strong>: 6승 상승세<br />
-<strong>예상 스코어</strong>: KIA 6 - 키움 3</p>
+<p>반대 신호 (3개는 이번엔 맞지 않음):<br />
+- ⚾ 선발 투수 ERA: 황동하 ERA 4.50 vs 로젠버그 ERA 1.42 — 키움 우세<br />
+- 📋 상대전적 ERA: 황동하 상대(홈팀) ERA 18.00 — 불안<br />
+- 🔥 키움 위험 타자: 여동욱 OPS 3.000 vs 황동하 — 핵심 위협</p>
+<h3>핵심 적중 포인트</h3>
+<p><strong>KIA 위험 타자</strong>이 가장 결정적: 한승연 OPS 2.000 vs 로젠버그 — 핵심 위협</p>
 </div>
 <script>
 function toggleAnalysis(i) {
@@ -655,8 +658,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:64.0%">64.0%</div>
-    <div class="prob-home" style="width:36.0%">36.0%</div>
+    <div class="prob-away" style="width:54.3%">54.3%</div>
+    <div class="prob-home" style="width:45.7%">45.7%</div>
   </div>
   <div class="prob-teams">
     <span>KT (원정)</span>
@@ -666,28 +669,25 @@ function toggleBS(id) {
   
   
 <button class="analysis-toggle" onclick="toggleAnalysis(3)">
-  이전 경기 분석 보기 <span id="arr-3">▼</span>
+  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-3">▼</span>
 </button>
 <div class="analysis-body" id="ab-3">
-  <h2>핵심 포인트</h2>
+  <h2>✅ 예측 적중</h2>
+<p><strong>예측</strong>: KT 승 (54.3% 우세) → <strong>실제</strong>: KT 승 (KT 11 - 3 두산)</p>
+<h3>예측 득점 정확도</h3>
 <ul>
-<li><strong>공격력</strong>: KT 경기당 5.80득점 우세</li>
+<li>KT: 예측 6.5점 → 실제 11점 (오차 4.5, 큰 차이)</li>
+<li>두산: 예측 5.9점 → 실제 3점 (오차 2.9, 소폭 차이)</li>
 </ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>KT (원정)</strong>: 29승1무20패 (승률 0.592) | 최근10경기 5승0무5패 | 연속 1승</p>
-<p><strong>두산 (홈)</strong>: 23승1무27패 (승률 0.46) | 최근10경기 5승0무5패 | 연속 1패</p>
-<h2>승부 포인트</h2>
+<h3>적중 기여 요인 (1/3개 일치)</h3>
 <ul>
-<li><strong>선취점 선점</strong>: KT λ=7.47 vs 두산 λ=5.53 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+<li>🔥 <strong>KT 위험 타자</strong>: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</li>
 </ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: KT</strong> (64.0% 우세)</p>
-<p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
+<p>반대 신호 (2개는 이번엔 맞지 않음):<br />
+- ⚾ 선발 투수 ERA: 고영표 ERA 5.33 vs 곽빈 ERA 3.46 — 두산 우세<br />
+- 🔥 두산 위험 타자: 조수행 OPS 1.000 vs 고영표 — 핵심 위협</p>
+<h3>핵심 적중 포인트</h3>
+<p><strong>KT 위험 타자</strong>이 가장 결정적: 배정대 OPS 1.143 vs 곽빈 — 핵심 위협</p>
 </div>
 <script>
 function toggleAnalysis(i) {
@@ -769,8 +769,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:79.5%">79.5%</div>
-    <div class="prob-home" style="width:20.5%">20.5%</div>
+    <div class="prob-away" style="width:81.4%">81.4%</div>
+    <div class="prob-home" style="width:18.6%">18.6%</div>
   </div>
   <div class="prob-teams">
     <span>한화 (원정)</span>
@@ -780,28 +780,28 @@ function toggleBS(id) {
   
   
 <button class="analysis-toggle" onclick="toggleAnalysis(4)">
-  이전 경기 분석 보기 <span id="arr-4">▼</span>
+  예측 분석 보기 (왜 맞았는지/틀렸는지) <span id="arr-4">▼</span>
 </button>
 <div class="analysis-body" id="ab-4">
-  <h2>핵심 포인트</h2>
+  <h2>✅ 예측 적중</h2>
+<p><strong>예측</strong>: 한화 승 (81.4% 우세) → <strong>실제</strong>: 한화 승 (한화 18 - 7 NC)</p>
+<h3>예측 득점 정확도</h3>
 <ul>
-<li><strong>공격력</strong>: 한화 경기당 6.37득점 우세</li>
+<li>한화: 예측 7.1점 → 실제 18점 (오차 10.9, 큰 차이)</li>
+<li>NC: 예측 3.3점 → 실제 7점 (오차 3.7, 큰 차이)</li>
 </ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>한화 (원정)</strong>: 24승0무25패 (승률 0.49) | 최근10경기 6승0무4패 | 연속 1승</p>
-<p><strong>NC (홈)</strong>: 20승1무28패 (승률 0.417) | 최근10경기 3승0무7패 | 연속 1패</p>
-<h2>승부 포인트</h2>
+<h3>적중 기여 요인 (3/6개 일치)</h3>
 <ul>
-<li><strong>선취점 선점</strong>: 한화 λ=7.68 vs NC λ=4.1 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+<li>⚾ <strong>선발 투수 ERA</strong>: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</li>
+<li>🔥 <strong>한화 위험 타자</strong>: 페라자 OPS 1.600 vs 김태경 — 핵심 위협</li>
+<li>📈 <strong>선발 로테이션 WAR</strong>: 한화 선발WAR 우세 (한화 5.01 vs NC 3.94)</li>
 </ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: 한화</strong> (79.5% 우세)</p>
-<p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: 한화 8 - NC 4</p>
+<p>반대 신호 (3개는 이번엔 맞지 않음):<br />
+- 🔥 NC 위험 타자: 안중열 OPS 2.667 vs 왕옌청 — 핵심 위협<br />
+- 📊 최근 맞대결: NC 최근 상대전적 우세 (한화 1승 0무 3패 vs NC 3승 0무 1패)<br />
+- 🏟️ NC 홈구장 파크팩터: 파크팩터 0.95 — 투수 유리 구장</p>
+<h3>핵심 적중 포인트</h3>
+<p><strong>선발 투수 ERA</strong>이 가장 결정적: 왕옌청 ERA 2.72 vs 김태경 ERA 3.65 — 한화 우세</p>
 </div>
 <script>
 function toggleAnalysis(i) {
@@ -861,6 +861,6 @@ function toggleBS(id) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-05-28 23:05</div>
+<div class="update-info">빌드: 2026-05-28 23:15</div>
 </body>
 </html>
