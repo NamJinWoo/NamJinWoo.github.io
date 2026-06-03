@@ -299,7 +299,7 @@ a { color: inherit; text-decoration: none; }
 
 <div class="site-header">
   <h1>⚾ KBO 경기 예측</h1>
-  <div class="subtitle">몬테카를로 시뮬레이션 기반 · 최종 업데이트 2026-06-03 14:10</div>
+  <div class="subtitle">몬테카를로 시뮬레이션 기반 · 최종 업데이트 2026-06-03 23:02</div>
 </div>
 
 <div class="tab-bar">
@@ -309,7 +309,16 @@ a { color: inherit; text-decoration: none; }
 </div>
 
 <div class="tab-panel active" id="tab-games">
-  <div class="date-list"><a href="games/2026-06-02.html">
+  <div class="date-list"><a href="games/2026-06-03.html">
+  <div class="date-card">
+    <div>
+      <div class="dc-date">6월 3일 (수)<span style="font-size:.68rem;background:#1d4ed8;color:#fff;padding:2px 6px;border-radius:99px;margin-left:6px">오늘</span></div>
+      <div class="dc-meta">경기 4건</div>
+    </div>
+    <div class="dc-arrow">›</div>
+  </div>
+</a>
+<a href="games/2026-06-02.html">
   <div class="date-card">
     <div>
       <div class="dc-date">6월 2일 (화)</div>
@@ -364,6 +373,15 @@ a { color: inherit; text-decoration: none; }
     </div>
     <div class="dc-arrow">›</div>
   </div>
+</a>
+<a href="predictions/2026-06-04.html">
+  <div class="date-card">
+    <div>
+      <div class="dc-date">6월 4일 (목)</div>
+      <div class="dc-meta">경기 5건</div>
+    </div>
+    <div class="dc-arrow">›</div>
+  </div>
 </a></div>
 </div>
 <div class="tab-panel" id="tab-intro">
@@ -398,6 +416,10 @@ a { color: inherit; text-decoration: none; }
 <tr>
 <td>데이터 수집</td>
 <td>requests + 정규표현식 HTML 파싱</td>
+</tr>
+<tr>
+<td>차트</td>
+<td>Chart.js (득점 분포 시각화)</td>
 </tr>
 </tbody>
 </table>
@@ -496,7 +518,7 @@ Prediction  — 사용자 저장 예측 + 실제 결과 대조
 </tr>
 <tr>
 <td><code>sim_confidence</code></td>
-<td>예측 확신도 (%)</td>
+<td>예측 확신도 (%) — shrinkage 적용 후 값</td>
 </tr>
 <tr>
 <td><code>sim_json</code></td>
@@ -520,73 +542,84 @@ home_wins = Σ(홈득점 &gt; 원정득점) + 동점 × 0.5
 </code></pre>
 <hr />
 <h2>λ (기대 득점) 계산 방법</h2>
-<p>각 팀의 λ는 <strong>시즌 평균 경기당 득점</strong>을 기준으로 여러 보정 계수를 곱해 산출합니다.</p>
-<pre><code>λ_away = 원정팀_RPG × ERA계수 × 최근흐름 × 원정전적계수 × 위험타자계수 × 맞대결계수 × 파크팩터 × 홈불펜WAR계수
-λ_home = 홈팀_RPG  × ERA계수 × 최근흐름 × 홈전적계수   × 위험타자계수 × 맞대결계수 × 홈어드밴티지(1.04) × 파크팩터 × 원정불펜WAR계수
+<p>각 팀의 λ는 <strong>블렌딩된 경기당 득점(RPG)</strong>을 기준으로 여러 보정 계수를 곱해 산출합니다.</p>
+<pre><code>λ_away = RPG_away(블렌딩) × ERA계수 × K-BB/9계수 × 피로도계수
+       × 최근흐름 × 원정전적계수 × 위험타자계수 × 맞대결계수
+       × 파크팩터 × 홈불펜복합계수
+
+λ_home = RPG_home(블렌딩) × ERA계수 × K-BB/9계수 × 피로도계수
+       × 최근흐름 × 홈전적계수 × 위험타자계수 × 맞대결계수
+       × 홈어드밴티지(1.01) × 파크팩터 × 원정불펜복합계수
 </code></pre>
-<p>λ는 최소 2.0, 최대 10.0으로 클램핑됩니다.</p>
+<p>λ는 최소 <strong>2.5</strong>, 최대 <strong>10.0</strong>으로 클램핑됩니다.</p>
 <blockquote>
 <p><strong>파크팩터</strong>는 두 λ에 동일하게 곱해 구장 특성을 반영합니다.<br />
-<strong>불펜WAR계수</strong>는 상대 팀의 불펜 전력을 반영합니다 (홈 불펜이 강할수록 원정팀 λ 감소).</p>
+<strong>불펜복합계수</strong>는 상대 팀의 불펜WAR + 팀ERA를 교차 검증해 반영합니다.</p>
 </blockquote>
 <hr />
 <h3>각 계수 상세</h3>
+<h4>0. RPG 블렌딩 (시즌 + 최근 폼)</h4>
+<p>단순 시즌 평균 대신, 최근 7경기 실제 득점을 가중 반영합니다.</p>
+<pre><code>RPG_블렌딩 = 시즌_RPG × 0.80 + 최근7경기_평균득점 × 0.20
+</code></pre>
+<ul>
+<li>최근 경기 데이터가 <strong>4경기 미만</strong>이면 시즌 RPG만 사용 (이상값 방지)</li>
+<li>최근 RPG는 리그평균의 ±40% 이내로 클램핑 (단일 폭발 게임 영향 억제)</li>
+</ul>
 <h4>1. ERA 계수 (선발 투수 지배력)</h4>
 <p>상대 선발 투수의 ERA로 자 팀의 득점 기대값을 조정합니다.</p>
 <pre><code>ERA계수 = ERA / 리그평균ERA(4.50)
 범위: [0.55, 1.75] 클램핑
 </code></pre>
-<p>예) 상대 선발 ERA 2.25 → 계수 0.55 (득점 45% 억제)<br />
-예) 상대 선발 ERA 6.75 → 계수 1.50 (득점 50% 증가)</p>
-<p><strong>시즌 ERA + H2H ERA 블렌딩:</strong><br />
-상대전적 ERA는 샘플이 적어 과가중을 피하기 위해 아래 비율로 혼합합니다.</p>
-<pre><code># 통산 경기 수에 따라 H2H 가중치 상향
-H2H_가중치 = 0.35 (5경기 이상) / 0.25 (5경기 미만)
+<p><strong>시즌 ERA + H2H ERA 블렌딩:</strong></p>
+<pre><code>H2H_가중치 = 0.35 (5경기 이상) / 0.25 (5경기 미만)
 ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2H_가중치
 </code></pre>
-<p>H2H 데이터가 없을 경우 시즌 ERA만 사용합니다.</p>
-<h4>7. 통산 상대팀 승률 계수 (상성)</h4>
-<p>투수의 특정 팀 상대 <strong>통산 승률</strong>로 λ를 추가 보정합니다. 특정 팀에 유독 강하거나 약한 패턴을 반영합니다.</p>
-<pre><code>상성계수 = 1.0 - (통산승률 - 0.5) × 0.20 × 샘플가중치
-샘플가중치 = min(1.0, 통산경기수 / 15)   # 15경기 이상이면 full weight
-범위: [0.93, 1.07] (최대 ±7% 조정)
+<h4>2. K-BB/9 폼 계수 (투수 구위·제구 종합)</h4>
+<p>선발 투수의 K-BB/9 지표가 리그 평균(4.5)을 초과할수록 상대 득점을 억제합니다.</p>
+<pre><code>K-BB/9계수 = 1.0 - (K-BB/9 - 4.5) / 4.5 × 0.15
+범위: [0.93, 1.07] 클램핑
 </code></pre>
 <ul>
-<li>투수 통산 승률 70%, 15경기 → 계수 0.94 (상대팀 득점 6% 억제)</li>
-<li>투수 통산 승률 20%, 10경기 → 계수 1.04 (상대팀 득점 4% 증가)</li>
-<li><strong>3경기 미만은 샘플 부족으로 무시</strong></li>
+<li>K-BB/9 7.0 (지배적) → 계수 0.93 (상대 득점 7% 억제)</li>
+<li>K-BB/9 2.0 (부진) → 계수 1.07 (상대 득점 7% 증가)</li>
 </ul>
-<pre><code>λ_home = ... × 통산상성계수(원정투수 vs 홈팀)
-λ_away = ... × 통산상성계수(홈투수 vs 원정팀)
+<blockquote>
+<p>시뮬레이션 화면에서 K-BB/9 ≥ 3.0 이면 하이라이트 표시.</p>
+</blockquote>
+<h4>3. 피로도 계수 (최근 등판 간격)</h4>
+<p>선발 투수의 마지막 실전 등판(승/패 기록 기준) 이후 경과 일수로 체력 부담을 반영합니다.</p>
+<pre><code>2일 이내 등판 → 피로도계수 = 1.10 (상대 득점 10% 증가)
+3일 이내 등판 → 피로도계수 = 1.05 (상대 득점 5% 증가)
+4일 이상      → 피로도계수 = 1.00 (정상)
 </code></pre>
-<h4>2. 최근 흐름 (연속 기록)</h4>
-<p>연승/연패 기록으로 팀의 현재 모멘텀을 반영합니다.</p>
+<p>데이터가 없으면 1.0 처리. 시뮬레이션 페이지에 ⚠️ 배지로 표시됩니다.</p>
+<h4>4. 최근 흐름 (연속 기록)</h4>
 <pre><code>흐름계수 = 1.0 + min(|연속수|, 5) × 0.015 × 방향(+1/-1)
 </code></pre>
-<p>예) 5연승 → 1.075 / 5연패 → 0.925 / 연속기록 없음 → 1.0</p>
-<h4>3. 홈/원정 전적 계수</h4>
-<p>해당 시즌의 실제 홈·원정 승률을 반영합니다.</p>
+<p>예) 5연승 → 1.075 / 5연패 → 0.925</p>
+<h4>5. 홈/원정 전적 계수</h4>
 <pre><code>홈전적계수 = 홈승률 / 0.500
 원정전적계수 = 원정승률 / 0.500
-범위: [0.7, 1.3] 클램핑
+범위: [0.75, 1.20] 클램핑
 </code></pre>
-<h4>4. 위험 타자 OPS 계수</h4>
-<p>상대 선발 투수를 상대로 강한 타자 상위 5명의 평균 OPS로 공격력을 보정합니다.</p>
+<h4>6. 위험 타자 OPS 계수</h4>
 <pre><code>위험타자계수 = 1.0 + (평균OPS / 리그평균OPS(0.750) - 1.0) × 0.25
 범위: [0.90, 1.15] 클램핑
 </code></pre>
-<h4>5. 최근 맞대결 계수</h4>
-<p>해당 시즌 두 팀의 직접 대결 전적 비율을 반영합니다.</p>
+<h4>7. 최근 맞대결 계수</h4>
 <pre><code>맞대결계수 = (맞대결승수 / 총맞대결수) / 0.5
 범위: [0.92, 1.08] 클램핑
 </code></pre>
-<h4>6. 홈 어드밴티지</h4>
-<p>홈 팀 λ에 고정 계수 <strong>1.04</strong> 적용 (KBO 리그 홈 팀 평균 승률 약 52~54% 기반).</p>
-<h4>8. 파크팩터 (구장 특성)</h4>
-<p>KBO 10개 구장별 고정 파크팩터를 적용합니다. 1.0 초과는 타자 친화 구장, 미만은 투수 친화 구장입니다.</p>
-<pre><code>파크팩터 = PARK_FACTORS[홈팀]   # 아래 테이블 참고
-범위: [0.90, 1.10]
+<h4>8. 통산 상대팀 승률 계수 (상성)</h4>
+<pre><code>상성계수 = 1.0 - (통산승률 - 0.5) × 0.20 × 샘플가중치
+샘플가중치 = min(1.0, 통산경기수 / 15)
+범위: [0.93, 1.07]
 </code></pre>
+<p>3경기 미만은 샘플 부족으로 무시.</p>
+<h4>9. 홈 어드밴티지</h4>
+<p>홈 팀 λ에 고정 계수 <strong>1.01</strong> 적용 (실측 데이터 기반 캘리브레이션으로 1.04에서 하향).</p>
+<h4>10. 파크팩터 (구장 특성)</h4>
 <table>
 <thead>
 <tr>
@@ -643,62 +676,30 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </tr>
 </tbody>
 </table>
-<p>파크팩터는 원정·홈 두 팀의 λ에 <strong>동일하게</strong> 적용됩니다 (구장이 양 팀에 동등하게 영향).</p>
-<h4>9. 불펜 WAR 계수</h4>
-<p>statiz 팀 전력 비교에서 수집한 <strong>불펜WAR</strong>을 리그 평균(3.0)과 비교해 λ를 보정합니다.</p>
-<pre><code>불펜WAR계수 = 1.0 - (불펜WAR - 리그평균(3.0)) / 리그평균 × 0.25
-범위: [0.92, 1.08] 클램핑   (최대 ±8% 조정)
+<p>파크팩터는 원정·홈 두 팀의 λ에 <strong>동일하게</strong> 적용됩니다.</p>
+<h4>11. 불펜 복합 계수 (WAR + 팀ERA 교차 검증)</h4>
+<p>단일 WAR 지표의 노이즈를 줄이기 위해 불펜WAR와 팀ERA를 가중 블렌딩합니다.</p>
+<pre><code>불펜WAR계수  = 1.0 - (불펜WAR - 리그평균(3.0)) / 3.0 × 0.25   → [0.92, 1.08]
+팀ERA계수    = 1.0 + (팀ERA - 4.50) / 4.50 × 0.18              → [0.93, 1.07]
+
+불펜복합계수 = 불펜WAR계수 × 0.60 + 팀ERA계수 × 0.40
 </code></pre>
 <ul>
-<li><strong>홈 팀 불펜WAR 높음</strong> → <code>λ_away</code> 감소 (홈 불펜이 원정 타선을 막음)  </li>
-<li><strong>원정 팀 불펜WAR 높음</strong> → <code>λ_home</code> 감소  </li>
-<li>불펜WAR 데이터 없을 경우 계수 = 1.0</li>
+<li><strong>홈 팀 불펜 강함</strong> → <code>λ_away</code> 감소 (홈 불펜이 원정 타선 억제)</li>
+<li><strong>원정 팀 불펜 강함</strong> → <code>λ_home</code> 감소</li>
 </ul>
 <hr />
-<h2>시뮬레이션 출력 (추가 지표)</h2>
-<h3>득점 범위 (25~75% 분위수)</h3>
-<p>10,000회 시뮬레이션 결과에서 <strong>25·50·75 퍼센타일</strong>을 계산해 예상 득점 범위를 제공합니다.</p>
-<pre><code class="language-python">p25, median, p75 = np.percentile(scores, [25, 50, 75])
-# 표시: &quot;3~7점&quot; (p25~p75)
-</code></pre>
-<h3>선발 투수 제구·탈삼진 지표</h3>
-<p>statiz 피안타율·탈삼진·볼넷·이닝 데이터로 K/9, BB/9, K-BB/9을 산출합니다.</p>
-<table>
-<thead>
-<tr>
-<th>지표</th>
-<th>계산식</th>
-<th>의미</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>K/9</td>
-<td>탈삼진 / 이닝 × 9</td>
-<td>9이닝당 탈삼진 수</td>
-</tr>
-<tr>
-<td>BB/9</td>
-<td>볼넷 / 이닝 × 9</td>
-<td>9이닝당 볼넷 허용 수</td>
-</tr>
-<tr>
-<td>K-BB/9</td>
-<td>(탈삼진 - 볼넷) / 이닝 × 9</td>
-<td>제구+구위 종합 지표 (높을수록 우수)</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>K-BB/9 ≥ 3.0: 우수 선발 투수 기준선 (시뮬레이션 화면에서 하이라이트 표시)</p>
-</blockquote>
-<hr />
 <h2>최종 승률 산출</h2>
-<p>몬테카를로 결과에 최근 10경기 흐름을 30% 블렌딩합니다.</p>
-<pre><code>최종승률(원정) = 시뮬레이션승률 × 0.70 + 최근10경기승률 × 0.30
+<p>몬테카를로 결과에 최근 10경기 흐름을 30% 블렌딩한 뒤, <strong>과잉확신 억제(Shrinkage)</strong>를 적용합니다.</p>
+<pre><code>raw승률(원정) = 시뮬레이션승률 × 0.70 + 최근10경기승률 × 0.30
+
+# Shrinkage: 극단적 확신도를 50%로 수렴 (계수 0.75)
+최종승률(원정) = 50 + (raw승률 - 50) × 0.75
 최종승률(홈)   = 100 - 최종승률(원정)
 </code></pre>
-<p>최근 10경기 비율은 두 팀의 최근 10경기 승수 합 대비 각 팀 승수의 비율로 산출됩니다.</p>
+<blockquote>
+<p>예) raw 80% → 최종 62.5% / raw 60% → 최종 57.5%</p>
+</blockquote>
 <hr />
 <h2>주요 분석 인자 요약</h2>
 <table>
@@ -711,19 +712,34 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </thead>
 <tbody>
 <tr>
+<td>RPG 블렌딩</td>
+<td>시즌 80% + 최근7경기 20% (4경기 이상 시)</td>
+<td>DB 집계</td>
+</tr>
+<tr>
 <td>시즌 ERA</td>
 <td>상대 투수 ERA가 낮을수록 득점 감소</td>
 <td>statiz 예측 페이지</td>
 </tr>
 <tr>
 <td>H2H ERA</td>
-<td>통산 상대 팀 타선 ERA 블렌딩 (경기 수 비례 25~35%)</td>
+<td>통산 상대 팀 타선 ERA 블렌딩 (25~35%)</td>
 <td>statiz 예측 상세</td>
 </tr>
 <tr>
-<td><strong>통산 상대팀 승률</strong></td>
-<td><strong>투수가 특정 팀에 강/약한 상성 반영 (최대 ±7%)</strong></td>
-<td><strong>statiz 예측 상세</strong></td>
+<td><strong>K-BB/9 계수</strong></td>
+<td><strong>투수 구위·제구 종합 → 최대 ±7%</strong></td>
+<td><strong>statiz 예측 페이지</strong></td>
+</tr>
+<tr>
+<td><strong>피로도 계수</strong></td>
+<td><strong>최근 등판 간격 → 최대 +10%</strong></td>
+<td><strong>DB RecentGame</strong></td>
+</tr>
+<tr>
+<td>통산 상대팀 승률</td>
+<td>투수 상성 반영 (최대 ±7%)</td>
+<td>statiz 예측 상세</td>
 </tr>
 <tr>
 <td>위험 타자 OPS</td>
@@ -756,19 +772,58 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 <td>statiz 팀비교</td>
 </tr>
 <tr>
-<td><strong>파크팩터</strong></td>
-<td><strong>구장 특성 반영 (잠실 +5%, 고척 -4% 등)</strong></td>
-<td><strong>내부 상수 (구장별 고정)</strong></td>
+<td>파크팩터</td>
+<td>구장 특성 반영</td>
+<td>내부 상수</td>
 </tr>
 <tr>
-<td><strong>불펜 WAR</strong></td>
-<td><strong>상대 불펜 전력 반영 (최대 ±8%)</strong></td>
+<td><strong>불펜 복합계수</strong></td>
+<td><strong>WAR 60% + 팀ERA 40% 교차 검증</strong></td>
 <td><strong>statiz 팀비교</strong></td>
 </tr>
 <tr>
 <td>홈 어드밴티지</td>
-<td>홈 팀 고정 4% 상향</td>
+<td>홈 팀 고정 1% 상향</td>
 <td>내부 상수</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>시뮬레이션 출력 (추가 지표)</h2>
+<h3>득점 분포 차트 (Chart.js)</h3>
+<p>시뮬레이션 페이지와 완료 경기 상세 페이지에서 <strong>포아송 PMF 기반 득점 분포</strong>를 시각화합니다.</p>
+<ul>
+<li>0~15점 구간의 확률 히스토그램</li>
+<li>원정(파란색) / 홈(주황색) 겹쳐 표시</li>
+<li>λ 값이 저장된 경기는 예측 당시 분포를 복원 가능</li>
+</ul>
+<h3>득점 범위 (25~75% 분위수)</h3>
+<pre><code class="language-python">p25, median, p75 = np.percentile(scores, [25, 50, 75])
+</code></pre>
+<h3>선발 투수 제구·탈삼진 지표</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>계산식</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>K/9</td>
+<td>탈삼진 / 이닝 × 9</td>
+<td>9이닝당 탈삼진 수</td>
+</tr>
+<tr>
+<td>BB/9</td>
+<td>볼넷 / 이닝 × 9</td>
+<td>9이닝당 볼넷 허용 수</td>
+</tr>
+<tr>
+<td>K-BB/9</td>
+<td>(탈삼진 - 볼넷) / 이닝 × 9</td>
+<td>제구+구위 종합 지표</td>
 </tr>
 </tbody>
 </table>
@@ -836,27 +891,8 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </tr>
 </tbody>
 </table>
-<h3>화면 표시</h3>
-<ul>
-<li><strong>홈 화면</strong> 최근 경기 카드: ✅ 적중 / ❌ 빗나감 배지 + 예측팀/확신도</li>
-<li><strong>경기 상세 페이지</strong>: 마크다운 렌더링된 전체 분석 섹션</li>
-</ul>
 <h3>분석 생성 방식</h3>
 <p><code>ANTHROPIC_API_KEY</code> 설정 시 Claude API로 서술형 분석 생성, 미설정 시 규칙 기반 fallback 자동 적용.</p>
-<hr />
-<h2>분석 텍스트 생성</h2>
-<h3>Claude API 사용 시 (<code>ANTHROPIC_API_KEY</code> 환경변수 설정)</h3>
-<p>시뮬레이션 결과, 선발 투수 스탯, 위험 타자, 팀 전력 데이터를 프롬프트로 구성하여 <strong>claude-sonnet-4-6</strong> 모델에 전달합니다. 분석 항목:</p>
-<ul>
-<li>핵심 포인트 3가지</li>
-<li>선발 투수 분석 (시즌 스탯 + 통산 상대팀 ERA/OOPS/승률 + 상성 패턴)</li>
-<li>위협 타자 분석</li>
-<li>팀 흐름 및 전력 비교 (WAR, 최근 맞대결)</li>
-<li>승부 포인트</li>
-<li>최종 예측 및 예상 스코어</li>
-</ul>
-<h3>API 키 미설정 시 (규칙 기반 fallback)</h3>
-<p>동일한 데이터를 기반으로 규칙 기반 텍스트를 자동 생성합니다. ERA 차이, OPS 임계값, WAR 차이 등 사전 정의된 기준으로 분석 텍스트를 조합합니다.</p>
 <hr />
 <h2>주요 페이지</h2>
 <table>
@@ -869,15 +905,23 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 <tbody>
 <tr>
 <td><code>/</code></td>
-<td>팀 순위표, 최근 경기 결과, 다음 예정 경기</td>
+<td>팀 순위표, 최근 경기 결과, 다음 예정 경기 (삼성 우선 표시)</td>
 </tr>
 <tr>
 <td><code>/simulate?away=XXX&amp;home=YYY</code></td>
-<td>선택 경기 몬테카를로 시뮬레이션 실행</td>
+<td>선택 경기 몬테카를로 시뮬레이션 + 득점 분포 차트</td>
 </tr>
 <tr>
 <td><code>/game/&lt;날짜&gt;/&lt;원정팀&gt;/&lt;홈팀&gt;</code></td>
-<td>경기 상세 — KBO 박스스코어 + 예측 결과 분석</td>
+<td>경기 상세 — KBO 박스스코어 + 예측 결과 분석 + 득점 분포</td>
+</tr>
+<tr>
+<td><code>/calendar</code></td>
+<td>월간 캘린더 — 경기 결과 및 예측 적중 여부 시각화</td>
+</tr>
+<tr>
+<td><code>/calendar/&lt;year&gt;/&lt;month&gt;</code></td>
+<td>특정 월 캘린더</td>
 </tr>
 <tr>
 <td><code>/predictions</code></td>
@@ -893,7 +937,7 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </tr>
 <tr>
 <td><code>/stats</code></td>
-<td>예측 정확도 통계</td>
+<td>예측 정확도 통계 (월별 추이 · 신뢰도별 · <strong>팀별</strong> · 팀 상성 히트맵)</td>
 </tr>
 <tr>
 <td><code>/admin/scrape</code> (POST)</td>
@@ -902,9 +946,17 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </tbody>
 </table>
 <hr />
+<h2>삼성 라이온즈 우선 표시</h2>
+<p>응원팀(삼성 라이온즈)의 경기를 모든 화면에서 우선 노출합니다.</p>
+<ul>
+<li><strong>홈 화면</strong>: 최근 경기·다음 경기 카드에서 삼성 경기 맨 위</li>
+<li><strong>순위표</strong>: 삼성 행 파란색(<code>#074CA1</code>) 테두리·배경 강조</li>
+<li><strong>캘린더</strong>: 삼성 경기 파란색 테두리, 해당 월 삼성 경기 카드 하단 별도 요약</li>
+<li><strong>통계</strong>: 팀별 적중률 테이블에서 삼성 행 강조</li>
+</ul>
+<hr />
 <h2>경기 상세 페이지 (<code>/game/...</code>)</h2>
 <p>완료된 경기를 클릭하면 KBO 공식 API에서 박스스코어를 실시간으로 가져와 표시합니다.</p>
-<h3>표시 항목</h3>
 <table>
 <thead>
 <tr>
@@ -927,14 +979,58 @@ ERA계수(최종) = 시즌ERA계수 × (1 - H2H_가중치) + H2H_ERA계수 × H2
 </tr>
 <tr>
 <td>투수 성적</td>
-<td>원정·홈 각각 — 이닝, 피안타, 탈삼진, 볼넷, 실점, 자책, 결과(승/패/세/홀)</td>
+<td>원정·홈 각각 — 이닝, 피안타, 탈삼진, 볼넷, 실점, 자책, 결과</td>
+</tr>
+<tr>
+<td><strong>득점 분포 차트</strong></td>
+<td><strong>예측 시점 λ 기반 포아송 분포 복원 시각화</strong></td>
+</tr>
+<tr>
+<td>예측 결과 분석</td>
+<td>적중·빗나감 원인 분석 (markdown 렌더링)</td>
 </tr>
 </tbody>
 </table>
-<h3>취소·미완료 처리</h3>
-<p>경기가 취소되었거나 아직 결과가 없으면 박스스코어 대신 안내 메시지를 표시합니다.</p>
-<h3>데이터 출처</h3>
-<p>KBO 공식 웹서비스 (<code>koreabaseball.com/ws/Schedule.asmx/GetBoxScore</code>)를 POST 요청으로 호출합니다. 별도 저장 없이 매 조회 시 실시간으로 파싱합니다.</p>
+<hr />
+<h2>통계 페이지 (<code>/stats</code>)</h2>
+<table>
+<thead>
+<tr>
+<th>섹션</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>전체 요약</td>
+<td>수동/시뮬레이션 예측 수, 적중 수, 적중률</td>
+</tr>
+<tr>
+<td>신뢰도별 정확도</td>
+<td>50~59% / 60~69% / 70~79% / 80%+ 구간별 실제 적중률</td>
+</tr>
+<tr>
+<td>월별 추이 차트</td>
+<td>시뮬레이션 적중률 월간 변화 (Chart.js)</td>
+</tr>
+<tr>
+<td><strong>팀별 예측 적중률</strong></td>
+<td><strong>팀별 전체·홈·원정 예측 수 및 적중률 테이블</strong></td>
+</tr>
+<tr>
+<td>팀 상성 히트맵</td>
+<td>10×10 매트릭스로 팀간 상대전적 승률 색상 표시</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>예측 캘린더 (<code>/calendar</code>)</h2>
+<p>월간 달력 형태로 경기 결과와 예측 적중 여부를 한눈에 확인합니다.</p>
+<ul>
+<li>✅ 적중 (초록 테두리) / ❌ 빗나감 (빨간 테두리) / 예측 없음 (회색)</li>
+<li>삼성 경기는 파란 테두리로 강조</li>
+<li>하단에 해당 월 <strong>삼성 라이온즈 경기 카드</strong> 별도 목록</li>
+</ul>
 <hr />
 <h2>실행 방법</h2>
 <pre><code class="language-bash"># 의존성 설치
@@ -974,43 +1070,8 @@ python run.py
 </tr>
 </tbody>
 </table>
-<h3>경기 카드 상세 (오늘 경기 분석)</h3>
-<table>
-<thead>
-<tr>
-<th>섹션</th>
-<th>내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>매치업 헤더</td>
-<td>최종 스코어, 예측 적중·빗나감 뱃지</td>
-</tr>
-<tr>
-<td>승패 투수</td>
-<td>승리·세이브·패전 투수 태그</td>
-</tr>
-<tr>
-<td>승률 바</td>
-<td>사전 시뮬레이션 기반 원정/홈 승률</td>
-</tr>
-<tr>
-<td>위협 타자</td>
-<td>선발 투수 상대 강타자 OPS</td>
-</tr>
-<tr>
-<td><strong>예측 vs 결과 분석</strong></td>
-<td><strong>✅/❌ 적중 여부, 득점 오차, 빗나간 원인 분석 — 항상 노출</strong></td>
-</tr>
-<tr>
-<td>경기 결과 상세</td>
-<td>KBO 공식 박스스코어 — 타자 이닝별 기록 + 투수 성적표 (아코디언)</td>
-</tr>
-</tbody>
-</table>
 <h3>업데이트 방법</h3>
-<pre><code class="language-bash"># Flask 앱에서 최신 데이터 스크래핑 (브라우저 또는 curl)
+<pre><code class="language-bash"># Flask 앱에서 최신 데이터 스크래핑
 curl -X POST http://localhost:5000/admin/scrape
 
 # 블로그 빌드 및 배포
@@ -1022,11 +1083,12 @@ python build_blog.py
 <li>부상, 날씨, 컨디션 등 비정형 변수는 반영되지 않습니다.</li>
 <li>H2H 샘플 크기가 작을 경우 해당 계수의 신뢰도가 낮습니다.</li>
 <li>선발 투수 미정 경기는 ERA 계수를 1.0(리그 평균)으로 처리합니다.</li>
+<li>RPG 블렌딩은 DB에 팀당 4경기 이상 데이터가 쌓여야 활성화됩니다.</li>
 <li>본 예측은 통계적 참고 자료이며, 투자·도박 목적으로 사용하지 마십시오.</li>
 </ul></div>
 </div>
 
-<div class="update-info">빌드: 2026-06-03 14:10</div>
+<div class="update-info">빌드: 2026-06-03 23:02</div>
 
 <script>
 function switchTab(name, btn) {
