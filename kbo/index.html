@@ -300,12 +300,13 @@ a { color: inherit; text-decoration: none; }
 
 <div class="site-header">
   <h1>⚾ KBO 경기 예측</h1>
-  <div class="subtitle">몬테카를로 시뮬레이션 기반 · 최종 업데이트 2026-06-14 19:17</div>
+  <div class="subtitle">몬테카를로 시뮬레이션 기반 · 최종 업데이트 2026-06-14 19:28</div>
 </div>
 
 <div class="tab-bar">
-  <button class="tab-btn active" onclick="switchTab('games', this)">오늘 경기 분석</button>
-  <button class="tab-btn"        onclick="switchTab('preds', this)">다음 경기 예상</button>
+  <button class="tab-btn active" onclick="switchTab('games', this)">경기 분석</button>
+  <button class="tab-btn"        onclick="switchTab('preds', this)">경기 예상</button>
+  <button class="tab-btn"        onclick="location.href='samsung.html'" style="color:#C8A951">🦁 삼성</button>
   <button class="tab-btn"        onclick="switchTab('intro', this)">소개</button>
 </div>
 
@@ -1269,7 +1270,7 @@ python build_blog.py
 </ul></div>
 </div>
 
-<div class="update-info">빌드: 2026-06-14 19:17</div>
+<div class="update-info">빌드: 2026-06-14 19:28</div>
 
 <script>
 function switchTab(name, btn) {
