@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>배트맨 배팅 분석 — KBO 예측</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #0f172a; color: #e2e8f0; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── 헤더 ── */
+.site-header {
+  background: linear-gradient(135deg, #1e3a5f 0%, #0f2744 100%);
+  padding: 20px 16px 16px;
+  border-bottom: 2px solid #3b82f6;
+}
+.site-header h1 {
+  font-size: 1.4rem; font-weight: 800; color: #fff; letter-spacing: -0.5px;
+}
+.site-header .subtitle { font-size: 0.78rem; color: #94a3b8; margin-top: 4px; }
+
+/* ── 탭 바 ── */
+.tab-bar {
+  display: flex; position: sticky; top: 0; z-index: 10;
+  background: #0f172a; border-bottom: 1px solid #1e293b;
+}
+.tab-btn {
+  flex: 1; padding: 14px 8px; text-align: center; font-size: 0.88rem;
+  font-weight: 600; color: #64748b; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.tab-btn.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+
+/* ── 탭 패널 ── */
+.tab-panel { display: none; padding: 16px; }
+.tab-panel.active { display: block; }
+
+/* ── 날짜 카드 (인덱스) ── */
+.date-list { display: flex; flex-direction: column; gap: 10px; }
+.date-card {
+  background: #1e293b; border-radius: 12px; padding: 16px 18px;
+  display: flex; justify-content: space-between; align-items: center;
+  border: 1px solid #334155; transition: border-color .2s;
+}
+.date-card:active { border-color: #3b82f6; }
+.date-card .dc-date { font-size: 1rem; font-weight: 700; }
+.date-card .dc-meta { font-size: 0.78rem; color: #64748b; margin-top: 3px; }
+.date-card .dc-arrow { color: #3b82f6; font-size: 1.2rem; }
+
+/* ── 페이지 헤더 (날짜 페이지) ── */
+.page-header {
+  padding: 16px;
+  background: #0f172a;
+  border-bottom: 1px solid #1e293b;
+  display: flex; align-items: center; gap: 12px;
+}
+.back-btn {
+  color: #3b82f6; font-size: 0.9rem; font-weight: 600;
+  display: flex; align-items: center; gap: 4px;
+}
+.page-title { font-size: 1.05rem; font-weight: 700; }
+.page-subtitle { font-size: 0.78rem; color: #64748b; }
+
+/* ── 경기 카드 ── */
+.games-list { padding: 12px 16px; display: flex; flex-direction: column; gap: 14px; }
+.game-card {
+  background: #1e293b; border-radius: 14px;
+  border: 1px solid #334155; overflow: hidden;
+}
+
+/* 매치업 헤더 */
+.matchup {
+  padding: 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: #162032;
+}
+.team-block { text-align: center; flex: 1; }
+.team-name { font-size: 1.05rem; font-weight: 800; }
+.team-role { font-size: 0.68rem; color: #64748b; margin-bottom: 4px; }
+.team-score { font-size: 2rem; font-weight: 900; line-height: 1; margin-top: 4px; }
+.team-score.winner { color: #22c55e; }
+.vs-col { text-align: center; padding: 0 8px; }
+.vs-text { font-size: 0.8rem; color: #64748b; font-weight: 600; }
+
+/* 예측 결과 뱃지 */
+.pred-badge {
+  display: inline-block; font-size: 0.7rem; font-weight: 700;
+  padding: 3px 8px; border-radius: 99px; margin-top: 6px;
+}
+.pred-hit  { background: #14532d; color: #4ade80; }
+.pred-miss { background: #450a0a; color: #f87171; }
+.pred-none { background: #1e293b; color: #64748b; }
+.pred-warn { background: #422006; color: #fb923c; }
+
+/* 승패 투수 */
+.pitchers {
+  padding: 10px 16px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  border-top: 1px solid #334155;
+}
+.pit-tag {
+  font-size: 0.72rem; padding: 3px 10px; border-radius: 99px; font-weight: 600;
+}
+.pit-win  { background: #14532d; color: #4ade80; }
+.pit-lose { background: #450a0a; color: #f87171; }
+.pit-save { background: #1e3a5f; color: #60a5fa; }
+
+/* 승률 바 */
+.prob-section { padding: 14px 16px; border-top: 1px solid #334155; }
+.prob-label { font-size: 0.72rem; color: #64748b; margin-bottom: 8px; font-weight: 600; }
+.prob-bar-wrap {
+  height: 28px; border-radius: 6px; overflow: hidden;
+  display: flex; background: #0f172a;
+}
+.prob-away {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding-right: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #1d4ed8; transition: width .6s ease;
+}
+.prob-home {
+  display: flex; align-items: center; justify-content: flex-start;
+  padding-left: 8px; font-size: 0.8rem; font-weight: 800; color: #fff;
+  background: #dc2626; transition: width .6s ease;
+}
+.prob-teams {
+  display: flex; justify-content: space-between;
+  font-size: 0.72rem; color: #94a3b8; margin-top: 6px;
+}
+
+/* λ 지표 */
+.lambda-row {
+  display: flex; gap: 8px; padding: 10px 16px 0;
+}
+.lambda-chip {
+  background: #0f172a; border-radius: 8px; padding: 8px 12px; flex: 1;
+  text-align: center;
+}
+.lambda-chip .lc-label { font-size: 0.65rem; color: #64748b; }
+.lambda-chip .lc-val   { font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin-top: 2px; }
+
+/* 선발 투수 박스 */
+.pitchers-box {
+  padding: 12px 16px; border-top: 1px solid #334155;
+  display: flex; gap: 8px;
+}
+.pitcher-chip {
+  flex: 1; background: #0f172a; border-radius: 8px; padding: 10px 12px;
+}
+.pc-role  { font-size: 0.65rem; color: #64748b; }
+.pc-name  { font-size: 0.95rem; font-weight: 700; margin-top: 2px; }
+.pc-era   { font-size: 0.72rem; color: #94a3b8; margin-top: 2px; }
+
+/* 분석 아코디언 */
+.analysis-toggle {
+  width: 100%; padding: 12px 16px;
+  background: none; border: none; border-top: 1px solid #334155;
+  color: #3b82f6; font-size: 0.82rem; font-weight: 600;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.analysis-body {
+  display: none; padding: 0 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+}
+.analysis-body.open { display: block; }
+.analysis-body h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.analysis-body h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.analysis-body ul { padding-left: 16px; }
+.analysis-body li { margin-bottom: 4px; }
+.analysis-body p  { margin-bottom: 8px; }
+.analysis-body strong { color: #e2e8f0; }
+/* 완료경기 결과 분석 — 항상 노출 */
+.result-analysis {
+  padding: 12px 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+  border-top: 1px solid #1e293b;
+}
+.result-analysis h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.result-analysis h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.result-analysis ul { padding-left: 16px; }
+.result-analysis li { margin-bottom: 4px; }
+.result-analysis p  { margin-bottom: 8px; }
+.result-analysis strong { color: #e2e8f0; }
+
+/* 위협 타자 섹션 */
+.danger-section { padding: 0 16px 12px; }
+.danger-title { font-size: 0.72rem; color: #64748b; font-weight: 600; margin-bottom: 8px; }
+.danger-group { margin-bottom: 10px; }
+.danger-group-header {
+  display: flex; align-items: center; gap: 6px; margin-bottom: 6px;
+}
+.danger-team-tag {
+  font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 99px;
+}
+.away-tag { background: #1e3a5f; color: #60a5fa; }
+.home-tag { background: #3b0764; color: #c084fc; }
+.danger-sub { font-size: 0.72rem; color: #64748b; }
+.danger-batter-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 5px 10px; border-radius: 6px; margin-bottom: 3px;
+  background: #0f172a;
+}
+.db-name { font-size: 0.8rem; font-weight: 600; }
+.db-ops  { font-size: 0.75rem; font-weight: 700; }
+.ops-hot  { color: #f87171; }
+.ops-warm { color: #fb923c; }
+.ops-cool { color: #94a3b8; }
+
+/* 빈 상태 */
+.empty-state {
+  text-align: center; padding: 48px 24px; color: #475569;
+}
+.empty-state .es-icon { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-state .es-text { font-size: 0.9rem; }
+
+/* 업데이트 시각 */
+.update-info {
+  text-align: center; padding: 16px; font-size: 0.72rem; color: #334155;
+}
+
+/* ── 박스스코어 ── */
+.bs-toggle {
+  width: 100%; padding: 12px 16px;
+  background: none; border: none; border-top: 1px solid #334155;
+  color: #94a3b8; font-size: 0.82rem; font-weight: 600;
+  text-align: left; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.bs-body { display: none; }
+.bs-body.open { display: block; }
+
+.bs-sp {
+  padding: 10px 16px; border-top: 1px solid #1e293b;
+  font-size: 0.72rem; color: #94a3b8; line-height: 1.8;
+}
+.bs-sp strong { color: #cbd5e1; }
+
+.bs-team-header {
+  padding: 8px 16px 4px; font-size: 0.75rem; font-weight: 700; color: #64748b;
+  border-top: 1px solid #1e293b; margin-top: 4px;
+}
+.bs-table-wrap { overflow-x: auto; padding: 0 16px 12px; }
+.bs-table {
+  border-collapse: collapse; width: 100%; font-size: 0.72rem;
+  white-space: nowrap;
+}
+.bs-table th {
+  background: #0f172a; color: #64748b; font-weight: 600;
+  padding: 5px 8px; text-align: center; border-bottom: 1px solid #334155;
+  position: sticky; top: 0;
+}
+.bs-table td {
+  padding: 4px 8px; text-align: center; border-bottom: 1px solid #1e293b;
+  color: #cbd5e1;
+}
+.bs-table .td-name { text-align: left; font-weight: 600; color: #e2e8f0; min-width: 60px; }
+.bs-table .td-pos  { color: #64748b; }
+.bs-table .td-hi   { color: #fbbf24; font-weight: 700; }
+.bs-table .td-win  { color: #4ade80; font-weight: 700; }
+.bs-table .td-lose { color: #f87171; font-weight: 700; }
+.bs-table .td-save { color: #60a5fa; font-weight: 700; }
+.bs-table .td-hold { color: #c084fc; font-weight: 700; }
+.bs-table tr.sub-row td { color: #475569; }
+.bs-table tfoot td  { background: #0f172a; color: #94a3b8; font-weight: 600; }
+
+/* ── 소개 탭 ── */
+.intro-body {
+  padding: 16px; font-size: 0.84rem; line-height: 1.8; color: #cbd5e1;
+}
+.intro-body h1 { font-size: 1.1rem; font-weight: 800; color: #f1f5f9; margin: 16px 0 8px; }
+.intro-body h2 { font-size: 0.95rem; font-weight: 700; color: #93c5fd; margin: 16px 0 6px; border-bottom: 1px solid #1e293b; padding-bottom: 4px; }
+.intro-body h3 { font-size: 0.85rem; font-weight: 700; color: #7dd3fc; margin: 12px 0 4px; }
+.intro-body h4 { font-size: 0.82rem; font-weight: 700; color: #94a3b8; margin: 10px 0 4px; }
+.intro-body p  { margin-bottom: 8px; }
+.intro-body ul, .intro-body ol { padding-left: 18px; margin-bottom: 8px; }
+.intro-body li { margin-bottom: 3px; }
+.intro-body code {
+  background: #0f172a; padding: 1px 5px; border-radius: 4px;
+  font-size: 0.78rem; color: #7dd3fc; font-family: monospace;
+}
+.intro-body pre {
+  background: #0f172a; border-radius: 8px; padding: 12px 14px;
+  overflow-x: auto; margin: 8px 0; border: 1px solid #1e293b;
+}
+.intro-body pre code { background: none; padding: 0; color: #a5f3fc; }
+.intro-body table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.78rem; }
+.intro-body th { background: #1e293b; color: #94a3b8; padding: 6px 10px; text-align: left; border: 1px solid #334155; }
+.intro-body td { padding: 5px 10px; border: 1px solid #1e293b; }
+.intro-body hr { border: none; border-top: 1px solid #1e293b; margin: 16px 0; }
+.intro-body strong { color: #e2e8f0; }
+.intro-body a { color: #60a5fa; text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<style>
+.bt-card {
+  background: #1e293b; border-radius: 14px; margin-bottom: 16px;
+  border: 1px solid #334155; overflow: hidden;
+}
+.bt-ambig-card { border-color: #b45309; }
+.bt-card-header {
+  padding: 14px 16px 8px; display: flex;
+  justify-content: space-between; align-items: center;
+}
+.bt-matchup { font-size: 1rem; font-weight: 800; }
+.bt-at { color: #64748b; margin: 0 6px; font-weight: 400; }
+.bt-badges { display: flex; gap: 6px; }
+.bt-ambig { background: #422006; color: #fb923c; font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; font-weight: 700; }
+.bt-nopitch { background: #1e293b; color: #64748b; font-size: 0.7rem; padding: 2px 8px; border-radius: 99px; border: 1px solid #334155; }
+.bt-best-row { padding: 0 16px 10px; }
+.bt-best-badge {
+  display: inline-block; background: #0f2744; border: 1px solid #1d4ed8;
+  color: #60a5fa; font-size: 0.75rem; font-weight: 700;
+  padding: 5px 12px; border-radius: 8px;
+}
+.bt-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; padding: 0 12px 10px; }
+.bt-item {
+  background: #0f172a; border-radius: 8px; padding: 10px 8px;
+  border: 1px solid #1e293b; text-align: center;
+}
+.bt-item-best { border-color: #1d4ed8; background: #0a1628; }
+.bt-item-label { font-size: 0.68rem; color: #64748b; margin-bottom: 4px; }
+.bt-item-pick { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+.bt-bar-wrap { background: #1e293b; border-radius: 4px; height: 6px; position: relative; margin-bottom: 4px; }
+.bt-bar { height: 6px; border-radius: 4px; }
+.bt-bar-pct { font-size: 0.72rem; color: #94a3b8; }
+.bt-item-sub { font-size: 0.65rem; color: #475569; margin-top: 2px; }
+.bt-lambda { padding: 8px 16px 12px; font-size: 0.75rem; color: #475569; }
+.bt-section { background: #1e293b; border-radius: 12px; padding: 16px; margin-bottom: 16px; border: 1px solid #334155; }
+.bt-section-title { font-size: 0.85rem; font-weight: 700; color: #C8A951; margin-bottom: 10px; }
+.bt-combo-note { font-size: 0.72rem; color: #64748b; margin-bottom: 10px; }
+.cb-block { background: #0f172a; border-radius: 8px; padding: 12px; margin-bottom: 10px; border: 1px solid #1e293b; }
+.cb-title { font-size: 0.8rem; font-weight: 700; color: #e2e8f0; margin-bottom: 8px; }
+.cb-row { display: flex; gap: 8px; align-items: center; padding: 5px 0; border-bottom: 1px solid #1e293b; font-size: 0.78rem; }
+.cb-type { min-width: 60px; color: #64748b; }
+.cb-game { flex: 1; }
+.cb-pick { font-weight: 700; color: #60a5fa; min-width: 60px; }
+.cb-conf { color: #22c55e; font-weight: 700; }
+.cb-joint { font-size: 0.8rem; color: #94a3b8; margin-top: 8px; text-align: right; }
+.bt-ambig-list { padding-left: 18px; font-size: 0.82rem; line-height: 1.9; color: #94a3b8; }</style>
+<div class="page-header">
+  <a class="back-btn" href="index.html">‹ 홈</a>
+  <div>
+    <div class="page-title">🎯 배트맨 배팅 분석</div>
+    <div class="page-subtitle">2026년 6월 15일 · 시뮬레이션 기반 종목별 확률</div>
+  </div>
+</div>
+<div style="padding:12px 16px">
+  <div class="bt-section" style="background:#0a1628;border-color:#1d4ed8">
+    <div style="font-size:0.75rem;color:#64748b;line-height:1.7">
+      ⚠ 본 분석은 몬테카를로 시뮬레이션 기반 통계적 확률입니다.<br>
+      실제 배트맨 배당률·라인과 다를 수 있으며, 수익을 보장하지 않습니다.<br>
+      배트맨은 국민체육진흥공단 운영 합법 스포츠 복권입니다.
+    </div>
+  </div>
+  <div class="bt-section-title" style="color:#e2e8f0;font-size:0.9rem;margin-bottom:12px">경기별 종목 분석</div>
+  
+<div class="bt-card ">
+  <div class="bt-card-header">
+    <div class="bt-matchup">KT <span class="bt-at">@</span> 두산</div>
+    <div class="bt-badges"><span class="bt-nopitch">선발 미정</span></div>
+  </div>
+
+  <div class="bt-best-row"><span class="bt-best-badge">★ 추천: 언더오버 — 합산 8.5 오버 (예상 14.5점)</span></div>
+
+  <div class="bt-grid">
+    <div class="bt-item ">
+      <div class="bt-item-label">승패</div>
+      <div class="bt-item-pick">KT 승</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:64%;background:#22c55e"></div><span class="bt-bar-pct">63.6%</span></div>
+      <div class="bt-item-sub">KT 63.6% / 두산 36.4%</div>
+    </div>
+    <div class="bt-item bt-item-best">
+      <div class="bt-item-label">언더오버 (8.5)</div>
+      <div class="bt-item-pick">오버</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:95%;background:#22c55e"></div><span class="bt-bar-pct">95.2%</span></div>
+      <div class="bt-item-sub">예상합산 14.5점 · 오버 95.2%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">홀짝</div>
+      <div class="bt-item-pick">짝</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:50%;background:#64748b"></div><span class="bt-bar-pct">50.0%</span></div>
+      <div class="bt-item-sub">홀 50.0% / 짝 50.0%</div>
+    </div>
+  </div>
+
+  <div class="bt-lambda">기대득점 — KT <strong>8.64</strong>점 / 두산 <strong>5.87</strong>점</div>
+</div>
+<div class="bt-card ">
+  <div class="bt-card-header">
+    <div class="bt-matchup">롯데 <span class="bt-at">@</span> SSG</div>
+    <div class="bt-badges"><span class="bt-nopitch">선발 미정</span></div>
+  </div>
+
+  <div class="bt-best-row"><span class="bt-best-badge">★ 추천: 언더오버 — 합산 8.5 오버 (예상 10.5점)</span></div>
+
+  <div class="bt-grid">
+    <div class="bt-item ">
+      <div class="bt-item-label">승패</div>
+      <div class="bt-item-pick">SSG 승</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:57%;background:#f59e0b"></div><span class="bt-bar-pct">57.2%</span></div>
+      <div class="bt-item-sub">롯데 42.8% / SSG 57.2%</div>
+    </div>
+    <div class="bt-item bt-item-best">
+      <div class="bt-item-label">언더오버 (8.5)</div>
+      <div class="bt-item-pick">오버</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:72%;background:#22c55e"></div><span class="bt-bar-pct">72.3%</span></div>
+      <div class="bt-item-sub">예상합산 10.5점 · 오버 72.3%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">홀짝</div>
+      <div class="bt-item-pick">짝</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:50%;background:#64748b"></div><span class="bt-bar-pct">50.0%</span></div>
+      <div class="bt-item-sub">홀 50.0% / 짝 50.0%</div>
+    </div>
+  </div>
+
+  <div class="bt-lambda">기대득점 — 롯데 <strong>4.94</strong>점 / SSG <strong>5.58</strong>점</div>
+</div>
+<div class="bt-card ">
+  <div class="bt-card-header">
+    <div class="bt-matchup">키움 <span class="bt-at">@</span> 삼성</div>
+    <div class="bt-badges"><span class="bt-nopitch">선발 미정</span></div>
+  </div>
+
+  <div class="bt-best-row"><span class="bt-best-badge">★ 추천: 승패 — 삼성 승리</span></div>
+
+  <div class="bt-grid">
+    <div class="bt-item bt-item-best">
+      <div class="bt-item-label">승패</div>
+      <div class="bt-item-pick">삼성 승</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:70%;background:#22c55e"></div><span class="bt-bar-pct">69.9%</span></div>
+      <div class="bt-item-sub">키움 30.1% / 삼성 69.9%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">언더오버 (8.5)</div>
+      <div class="bt-item-pick">오버</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:61%;background:#f59e0b"></div><span class="bt-bar-pct">61.1%</span></div>
+      <div class="bt-item-sub">예상합산 9.5점 · 오버 61.1%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">홀짝</div>
+      <div class="bt-item-pick">짝</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:50%;background:#64748b"></div><span class="bt-bar-pct">50.0%</span></div>
+      <div class="bt-item-sub">홀 50.0% / 짝 50.0%</div>
+    </div>
+  </div>
+
+  <div class="bt-lambda">기대득점 — 키움 <strong>2.5</strong>점 / 삼성 <strong>7.02</strong>점</div>
+</div>
+<div class="bt-card ">
+  <div class="bt-card-header">
+    <div class="bt-matchup">LG <span class="bt-at">@</span> KIA</div>
+    <div class="bt-badges"><span class="bt-nopitch">선발 미정</span></div>
+  </div>
+
+  <div class="bt-best-row"><span class="bt-best-badge">★ 추천: 언더오버 — 합산 8.5 오버 (예상 13.1점)</span></div>
+
+  <div class="bt-grid">
+    <div class="bt-item ">
+      <div class="bt-item-label">승패</div>
+      <div class="bt-item-pick">LG 승</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:60%;background:#f59e0b"></div><span class="bt-bar-pct">60.5%</span></div>
+      <div class="bt-item-sub">LG 60.5% / KIA 39.5%</div>
+    </div>
+    <div class="bt-item bt-item-best">
+      <div class="bt-item-label">언더오버 (8.5)</div>
+      <div class="bt-item-pick">오버</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:90%;background:#22c55e"></div><span class="bt-bar-pct">90.3%</span></div>
+      <div class="bt-item-sub">예상합산 13.1점 · 오버 90.3%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">홀짝</div>
+      <div class="bt-item-pick">짝</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:50%;background:#64748b"></div><span class="bt-bar-pct">50.0%</span></div>
+      <div class="bt-item-sub">홀 50.0% / 짝 50.0%</div>
+    </div>
+  </div>
+
+  <div class="bt-lambda">기대득점 — LG <strong>7.38</strong>점 / KIA <strong>5.68</strong>점</div>
+</div>
+<div class="bt-card ">
+  <div class="bt-card-header">
+    <div class="bt-matchup">한화 <span class="bt-at">@</span> NC</div>
+    <div class="bt-badges"><span class="bt-nopitch">선발 미정</span></div>
+  </div>
+
+  <div class="bt-best-row"><span class="bt-best-badge">★ 추천: 언더오버 — 합산 8.5 오버 (예상 12.3점)</span></div>
+
+  <div class="bt-grid">
+    <div class="bt-item ">
+      <div class="bt-item-label">승패</div>
+      <div class="bt-item-pick">한화 승</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:51%;background:#64748b"></div><span class="bt-bar-pct">51.2%</span></div>
+      <div class="bt-item-sub">한화 51.2% / NC 48.8%</div>
+    </div>
+    <div class="bt-item bt-item-best">
+      <div class="bt-item-label">언더오버 (8.5)</div>
+      <div class="bt-item-pick">오버</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:87%;background:#22c55e"></div><span class="bt-bar-pct">86.6%</span></div>
+      <div class="bt-item-sub">예상합산 12.3점 · 오버 86.6%</div>
+    </div>
+    <div class="bt-item ">
+      <div class="bt-item-label">홀짝</div>
+      <div class="bt-item-pick">짝</div>
+      <div class="bt-bar-wrap"><div class="bt-bar" style="width:50%;background:#64748b"></div><span class="bt-bar-pct">50.0%</span></div>
+      <div class="bt-item-sub">홀 50.0% / 짝 50.0%</div>
+    </div>
+  </div>
+
+  <div class="bt-lambda">기대득점 — 한화 <strong>6.35</strong>점 / NC <strong>5.99</strong>점</div>
+</div>
+  
+<div class="bt-section">
+  <div class="bt-section-title">조합 배팅 가이드 (1,000~5,000원)</div>
+  <div class="bt-combo-note">신뢰도 58% 이상 경기만 선별 · 실제 배당률에 따라 기대값 다를 수 있음</div>
+  
+<div class="cb-block">
+  <div class="cb-title">2경기 조합 (5,000원)</div>
+  
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">KT vs 두산</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">95.2%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">LG vs KIA</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">90.3%</span>
+</div>
+  <div class="cb-joint">조합 적중 확률 ≈ <strong>85.9%</strong></div>
+</div>
+<div class="cb-block">
+  <div class="cb-title">3경기 조합 (3,000원)</div>
+  
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">KT vs 두산</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">95.2%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">LG vs KIA</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">90.3%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">한화 vs NC</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">86.6%</span>
+</div>
+  <div class="cb-joint">조합 적중 확률 ≈ <strong>74.4%</strong></div>
+</div>
+<div class="cb-block">
+  <div class="cb-title">4경기 조합 (1,000원)</div>
+  
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">KT vs 두산</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">95.2%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">LG vs KIA</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">90.3%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">한화 vs NC</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">86.6%</span>
+</div>
+<div class="cb-row">
+  <span class="cb-type">언더오버</span>
+  <span class="cb-game">롯데 vs SSG</span>
+  <span class="cb-pick">오버</span>
+  <span class="cb-conf">72.3%</span>
+</div>
+  <div class="cb-joint">조합 적중 확률 ≈ <strong>53.8%</strong></div>
+</div>
+</div>
+  
+</div>
+</body>
+</html>
