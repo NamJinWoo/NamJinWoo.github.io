@@ -95,6 +95,7 @@ a { color: inherit; text-decoration: none; }
 .pred-hit  { background: #14532d; color: #4ade80; }
 .pred-miss { background: #450a0a; color: #f87171; }
 .pred-none { background: #1e293b; color: #64748b; }
+.pred-warn { background: #422006; color: #fb923c; }
 
 /* 승패 투수 */
 .pitchers {
@@ -173,6 +174,18 @@ a { color: inherit; text-decoration: none; }
 .analysis-body li { margin-bottom: 4px; }
 .analysis-body p  { margin-bottom: 8px; }
 .analysis-body strong { color: #e2e8f0; }
+/* 완료경기 결과 분석 — 항상 노출 */
+.result-analysis {
+  padding: 12px 16px 16px;
+  font-size: 0.82rem; line-height: 1.7; color: #cbd5e1;
+  border-top: 1px solid #1e293b;
+}
+.result-analysis h2 { font-size: 0.88rem; color: #93c5fd; margin: 12px 0 6px; }
+.result-analysis h3 { font-size: 0.82rem; color: #7dd3fc; margin: 10px 0 4px; }
+.result-analysis ul { padding-left: 16px; }
+.result-analysis li { margin-bottom: 4px; }
+.result-analysis p  { margin-bottom: 8px; }
+.result-analysis strong { color: #e2e8f0; }
 
 /* 위협 타자 섹션 */
 .danger-section { padding: 0 16px 12px; }
@@ -295,6 +308,121 @@ a { color: inherit; text-decoration: none; }
   <div class="matchup">
     <div class="team-block">
       <div class="team-role">원정</div>
+      <div class="team-name">KT</div>
+      <div class="team-score winner">6</div>
+    </div>
+    <div class="vs-col">
+      <div class="vs-text">VS</div>
+      <span class="pred-badge pred-hit">예측 적중</span>
+    </div>
+    <div class="team-block">
+      <div class="team-role">홈</div>
+      <div class="team-name">두산</div>
+      <div class="team-score">0</div>
+    </div>
+  </div>
+  <div class="pitchers"><span class="pit-tag pit-win">승 보쉴리</span><span class="pit-tag pit-lose">패 최민석</span></div>
+  
+<div class="prob-section">
+  <div class="prob-label">승리 확률</div>
+  <div class="prob-bar-wrap">
+    <div class="prob-away" style="width:58.1%">58.1%</div>
+    <div class="prob-home" style="width:41.9%">41.9%</div>
+  </div>
+  <div class="prob-teams">
+    <span>KT (원정)</span>
+    <span>두산 (홈)</span>
+  </div>
+</div>
+  
+  
+  
+<button class="analysis-toggle" onclick="toggleAcc('a0')">
+  이전 경기 분석 보기 <span id="arr-a0">▼</span>
+</button>
+<div class="analysis-body" id="ab-a0">
+  <h2>핵심 포인트</h2>
+<ul>
+<li><strong>공격력</strong>: KT 경기당 5.61득점 우세</li>
+</ul>
+<h2>선발 투수 분석</h2>
+<h2>위협 타자</h2>
+<p>위협 타자 데이터 없음</p>
+<h2>팀 흐름 분석</h2>
+<p><strong>KT (원정)</strong>: 38승1무25패 (승률 0.603) | 최근10경기 6승0무4패 | 연속 2승 — 2연승</p>
+<p><strong>두산 (홈)</strong>: 32승2무31패 (승률 0.508) | 최근10경기 6승1무3패 | 연속 1패</p>
+<h2>승부 포인트</h2>
+<ul>
+<li><strong>선취점 선점</strong>: KT λ=7.28 vs 두산 λ=5.83 — 초반 흐름이 승부 갈림</li>
+<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
+</ul>
+<h2>최종 예측</h2>
+<p><strong>예측 승팀: KT</strong> (58.2% 우세)</p>
+<p><strong>근거</strong>: 2승 상승세<br />
+<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
+  
+<button class="bs-toggle" onclick="toggleBS('bs-0')">
+  경기 결과 상세 <span id="bs-0-arr">▼</span>
+</button>
+<div class="bs-body" id="bs-0">
+  <div class="bs-sp"><strong>결승타</strong> 김상수(4회 2사 2루서 좌전 안타) &nbsp;|&nbsp; <strong>홈런</strong> 최원준2호3호(5회1점 9회1점 최민석 이용찬) &nbsp;|&nbsp; <strong>2루타</strong> 허경민2(4 6회) 윤준호(6회) &nbsp;|&nbsp; <strong>실책</strong> 카메론(6회) &nbsp;|&nbsp; <strong>도루</strong> 최원준(7회) &nbsp;|&nbsp; <strong>주루사</strong> 김민석(5회) &nbsp;|&nbsp; <strong>병살타</strong> 오명진(8회) &nbsp;|&nbsp; <strong>심판</strong> 김갑수 김정 김익수 전일수</div>
+<div class="bs-team-header">KT 타자</div>
+<div class="bs-table-wrap">
+  <table class="bs-table">
+    <thead><tr><th></th><th></th><th>선수명</th><th>타수</th><th>안타</th><th>타점</th><th>득점</th><th>타율</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+    <tbody><tr><td class="">1</td><td class="td-pos">우</td><td class="td-name">최원준</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0.370</td><td class="">2비</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">우중홈</td><td class=""></td><td class="">4구</td><td class=""></td><td class="">우중홈</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">2</td><td class="td-pos">一</td><td class="td-name">김현수</td><td class="">5</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.276</td><td class="">투땅</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">2</td><td class="td-pos">一</td><td class="td-name">오윤석</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.302</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">3</td><td class="td-pos">지</td><td class="td-name">김민혁</td><td class="">4</td><td class="td-hi">2</td><td class="">0</td><td class="td-hi">1</td><td class="">0.357</td><td class="">좌안</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">우중안</td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">4</td><td class="td-pos">좌</td><td class="td-name">힐리어드</td><td class="">3</td><td class="td-hi">1</td><td class="">0</td><td class="td-hi">1</td><td class="">0.280</td><td class="">중안</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">4구</td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">5</td><td class="td-pos">三</td><td class="td-name">허경민</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0.424</td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">좌2</td><td class=""></td><td class="">우2</td><td class=""></td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">5</td><td class="td-pos">三</td><td class="td-name">장준원</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.200</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">6</td><td class="td-pos">二</td><td class="td-name">김상수</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0</td><td class="">0.324</td><td class=""></td><td class="">우비</td><td class=""></td><td class="">좌안</td><td class=""></td><td class="">중안</td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">7</td><td class="td-pos">중</td><td class="td-name">유준규</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.308</td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">투희번</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">7</td><td class="td-pos">타중</td><td class="td-name">배정대</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.224</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">8</td><td class="td-pos">포</td><td class="td-name">한승택</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.200</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">2땅</td><td class="">중비</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">9</td><td class="td-pos">유</td><td class="td-name">권동진</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.341</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">좌비</td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">9</td><td class="td-pos">타</td><td class="td-name">장성우</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.206</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">9</td><td class="td-pos">유</td><td class="td-name">이강민</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.207</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr></tbody>
+    <tfoot><tr><td>TOTAL</td><td>35</td><td>9</td><td></td><td></td><td></td><td></td><td></td><td>6</td><td>6</td><td>0.289</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>
+  </table>
+</div>
+<div class="bs-team-header">두산 타자</div>
+<div class="bs-table-wrap">
+  <table class="bs-table">
+    <thead><tr><th></th><th></th><th>선수명</th><th>타수</th><th>안타</th><th>타점</th><th>득점</th><th>타율</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
+    <tbody><tr><td class="">1</td><td class="td-pos">유</td><td class="td-name">박찬호</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.262</td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">유땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">2</td><td class="td-pos">三</td><td class="td-name">박지훈</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.287</td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">좌안</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">3</td><td class="td-pos">지</td><td class="td-name">손아섭</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.233</td><td class="">좌비</td><td class=""></td><td class=""></td><td class="">중비</td><td class=""></td><td class=""></td><td class="">좌안</td><td class=""></td><td class="">투땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">4</td><td class="td-pos">우</td><td class="td-name">카메론</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.293</td><td class=""></td><td class="">1땅</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">4</td><td class="td-pos">우</td><td class="td-name">김인태</td><td class="">1</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.227</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">5</td><td class="td-pos">좌</td><td class="td-name">김민석</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.269</td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class="">좌비</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">6</td><td class="td-pos">중</td><td class="td-name">정수빈</td><td class="">3</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.256</td><td class=""></td><td class="">2직</td><td class=""></td><td class=""></td><td class="">1직</td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">7</td><td class="td-pos">一</td><td class="td-name">오명진</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.220</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class="">유땅</td><td class=""></td><td class="">1병</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">8</td><td class="td-pos">포</td><td class="td-name">윤준호</td><td class="">2</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.250</td><td class=""></td><td class=""></td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">좌2</td><td class=""></td><td class="">4구</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">9</td><td class="td-pos">二</td><td class="td-name">이유찬</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.179</td><td class=""></td><td class=""></td><td class="">우비</td><td class=""></td><td class=""></td><td class="">우비</td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr></tbody>
+    <tfoot><tr><td>TOTAL</td><td>31</td><td>6</td><td></td><td></td><td></td><td></td><td></td><td>0</td><td>0</td><td>0.256</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>
+  </table>
+</div>
+<div class="bs-team-header">KT 투수</div>
+<div class="bs-table-wrap">
+  <table class="bs-table">
+    <thead><tr><th>선수명</th><th>등판</th><th>결과</th><th>승</th><th>패</th><th>세</th><th>이닝</th><th>타자</th><th>투구수</th><th>타수</th><th>피안타</th><th>홈런</th><th>4사구</th><th>삼진</th><th>실점</th><th>자책</th><th>평균자책점</th></tr></thead>
+    <tbody><tr><td class="td-name">보쉴리</td><td class="">선발</td><td class="td-win">승</td><td class="">6</td><td class="">3</td><td class="">0</td><td class="">7</td><td class="">23</td><td class="">85</td><td class="">23</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">3.49</td></tr><tr><td class="td-name">한승혁</td><td class="">8.6</td><td class="">—</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">23</td><td class="">3</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">5.01</td></tr><tr><td class="td-name">박영현</td><td class="">9.1</td><td class="">—</td><td class="">3</td><td class="">0</td><td class="">10</td><td class="">1</td><td class="">5</td><td class="">23</td><td class="">5</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">2.42</td></tr></tbody>
+    <tfoot><tr><td>TOTAL</td><td>9</td><td>32</td><td>131</td><td>31</td><td>6</td><td>0</td><td>1</td><td>4</td><td>0</td><td>0</td><td>0.00</td></tr></tfoot>
+  </table>
+</div>
+<div class="bs-team-header">두산 투수</div>
+<div class="bs-table-wrap">
+  <table class="bs-table">
+    <thead><tr><th>선수명</th><th>등판</th><th>결과</th><th>승</th><th>패</th><th>세</th><th>이닝</th><th>타자</th><th>투구수</th><th>타수</th><th>피안타</th><th>홈런</th><th>4사구</th><th>삼진</th><th>실점</th><th>자책</th><th>평균자책점</th></tr></thead>
+    <tbody><tr><td class="td-name">최민석</td><td class="">선발</td><td class="td-lose">패</td><td class="">4</td><td class="">1</td><td class="">0</td><td class="">5</td><td class="">24</td><td class="">96</td><td class="">23</td><td class="">8</td><td class="">1</td><td class="">1</td><td class="">6</td><td class="">5</td><td class="">5</td><td class="">2.84</td></tr><tr><td class="td-name">이병헌</td><td class="">6.7</td><td class="">—</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">3</td><td class="">14</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">6.05</td></tr><tr><td class="td-name">최주형</td><td class="">7.1</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">17</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.00</td></tr><tr><td class="td-name">박정수</td><td class="">8.5</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">3</td><td class="">20</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">3.60</td></tr><tr><td class="td-name">이용찬</td><td class="">9.8</td><td class="">—</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">20</td><td class="">4</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="">9.95</td></tr></tbody>
+    <tfoot><tr><td>TOTAL</td><td>9</td><td>38</td><td>167</td><td>35</td><td>9</td><td>2</td><td>2</td><td>9</td><td>6</td><td>6</td><td>6.00</td></tr></tfoot>
+  </table>
+</div>
+</div>
+<script>
+function toggleBS(id) {
+  var el=document.getElementById(id), arr=document.getElementById(id+'-arr');
+  if(el.classList.contains('open')){el.classList.remove('open');arr.textContent='▼';}
+  else{el.classList.add('open');arr.textContent='▲';}
+}
+</script>
+</div>
+<div class="game-card">
+  <div class="matchup">
+    <div class="team-block">
+      <div class="team-role">원정</div>
       <div class="team-name">LG</div>
       <div class="team-score winner">2</div>
     </div>
@@ -313,8 +441,8 @@ a { color: inherit; text-decoration: none; }
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:75.3%">75.3%</div>
-    <div class="prob-home" style="width:24.7%">24.7%</div>
+    <div class="prob-away" style="width:70.0%">70.0%</div>
+    <div class="prob-home" style="width:30.0%">30.0%</div>
   </div>
   <div class="prob-teams">
     <span>LG (원정)</span>
@@ -323,34 +451,35 @@ a { color: inherit; text-decoration: none; }
 </div>
   
   
-<button class="analysis-toggle" onclick="toggleAnalysis(0)">
-  이전 경기 분석 보기 <span id="arr-0">▼</span>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a1')">
+  이전 경기 분석 보기 <span id="arr-a1">▼</span>
 </button>
-<div class="analysis-body" id="ab-0">
+<div class="analysis-body" id="ab-a1">
   <h2>핵심 포인트</h2>
 <ul>
-<li><strong>공격력</strong>: LG 경기당 4.52득점 우세</li>
+<li><strong>공격력</strong>: LG 경기당 5.16득점 우세</li>
 </ul>
 <h2>선발 투수 분석</h2>
 <h2>위협 타자</h2>
 <p>위협 타자 데이터 없음</p>
 <h2>팀 흐름 분석</h2>
-<p><strong>LG (원정)</strong>: 29승0무19패 (승률 0.604) | 최근10경기 6승0무4패 | 연속 3승 — 3연승</p>
-<p><strong>롯데 (홈)</strong>: 19승1무27패 (승률 0.413) | 최근10경기 4승0무6패 | 연속 2패 — 2연패</p>
+<p><strong>LG (원정)</strong>: 40승0무24패 (승률 0.625) | 최근10경기 6승0무4패 | 연속 1승</p>
+<p><strong>롯데 (홈)</strong>: 24승1무38패 (승률 0.387) | 최근10경기 3승0무7패 | 연속 1패</p>
 <h2>승부 포인트</h2>
 <ul>
-<li><strong>선취점 선점</strong>: LG λ=5.58 vs 롯데 λ=2.87 — 초반 흐름이 승부 갈림</li>
+<li><strong>선취점 선점</strong>: LG λ=5.94 vs 롯데 λ=3.23 — 초반 흐름이 승부 갈림</li>
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: LG</strong> (75.3% 우세)</p>
-<p><strong>근거</strong>: 3승 상승세<br />
-<strong>예상 스코어</strong>: LG 6 - 롯데 3</p>
+<p><strong>예측 승팀: LG</strong> (70.1% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: LG 7 - 롯데 3</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -359,10 +488,10 @@ function toggleAnalysis(i) {
 }
 </script>
   
-<button class="bs-toggle" onclick="toggleBS('bs-0')">
-  경기 결과 상세 <span id="bs-0-arr">▼</span>
+<button class="bs-toggle" onclick="toggleBS('bs-1')">
+  경기 결과 상세 <span id="bs-1-arr">▼</span>
 </button>
-<div class="bs-body" id="bs-0">
+<div class="bs-body" id="bs-1">
   <div class="bs-sp"><strong>결승타</strong> 천성호(7회 무사 1루서 좌익수 2루타) &nbsp;|&nbsp; <strong>홈런</strong> 박동원3호(2회1점 비슬리) &nbsp;|&nbsp; <strong>2루타</strong> 천성호(7회) &nbsp;|&nbsp; <strong>실책</strong> 전민재(4회) &nbsp;|&nbsp; <strong>도루</strong> 장두성(3회) &nbsp;|&nbsp; <strong>도루자</strong> 천성호(7회) &nbsp;|&nbsp; <strong>병살타</strong> 전민재(4회) &nbsp;|&nbsp; <strong>심판</strong> 이영재 함지웅 김성철 김정국</div>
 <div class="bs-team-header">LG 타자</div>
 <div class="bs-table-wrap">
@@ -427,8 +556,8 @@ function toggleBS(id) {
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:64.6%">64.6%</div>
-    <div class="prob-home" style="width:35.4%">35.4%</div>
+    <div class="prob-away" style="width:55.6%">55.6%</div>
+    <div class="prob-home" style="width:44.4%">44.4%</div>
   </div>
   <div class="prob-teams">
     <span>KIA (원정)</span>
@@ -437,34 +566,35 @@ function toggleBS(id) {
 </div>
   
   
-<button class="analysis-toggle" onclick="toggleAnalysis(1)">
-  이전 경기 분석 보기 <span id="arr-1">▼</span>
+  
+<button class="analysis-toggle" onclick="toggleAcc('a2')">
+  이전 경기 분석 보기 <span id="arr-a2">▼</span>
 </button>
-<div class="analysis-body" id="ab-1">
+<div class="analysis-body" id="ab-a2">
   <h2>핵심 포인트</h2>
 <ul>
-<li><strong>공격력</strong>: KIA 경기당 5.29득점 우세</li>
+<li><strong>공격력</strong>: KIA 경기당 5.00득점 우세</li>
 </ul>
 <h2>선발 투수 분석</h2>
 <h2>위협 타자</h2>
 <p>위협 타자 데이터 없음</p>
 <h2>팀 흐름 분석</h2>
-<p><strong>KIA (원정)</strong>: 26승1무22패 (승률 0.542) | 최근10경기 8승0무2패 | 연속 4승 — <strong>4연승 상승세</strong></p>
-<p><strong>키움 (홈)</strong>: 20승1무29패 (승률 0.408) | 최근10경기 6승0무4패 | 연속 3패 — 3연패</p>
+<p><strong>KIA (원정)</strong>: 34승1무30패 (승률 0.531) | 최근10경기 5승0무5패 | 연속 1승</p>
+<p><strong>키움 (홈)</strong>: 26승1무40패 (승률 0.394) | 최근10경기 5승0무5패 | 연속 3승 — 3연승</p>
 <h2>승부 포인트</h2>
 <ul>
-<li><strong>선취점 선점</strong>: KIA λ=5.14 vs 키움 λ=3.75 — 초반 흐름이 승부 갈림</li>
+<li><strong>선취점 선점</strong>: KIA λ=4.26 vs 키움 λ=3.49 — 초반 흐름이 승부 갈림</li>
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: KIA</strong> (64.6% 우세)</p>
-<p><strong>근거</strong>: 4승 상승세<br />
-<strong>예상 스코어</strong>: KIA 6 - 키움 3</p>
+<p><strong>예측 승팀: KIA</strong> (55.7% 우세)</p>
+<p><strong>근거</strong>: 종합 전력 우위<br />
+<strong>예상 스코어</strong>: KIA 5 - 키움 3</p>
 </div>
 <script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
   if (el.classList.contains('open')) {
     el.classList.remove('open'); arr.textContent = '▼';
   } else {
@@ -473,10 +603,10 @@ function toggleAnalysis(i) {
 }
 </script>
   
-<button class="bs-toggle" onclick="toggleBS('bs-1')">
-  경기 결과 상세 <span id="bs-1-arr">▼</span>
+<button class="bs-toggle" onclick="toggleBS('bs-2')">
+  경기 결과 상세 <span id="bs-2-arr">▼</span>
 </button>
-<div class="bs-body" id="bs-1">
+<div class="bs-body" id="bs-2">
   <div class="bs-sp"><strong>결승타</strong> 박재현(5회 1사 2,3루서 좌전 안타) &nbsp;|&nbsp; <strong>홈런</strong> 아데를린8호(6회1점 김성진) &nbsp;|&nbsp; <strong>2루타</strong> 김태군(5회) 김도영(7회) 여동욱(9회) 김건희(9회) &nbsp;|&nbsp; <strong>실책</strong> 최주환(7회) &nbsp;|&nbsp; <strong>도루</strong> 박민(9회) &nbsp;|&nbsp; <strong>주루사</strong> 여동욱(9회) 전태현(9회) &nbsp;|&nbsp; <strong>병살타</strong> 김호령(5회) &nbsp;|&nbsp; <strong>심판</strong> 정은재 박기택 구명환 정종수</div>
 <div class="bs-team-header">KIA 타자</div>
 <div class="bs-table-wrap">
@@ -506,7 +636,7 @@ function toggleAnalysis(i) {
 <div class="bs-table-wrap">
   <table class="bs-table">
     <thead><tr><th>선수명</th><th>등판</th><th>결과</th><th>승</th><th>패</th><th>세</th><th>이닝</th><th>타자</th><th>투구수</th><th>타수</th><th>피안타</th><th>홈런</th><th>4사구</th><th>삼진</th><th>실점</th><th>자책</th><th>평균자책점</th></tr></thead>
-    <tbody><tr><td class="td-name">안우진</td><td class="">선발</td><td class="">—</td><td class="">1</td><td class="">2</td><td class="">0</td><td class="">4</td><td class="">15</td><td class="">61</td><td class="">13</td><td class="">1</td><td class="">0</td><td class="">2</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">2.25</td></tr><tr><td class="td-name">김성진</td><td class="">5.7</td><td class="td-lose">패</td><td class="">1</td><td class="">2</td><td class="">0</td><td class="">2</td><td class="">9</td><td class="">28</td><td class="">9</td><td class="">4</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">2</td><td class="">2</td><td class="">6.35</td></tr><tr><td class="td-name">56337</td><td class="">7.7</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">7</td><td class="">20</td><td class="">5</td><td class="">1</td><td class="">0</td><td class="">2</td><td class="">0</td><td class="">3</td><td class="">0</td><td class="">2.25</td></tr><tr><td class="td-name">67391</td><td class="">8.5</td><td class="">—</td><td class="">0</td><td class="">1</td><td class="">5</td><td class="">2</td><td class="">7</td><td class="">25</td><td class="">7</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">8.35</td></tr></tbody>
+    <tbody><tr><td class="td-name">안우진</td><td class="">선발</td><td class="">—</td><td class="">1</td><td class="">2</td><td class="">0</td><td class="">4</td><td class="">15</td><td class="">61</td><td class="">13</td><td class="">1</td><td class="">0</td><td class="">2</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">2.25</td></tr><tr><td class="td-name">김성진</td><td class="">5.7</td><td class="td-lose">패</td><td class="">1</td><td class="">2</td><td class="">0</td><td class="">2</td><td class="">9</td><td class="">28</td><td class="">9</td><td class="">4</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">2</td><td class="">2</td><td class="">6.35</td></tr><tr><td class="td-name">박지성</td><td class="">7.7</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">7</td><td class="">20</td><td class="">5</td><td class="">1</td><td class="">0</td><td class="">2</td><td class="">0</td><td class="">3</td><td class="">0</td><td class="">2.25</td></tr><tr><td class="td-name">김재웅</td><td class="">8.5</td><td class="">—</td><td class="">0</td><td class="">1</td><td class="">5</td><td class="">2</td><td class="">7</td><td class="">25</td><td class="">7</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">8.35</td></tr></tbody>
     <tfoot><tr><td>TOTAL</td><td>9</td><td>38</td><td>134</td><td>34</td><td>7</td><td>1</td><td>4</td><td>5</td><td>5</td><td>2</td><td>2.00</td></tr></tfoot>
   </table>
 </div>
@@ -518,121 +648,7 @@ function toggleBS(id) {
   else{el.classList.add('open');arr.textContent='▲';}
 }
 </script>
-</div>
-<div class="game-card">
-  <div class="matchup">
-    <div class="team-block">
-      <div class="team-role">원정</div>
-      <div class="team-name">KT</div>
-      <div class="team-score winner">6</div>
-    </div>
-    <div class="vs-col">
-      <div class="vs-text">VS</div>
-      <span class="pred-badge pred-hit">예측 적중</span>
-    </div>
-    <div class="team-block">
-      <div class="team-role">홈</div>
-      <div class="team-name">두산</div>
-      <div class="team-score">0</div>
-    </div>
-  </div>
-  <div class="pitchers"><span class="pit-tag pit-win">승 보쉴리</span><span class="pit-tag pit-lose">패 최민석</span></div>
-  
-<div class="prob-section">
-  <div class="prob-label">승리 확률</div>
-  <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:65.4%">65.4%</div>
-    <div class="prob-home" style="width:34.6%">34.6%</div>
-  </div>
-  <div class="prob-teams">
-    <span>KT (원정)</span>
-    <span>두산 (홈)</span>
-  </div>
-</div>
-  
-  
-<button class="analysis-toggle" onclick="toggleAnalysis(2)">
-  이전 경기 분석 보기 <span id="arr-2">▼</span>
-</button>
-<div class="analysis-body" id="ab-2">
-  <h2>핵심 포인트</h2>
-<ul>
-<li><strong>공격력</strong>: KT 경기당 5.81득점 우세</li>
-</ul>
-<h2>선발 투수 분석</h2>
-<h2>위협 타자</h2>
-<p>위협 타자 데이터 없음</p>
-<h2>팀 흐름 분석</h2>
-<p><strong>KT (원정)</strong>: 28승1무19패 (승률 0.596) | 최근10경기 4승0무6패 | 연속 1승</p>
-<p><strong>두산 (홈)</strong>: 22승1무26패 (승률 0.458) | 최근10경기 4승0무6패 | 연속 4패 — <strong>4연패 침체</strong></p>
-<h2>승부 포인트</h2>
-<ul>
-<li><strong>선취점 선점</strong>: KT λ=7.24 vs 두산 λ=5.09 — 초반 흐름이 승부 갈림</li>
-<li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
-</ul>
-<h2>최종 예측</h2>
-<p><strong>예측 승팀: KT</strong> (65.4% 우세)</p>
-<p><strong>근거</strong>: 종합 전력 우위<br />
-<strong>예상 스코어</strong>: KT 8 - 두산 5</p>
-</div>
-<script>
-function toggleAnalysis(i) {
-  var el = document.getElementById('ab-'+i);
-  var arr = document.getElementById('arr-'+i);
-  if (el.classList.contains('open')) {
-    el.classList.remove('open'); arr.textContent = '▼';
-  } else {
-    el.classList.add('open'); arr.textContent = '▲';
-  }
-}
-</script>
-  
-<button class="bs-toggle" onclick="toggleBS('bs-2')">
-  경기 결과 상세 <span id="bs-2-arr">▼</span>
-</button>
-<div class="bs-body" id="bs-2">
-  <div class="bs-sp"><strong>결승타</strong> 김상수(4회 2사 2루서 좌전 안타) &nbsp;|&nbsp; <strong>홈런</strong> 최원준2호3호(5회1점 9회1점 최민석 이용찬) &nbsp;|&nbsp; <strong>2루타</strong> 허경민2(4 6회) 윤준호(6회) &nbsp;|&nbsp; <strong>실책</strong> 카메론(6회) &nbsp;|&nbsp; <strong>도루</strong> 최원준(7회) &nbsp;|&nbsp; <strong>주루사</strong> 김민석(5회) &nbsp;|&nbsp; <strong>병살타</strong> 오명진(8회) &nbsp;|&nbsp; <strong>심판</strong> 김갑수 김정 김익수 전일수</div>
-<div class="bs-team-header">KT 타자</div>
-<div class="bs-table-wrap">
-  <table class="bs-table">
-    <thead><tr><th></th><th></th><th>선수명</th><th>타수</th><th>안타</th><th>타점</th><th>득점</th><th>타율</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
-    <tbody><tr><td class="">1</td><td class="td-pos">우</td><td class="td-name">최원준</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0.370</td><td class="">2비</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">우중홈</td><td class=""></td><td class="">4구</td><td class=""></td><td class="">우중홈</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">2</td><td class="td-pos">一</td><td class="td-name">김현수</td><td class="">5</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.276</td><td class="">투땅</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">중비</td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">2</td><td class="td-pos">一</td><td class="td-name">오윤석</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.302</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">3</td><td class="td-pos">지</td><td class="td-name">김민혁</td><td class="">4</td><td class="td-hi">2</td><td class="">0</td><td class="td-hi">1</td><td class="">0.357</td><td class="">좌안</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">우중안</td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">4</td><td class="td-pos">좌</td><td class="td-name">힐리어드</td><td class="">3</td><td class="td-hi">1</td><td class="">0</td><td class="td-hi">1</td><td class="">0.280</td><td class="">중안</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">4구</td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">5</td><td class="td-pos">三</td><td class="td-name">허경민</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0.424</td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">좌2</td><td class=""></td><td class="">우2</td><td class=""></td><td class="">우비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">5</td><td class="td-pos">三</td><td class="td-name">장준원</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.200</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">6</td><td class="td-pos">二</td><td class="td-name">김상수</td><td class="">4</td><td class="td-hi">2</td><td class="td-hi">2</td><td class="">0</td><td class="">0.324</td><td class=""></td><td class="">우비</td><td class=""></td><td class="">좌안</td><td class=""></td><td class="">중안</td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">7</td><td class="td-pos">중</td><td class="td-name">유준규</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.308</td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">투희번</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">7</td><td class="td-pos">타중</td><td class="td-name">배정대</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.224</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">8</td><td class="td-pos">포</td><td class="td-name">한승택</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.200</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">2땅</td><td class="">중비</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">9</td><td class="td-pos">유</td><td class="td-name">권동진</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.341</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">좌비</td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">9</td><td class="td-pos">타</td><td class="td-name">장성우</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.206</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">9</td><td class="td-pos">유</td><td class="td-name">이강민</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.207</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr></tbody>
-    <tfoot><tr><td>TOTAL</td><td>35</td><td>9</td><td></td><td></td><td></td><td></td><td></td><td>6</td><td>6</td><td>0.289</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>
-  </table>
-</div>
-<div class="bs-team-header">두산 타자</div>
-<div class="bs-table-wrap">
-  <table class="bs-table">
-    <thead><tr><th></th><th></th><th>선수명</th><th>타수</th><th>안타</th><th>타점</th><th>득점</th><th>타율</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th></tr></thead>
-    <tbody><tr><td class="">1</td><td class="td-pos">유</td><td class="td-name">박찬호</td><td class="">4</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.262</td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class="">유땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">2</td><td class="td-pos">三</td><td class="td-name">박지훈</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.287</td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class="">좌안</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">3</td><td class="td-pos">지</td><td class="td-name">손아섭</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.233</td><td class="">좌비</td><td class=""></td><td class=""></td><td class="">중비</td><td class=""></td><td class=""></td><td class="">좌안</td><td class=""></td><td class="">투땅</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">4</td><td class="td-pos">우</td><td class="td-name">카메론</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.293</td><td class=""></td><td class="">1땅</td><td class=""></td><td class=""></td><td class="">삼진</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr class="sub-row"><td class="">4</td><td class="td-pos">우</td><td class="td-name">김인태</td><td class="">1</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.227</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">5</td><td class="td-pos">좌</td><td class="td-name">김민석</td><td class="">4</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.269</td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class="">좌비</td><td class=""></td><td class="">삼진</td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">6</td><td class="td-pos">중</td><td class="td-name">정수빈</td><td class="">3</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.256</td><td class=""></td><td class="">2직</td><td class=""></td><td class=""></td><td class="">1직</td><td class=""></td><td class=""></td><td class="">우안</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">7</td><td class="td-pos">一</td><td class="td-name">오명진</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.220</td><td class=""></td><td class=""></td><td class="">2땅</td><td class=""></td><td class=""></td><td class="">유땅</td><td class=""></td><td class="">1병</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">8</td><td class="td-pos">포</td><td class="td-name">윤준호</td><td class="">2</td><td class="td-hi">1</td><td class="">0</td><td class="">0</td><td class="">0.250</td><td class=""></td><td class=""></td><td class="">3땅</td><td class=""></td><td class=""></td><td class="">좌2</td><td class=""></td><td class="">4구</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr><tr><td class="">9</td><td class="td-pos">二</td><td class="td-name">이유찬</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.179</td><td class=""></td><td class=""></td><td class="">우비</td><td class=""></td><td class=""></td><td class="">우비</td><td class=""></td><td class="">좌비</td><td class=""></td><td class=""></td><td class=""></td><td class=""></td></tr></tbody>
-    <tfoot><tr><td>TOTAL</td><td>31</td><td>6</td><td></td><td></td><td></td><td></td><td></td><td>0</td><td>0</td><td>0.256</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tfoot>
-  </table>
-</div>
-<div class="bs-team-header">KT 투수</div>
-<div class="bs-table-wrap">
-  <table class="bs-table">
-    <thead><tr><th>선수명</th><th>등판</th><th>결과</th><th>승</th><th>패</th><th>세</th><th>이닝</th><th>타자</th><th>투구수</th><th>타수</th><th>피안타</th><th>홈런</th><th>4사구</th><th>삼진</th><th>실점</th><th>자책</th><th>평균자책점</th></tr></thead>
-    <tbody><tr><td class="td-name">보쉴리</td><td class="">선발</td><td class="td-win">승</td><td class="">6</td><td class="">3</td><td class="">0</td><td class="">7</td><td class="">23</td><td class="">85</td><td class="">23</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">3.49</td></tr><tr><td class="td-name">한승혁</td><td class="">8.6</td><td class="">—</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">23</td><td class="">3</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">5.01</td></tr><tr><td class="td-name">박영현</td><td class="">9.1</td><td class="">—</td><td class="">3</td><td class="">0</td><td class="">10</td><td class="">1</td><td class="">5</td><td class="">23</td><td class="">5</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">2.42</td></tr></tbody>
-    <tfoot><tr><td>TOTAL</td><td>9</td><td>32</td><td>131</td><td>31</td><td>6</td><td>0</td><td>1</td><td>4</td><td>0</td><td>0</td><td>0.00</td></tr></tfoot>
-  </table>
-</div>
-<div class="bs-team-header">두산 투수</div>
-<div class="bs-table-wrap">
-  <table class="bs-table">
-    <thead><tr><th>선수명</th><th>등판</th><th>결과</th><th>승</th><th>패</th><th>세</th><th>이닝</th><th>타자</th><th>투구수</th><th>타수</th><th>피안타</th><th>홈런</th><th>4사구</th><th>삼진</th><th>실점</th><th>자책</th><th>평균자책점</th></tr></thead>
-    <tbody><tr><td class="td-name">최민석</td><td class="">선발</td><td class="td-lose">패</td><td class="">4</td><td class="">1</td><td class="">0</td><td class="">5</td><td class="">24</td><td class="">96</td><td class="">23</td><td class="">8</td><td class="">1</td><td class="">1</td><td class="">6</td><td class="">5</td><td class="">5</td><td class="">2.84</td></tr><tr><td class="td-name">52204</td><td class="">6.7</td><td class="">—</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">3</td><td class="">14</td><td class="">2</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">6.05</td></tr><tr><td class="td-name">56215</td><td class="">7.1</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">17</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">0.00</td></tr><tr><td class="td-name">65639</td><td class="">8.5</td><td class="">—</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">3</td><td class="">20</td><td class="">3</td><td class="">0</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">3.60</td></tr><tr><td class="td-name">77211</td><td class="">9.8</td><td class="">—</td><td class="">1</td><td class="">0</td><td class="">0</td><td class="">1</td><td class="">4</td><td class="">20</td><td class="">4</td><td class="">1</td><td class="">1</td><td class="">0</td><td class="">1</td><td class="">1</td><td class="">1</td><td class="">9.95</td></tr></tbody>
-    <tfoot><tr><td>TOTAL</td><td>9</td><td>38</td><td>167</td><td>35</td><td>9</td><td>2</td><td>2</td><td>9</td><td>6</td><td>6</td><td>6.00</td></tr></tfoot>
-  </table>
-</div>
-</div>
-<script>
-function toggleBS(id) {
-  var el=document.getElementById(id), arr=document.getElementById(id+'-arr');
-  if(el.classList.contains('open')){el.classList.remove('open');arr.textContent='▼';}
-  else{el.classList.add('open');arr.textContent='▲';}
-}
-</script>
 </div></div>
-<div class="update-info">빌드: 2026-05-26 22:52</div>
+<div class="update-info">빌드: 2026-06-14 18:42</div>
 </body>
 </html>
