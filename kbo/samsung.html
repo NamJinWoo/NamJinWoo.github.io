@@ -363,11 +363,11 @@ a { color: inherit; text-decoration: none; }
     <div class="ss-rank-label">리그 순위</div>
   </div>
   <div class="ss-record">
-    <div class="ss-wdl">35승 1무 27패</div>
-    <div class="ss-pct">승률 0.565 · 63경기</div>
+    <div class="ss-wdl">37승 1무 27패</div>
+    <div class="ss-pct">승률 0.578 · 65경기</div>
   </div>
   <div class="ss-streak" style="color:#f87171">
-    <div class="ss-streak-val">1승</div>
+    <div class="ss-streak-val">3승</div>
     <div class="ss-streak-label">현재 연속</div>
   </div>
 </div>
@@ -375,7 +375,7 @@ a { color: inherit; text-decoration: none; }
 <div class="ss-stat-row">
   <div class="ss-stat-chip">
     <div class="ss-stat-label">경기당 득점</div>
-    <div class="ss-stat-val">5.51</div>
+    <div class="ss-stat-val">5.55</div>
   </div>
   <div class="ss-stat-chip">
     <div class="ss-stat-label">경기당 실점</div>
@@ -383,11 +383,11 @@ a { color: inherit; text-decoration: none; }
   </div>
   <div class="ss-stat-chip">
     <div class="ss-stat-label">최근 10경기</div>
-    <div class="ss-stat-val" style="font-size:1rem">3승0무7패</div>
+    <div class="ss-stat-val" style="font-size:1rem">5승0무5패</div>
   </div>
   <div class="ss-stat-chip">
     <div class="ss-stat-label">홈 전적</div>
-    <div class="ss-stat-val" style="font-size:0.95rem">17-1-14</div>
+    <div class="ss-stat-val" style="font-size:0.95rem">19-1-14</div>
   </div>
   <div class="ss-stat-chip">
     <div class="ss-stat-label">원정 전적</div>
@@ -403,10 +403,10 @@ a { color: inherit; text-decoration: none; }
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
   <script>
   (function(){
-    var labels  = ["5/28 vs SSG", "5/29 vs 두산", "5/30 vs 두산", "5/31 vs 두산", "6/2 vs NC", "6/3 vs NC", "6/4 vs NC", "6/5 vs KIA", "6/6 vs KIA", "6/7 vs KIA", "6/9 vs KT", "6/10 vs KT", "6/11 vs KT", "6/12 vs SSG", "6/13 vs SSG"];
-    var scored  = [10, 7, 7, 9, 8, 4, 3, 2, 3, 6, 2, 3, 8, 3, 7];
-    var allowed = [1, 9, 8, 4, 7, 6, 6, 5, 2, 7, 5, 4, 1, 5, 6];
-    var results = ["W", "L", "L", "W", "W", "L", "L", "L", "W", "L", "L", "L", "W", "L", "W"];
+    var labels  = ["5/29 vs 두산", "5/30 vs 두산", "5/31 vs 두산", "6/2 vs NC", "6/3 vs NC", "6/4 vs NC", "6/5 vs KIA", "6/6 vs KIA", "6/7 vs KIA", "6/9 vs KT", "6/10 vs KT", "6/11 vs KT", "6/12 vs SSG", "6/13 vs SSG", "6/16 vs 키움"];
+    var scored  = [7, 7, 9, 8, 4, 3, 2, 3, 6, 2, 3, 8, 3, 7, 4];
+    var allowed = [9, 8, 4, 7, 6, 6, 5, 2, 7, 5, 4, 1, 5, 6, 1];
+    var results = ["L", "L", "W", "W", "L", "L", "L", "W", "L", "L", "L", "W", "L", "W", "W"];
     var bgScored  = scored.map((_,i) => results[i]==='W' ? '#3b82f6' : results[i]==='L' ? '#475569' : '#94a3b8');
     var bgAllowed = allowed.map(() => '#ef4444aa');
     new Chart(document.getElementById('scoreChart'), {
@@ -442,6 +442,12 @@ a { color: inherit; text-decoration: none; }
 <div class="ss-section">
   <div class="ss-section-title">최근 경기 결과</div>
   <div class="ss-games-list">
+<div class="ss-game-row">
+  <div class="ss-game-date">6/16 <span class="ss-home-label">(홈)</span></div>
+  <div class="ss-game-opp">vs 키움</div>
+  <div class="ss-game-score">4 - 1</div>
+  <span class="ss-win">W</span>
+</div>
 <div class="ss-game-row">
   <div class="ss-game-date">6/13 <span class="ss-home-label">(홈)</span></div>
   <div class="ss-game-opp">vs SSG</div>
@@ -525,12 +531,6 @@ a { color: inherit; text-decoration: none; }
   <div class="ss-game-opp">vs 두산</div>
   <div class="ss-game-score">7 - 9</div>
   <span class="ss-loss">L</span>
-</div>
-<div class="ss-game-row">
-  <div class="ss-game-date">5/28 <span class="ss-home-label">(원정)</span></div>
-  <div class="ss-game-opp">vs SSG</div>
-  <div class="ss-game-score">10 - 1</div>
-  <span class="ss-win">W</span>
 </div></div>
 </div>
 
@@ -541,115 +541,115 @@ a { color: inherit; text-decoration: none; }
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">타율</span>
   <span class="ss-leader-name">최원준  🦁</span>
-  <span class="ss-leader-val">0.384</span>
+  <span class="ss-leader-val">0.383</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥈</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">레이예스</span>
-  <span class="ss-leader-val">0.358</span>
+  <span class="ss-leader-val">0.360</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
-  <span class="ss-leader-name">박성한  🦁</span>
-  <span class="ss-leader-val">0.357</span>
+  <span class="ss-leader-name">오스틴  🦁</span>
+  <span class="ss-leader-val">0.356</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">출루율</span>
-  <span class="ss-leader-name">박성한  🦁</span>
+  <span class="ss-leader-name">최원준  🦁</span>
   <span class="ss-leader-val">0.461</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥈</span>
   <span class="ss-leader-stat"></span>
-  <span class="ss-leader-name">최원준  🦁</span>
-  <span class="ss-leader-val">0.458</span>
+  <span class="ss-leader-name">박성한  🦁</span>
+  <span class="ss-leader-val">0.457</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">최형우</span>
-  <span class="ss-leader-val">0.434</span>
+  <span class="ss-leader-val">0.431</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">장타율</span>
   <span class="ss-leader-name">오스틴  🦁</span>
-  <span class="ss-leader-val">0.655</span>
+  <span class="ss-leader-val">0.667</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥈</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">최정</span>
-  <span class="ss-leader-val">0.606</span>
+  <span class="ss-leader-val">0.614</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">강백호</span>
-  <span class="ss-leader-val">0.571</span>
+  <span class="ss-leader-val">0.578</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">타점</span>
   <span class="ss-leader-name">강백호</span>
-  <span class="ss-leader-val">64</span>
+  <span class="ss-leader-val">67</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥈</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">오스틴  🦁</span>
-  <span class="ss-leader-val">62</span>
+  <span class="ss-leader-val">64</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">디아즈  🦁</span>
-  <span class="ss-leader-val">53</span>
+  <span class="ss-leader-val">54</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">득점</span>
   <span class="ss-leader-name">최원준  🦁</span>
-  <span class="ss-leader-val">56</span>
+  <span class="ss-leader-val">58</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥈</span>
+  <span class="ss-leader-stat"></span>
+  <span class="ss-leader-name">오스틴  🦁</span>
+  <span class="ss-leader-val">56</span>
+</div>
+<div class="ss-leader-row ss-leader-highlight">
+  <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">페라자  🦁</span>
   <span class="ss-leader-val">54</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
-  <span class="ss-leader-rank">🥉</span>
-  <span class="ss-leader-stat"></span>
-  <span class="ss-leader-name">오스틴  🦁</span>
-  <span class="ss-leader-val">53</span>
-</div>
-<div class="ss-leader-row">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">홈런</span>
-  <span class="ss-leader-name">김도영</span>
-  <span class="ss-leader-val">19</span>
+  <span class="ss-leader-name">오스틴  🦁</span>
+  <span class="ss-leader-val">20</span>
 </div>
-<div class="ss-leader-row ss-leader-highlight">
+<div class="ss-leader-row">
   <span class="ss-leader-rank">🥈</span>
   <span class="ss-leader-stat"></span>
-  <span class="ss-leader-name">오스틴  🦁</span>
-  <span class="ss-leader-val">19</span>
+  <span class="ss-leader-name">김도영</span>
+  <span class="ss-leader-val">20</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
   <span class="ss-leader-name">최정</span>
-  <span class="ss-leader-val">15</span>
+  <span class="ss-leader-val">16</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">도루</span>
   <span class="ss-leader-name">황성빈</span>
-  <span class="ss-leader-val">25</span>
+  <span class="ss-leader-val">26</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥈</span>
@@ -736,14 +736,14 @@ a { color: inherit; text-decoration: none; }
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥉</span>
   <span class="ss-leader-stat"></span>
-  <span class="ss-leader-name">비슬리</span>
-  <span class="ss-leader-val">80</span>
+  <span class="ss-leader-name">고영표</span>
+  <span class="ss-leader-val">81</span>
 </div>
 <div class="ss-leader-row ss-leader-highlight">
   <span class="ss-leader-rank">🥇</span>
   <span class="ss-leader-stat">세이브</span>
   <span class="ss-leader-name">김재윤  🦁</span>
-  <span class="ss-leader-val">15</span>
+  <span class="ss-leader-val">16</span>
 </div>
 <div class="ss-leader-row">
   <span class="ss-leader-rank">🥈</span>

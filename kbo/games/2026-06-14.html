@@ -326,8 +326,8 @@ a { color: inherit; text-decoration: none; }
 <div class="prob-section">
   <div class="prob-label">승리 확률</div>
   <div class="prob-bar-wrap">
-    <div class="prob-away" style="width:66.0%">66.0%</div>
-    <div class="prob-home" style="width:34.0%">34.0%</div>
+    <div class="prob-away" style="width:65.7%">65.7%</div>
+    <div class="prob-home" style="width:34.3%">34.3%</div>
   </div>
   <div class="prob-teams">
     <span>한화 (원정)</span>
@@ -336,6 +336,42 @@ a { color: inherit; text-decoration: none; }
 </div>
   
   
+<button class="analysis-toggle" onclick="toggleAcc('r0')">
+  ❌ 예측 빗나감 분석 <span id="arr-r0">▼</span>
+</button>
+<div class="analysis-body" id="ab-r0">
+  <h2>❌ 예측 빗나감</h2>
+<p><strong>예측</strong>: 한화 승 (65.7% 우세) → <strong>실제</strong>: 키움 승 (한화 2 - 3 키움)</p>
+<h3>예측 득점 정확도</h3>
+<ul>
+<li>한화: 예측 5.7점 → 실제 2점 (오차 3.7, 큰 차이)</li>
+<li>키움: 예측 3.2점 → 실제 3점 (오차 0.2, 근접)</li>
+</ul>
+<h3>빗나간 원인 분석</h3>
+<ul>
+<li>한화 타선 침묵 — 예측(5.7점)보다 훨씬 저조한 2점</li>
+</ul>
+<h3>다음 시뮬레이션 주목 포인트</h3>
+<ul>
+<li>선발 교체 타이밍과 불펜 운영 상황 — 이닝 수 / 구수 기록 체크</li>
+<li>팀 최근 3경기 득점 추세 — 연속 경기 피로도 반영 고려</li>
+</ul>
+<h3>시뮬레이션 개선 제안</h3>
+<ul>
+<li>선발 투수 최근 5경기 ERA를 별도 변수로 추가 — 시즌 ERA보다 현재 컨디션 반영</li>
+</ul>
+</div>
+<script>
+function toggleAcc(id) {
+  var el = document.getElementById('ab-'+id);
+  var arr = document.getElementById('arr-'+id);
+  if (el.classList.contains('open')) {
+    el.classList.remove('open'); arr.textContent = '▼';
+  } else {
+    el.classList.add('open'); arr.textContent = '▲';
+  }
+}
+</script>
   
 <button class="analysis-toggle" onclick="toggleAcc('a0')">
   이전 경기 분석 보기 <span id="arr-a0">▼</span>
@@ -343,21 +379,21 @@ a { color: inherit; text-decoration: none; }
 <div class="analysis-body" id="ab-a0">
   <h2>핵심 포인트</h2>
 <ul>
-<li><strong>공격력</strong>: 한화 경기당 6.03득점 우세</li>
+<li><strong>공격력</strong>: 한화 경기당 6.02득점 우세</li>
 </ul>
 <h2>선발 투수 분석</h2>
 <h2>위협 타자</h2>
 <p>위협 타자 데이터 없음</p>
 <h2>팀 흐름 분석</h2>
-<p><strong>한화 (원정)</strong>: 32승1무31패 (승률 0.508) | 최근10경기 5승0무5패 | 연속 3패 — 3연패</p>
-<p><strong>키움 (홈)</strong>: 26승1무40패 (승률 0.394) | 최근10경기 5승0무5패 | 연속 3승 — 3연승</p>
+<p><strong>한화 (원정)</strong>: 32승1무32패 (승률 0.5) | 최근10경기 5승0무5패 | 연속 4패 — <strong>4연패 침체</strong></p>
+<p><strong>키움 (홈)</strong>: 26승1무41패 (승률 0.388) | 최근10경기 5승0무5패 | 연속 1패</p>
 <h2>승부 포인트</h2>
 <ul>
-<li><strong>선취점 선점</strong>: 한화 λ=6.2 vs 키움 λ=3.49 — 초반 흐름이 승부 갈림</li>
+<li><strong>선취점 선점</strong>: 한화 λ=5.91 vs 키움 λ=3.25 — 초반 흐름이 승부 갈림</li>
 <li><strong>불펜 안정성</strong>: 선발 교체 이후 중간계투 운영이 후반 열쇠</li>
 </ul>
 <h2>최종 예측</h2>
-<p><strong>예측 승팀: 한화</strong> (66.4% 우세)</p>
+<p><strong>예측 승팀: 한화</strong> (66.3% 우세)</p>
 <p><strong>근거</strong>: 종합 전력 우위<br />
 <strong>예상 스코어</strong>: 한화 7 - 키움 3</p>
 </div>
@@ -419,6 +455,6 @@ function toggleBS(id) {
 }
 </script>
 </div></div>
-<div class="update-info">빌드: 2026-06-14 22:00</div>
+<div class="update-info">빌드: 2026-06-16 22:25</div>
 </body>
 </html>
